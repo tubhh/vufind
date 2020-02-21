@@ -1,0 +1,199 @@
+/* TODO: hide opc message - might work with jquery on live system because it
+         wouldn't be cross domain * /
+div.topbox      {display: none;}
+div.lrmargin    {margin: 0;}
+*/
+
+/*  Basically very (!) nice way for cover resizing IF they were initialy the
+    same (ratio) size: https://stackoverflow.com/a/26573319
+
+    .wrapper { float: left; clear: left; display: table; table-layout: fixed; padding-bottom: 62.5%; max-width: 100px; max-height: 150px; }
+    img.recordcoverx { display: table-cell; width: 100%; }
+
+    In Template:
+    <div class="wrapper col-xs-12">
+        <span class="tub-resultnumber"><?=$this->recordNumber?></span>
+        <?=$cover ?>
+    </div>
+*/
+
+th.coreTable {
+    width: 30%;
+}
+
+.red {
+    background-color:red;
+}
+
+.tub-bibliographic > div {
+    line-height: 1.35rem;
+    padding-top: 0.15rem;;
+}
+
+/* tooltips (buttons) font, color... */
+.tooltip {}
+
+
+
+/**
+ * TUB: Overrides & custom classes
+ *
+ * Check with Oliver if they are really needed (and where/when)
+ */
+label {display: inline;}
+
+.pager li > a {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: none;
+}
+
+/* Bookbag toogle inline */
+#bookbag-menu .tub_bookbag_on  {color: #576ca0; font-size:small;}
+/*#bookbag-menu .tub_bookbag_off {color: #a8ddf0; font-size:small;}*/
+#bookbag-menu .tub_bookbag_off {color: #576ca0; font-size:small;}
+
+/** class to make stuff "invisible" but still readable by screen readers
+ * maybe use .offcanvas ?!?
+ **/
+.offscreen {
+    position:absolute;
+    left:-10000px;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    display:inline;
+}
+
+.powered-by {
+   background-image: url("../../../themes/bootprint3-tub/images/vufind_logo.png");
+   background-size: 100px;
+   background-position: right;
+   background-repeat: no-repeat;
+   height: 40px;
+}
+
+.tag {
+    font-family: Arial, sans-serif;
+    width: 200px;
+    position: relative;
+    top: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: block;
+    float: left;
+}
+
+
+.tub_loading {
+   // Loading icon; always this way: <i class="tub_loading fa fa-circle-o-notch fa-spin"></i> <?=$this->transEsc('Loading')?>...
+}
+
+
+.tubbadge {
+   float: right;
+   font-size: 85%;
+   margin-top: 1px;
+   display: inline-block;
+   font-size: 12px;
+   font-weight: bold;
+   line-height: 1;
+   min-width: 10px;
+   padding: 3px 7px;
+   text-align: center;
+   vertical-align: baseline;
+   white-space: nowrap;
+}
+
+/* REPLACE WITH VUFIND-DEFAULT-CLASS IN TEMPLATES */
+.tub_label {
+  /* Just renamed vufind class "label" to tub_label- no formatting needed */
+}
+.tublabel-success {color: #028302;}
+.tublabel-danger  {color: #a41915;}
+.tublabel-info    {color: #1c5f74;}
+/* end REPLACE WITH VUFIND-DEFAULT-CLASS */
+
+/* Finally just use "fa-li fa-angle-right" https://fortawesome.github.io/Font-Awesome/examples/ */
+.tub_lielement {
+    color: #6BC1BB;
+    font-style: normal;
+    font-size: 20px;
+    font-family: FontAwesome;
+    padding-left: 10px;
+}
+
+.showmore,.showless {
+    color: #06c;
+}
+
+.showmore:hover,.showless:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+/*
+.navbar-brand-beta {
+    background-image: url("../../../themes/bootprint3-tub/images/tubfind-logo-beta.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    color: transparent;
+    height: 65px;
+    margin-top: 5px;
+    width: 170px;
+    float: left;padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    height: 50px;
+}
+.navbar-brand-beta:hover,.navbar-brand-beta:focus{text-decoration: none}
+.navbar-brand-beta > img {display: block}
+*/
+.table.table-striped tbody tr th.sample {
+    width: 100px;
+}
+
+@media (max-width: 991px) and (max-width: 479px) {
+    .table.table-striped tbody tr th.sample {
+        width: 70px;
+        font-size: smaller;
+    }
+    .table.table-striped tbody tr td.sample {
+        font-size: smaller;
+    }
+}
+
+.sidebar.detailedrecordview {
+    background: #fff;
+    border: solid #ddd 1px;
+}
+
+.close-modal {
+    font-size: 2rem;
+}
+
+/*  Apple Special Fun (modals are zoomed problem)
+    https://github.com/jschr/bootstrap-modal/issues/64#issuecomment-55794181
+    @todo: Try targeting IOS (Safari) only - 0 padding looks bad
+    @todo: Check if a new version of bootstrap fixes this problem and remove!
+*/
+@media (max-width: 768px) {
+  body {padding-right: 0px !important}
+  .modal-open {overflow-y: auto;}
+}
+
+@media (max-width: 991px) {
+    .result .right {
+        min-height: 1px; /* IOS seems not to understand auto */
+    }
+}
+
+#apbranding-box .tubsearch {
+    display: none;
+}
+
+#apbranding-box .tublogo {
+    width: 170px !important;
+}

@@ -1,0 +1,111 @@
+<?php
+  // Set up additional search box, which is not getting displayed:
+  if (isset($REQUEST['lookfor']) && $REQUEST['lookfor'] != '') {
+  $this->layout()->searchboxN = $this->context($this)->renderInContext(
+      'search/searchbox.phtml',
+      array(
+        'lookfor' => $_REQUEST['lookfor']
+      )
+  );
+  }
+?>
+<?php $account = $this->auth()->getManager(); ?>
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
+    <span class="sr-only">Toggle navigation</span>
+    <i class="fa fa-bars"></i>
+  </button>
+  <a role="logo" class="navbar-brand-beta" href="<?=$this->url('home')?>"> </a>
+</div>
+<?php /* 2015-12-27: What's the point of always loading a search form for >1200px and never showing it?
+  if ($this->layout()->searchbox !== false): ? >
+  <section class="visible-lg">
+    <?=$this->layout()->searchbox ? >
+  </section>
+<?php endif; */ ?>
+<?php if (!isset($this->layout()->renderingError)): ?>
+  <div class="collapse navbar-collapse" id="header-collapse">
+    <nav>
+    <ul class="nav navbar-nav navbar-right flip">
+    <li>
+      <a href="#" id="info-help" rel="tooltip" title="<?=$this->translate('help_menu_Hover_clueless')?>" class="locationInfox modal-link hidden-print"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->translate('help_menu_Link_clueless')?>
+      <span data-title="<?=$this->translate('help_modal_Title_clueless')?>" data-location="TEST" class="modal-dialog hidden"><?=$this->transEsc('help_modal_Body_clueless')?></span></a>
+    </li>
+    <li>
+      <a href="<?=$this->transEsc('feedback_url')?>" id="info-feedback" rel="tooltip" title="<?=$this->translate('Feedback')?>" class="hidden-print" target="_blank"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->translate('Feedback')?></a>
+    </li>
+      <?php if ($this->feedback()->tabEnabled()): ?>
+        <li>
+          <a id="feedbackLink" class="modal-link" href="<?=$this->url('feedback-home') ?>"><i class="fa fa-envelope"></i> <?=$this->transEsc("Feedback")?></a>
+        </li>
+      <?php endif; ?>
+      <?php $cart = $this->cart(); if ($cart->isActive()): ?>
+        <li id="cartSummary">
+          <a id="cartItems" data-lightbox title="<?=$this->transEsc('View Book Bag')?>" href="<?=$this->url('cart-home')?>"><i class="tub_lielement fa fa-angle-right"></i> <span class="cartItemsCount"><?=count($cart->getItems())?></span> <?=$this->transEsc('items')?><?=$cart->isFull() ? ' (' .  $this->transEsc('bookbag_full') . ')' : ''?></a>
+        </li>
+      <?php endif; ?>
+      <?php if (is_object($account) && $account->loginEnabled()): // hide login/logout if unavailable ?>
+        <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
+          <a href="<?=$this->url('myresearch-favorites', array(), array('query' => array('redirect' => 0)))?>" class="modal-link" rel="tooltip" title="<?=$this->transEsc("Favorites")?>"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc("Favorites")?></a>
+        </li>
+        <li class="logoutOptions<?php if(!$account->isLoggedIn()): ?> hidden<?php endif ?>">
+          <a href="<?=$this->url('myresearch-logout')?>" title="<?=$this->transEsc("Log Out")?>"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc("Log Out")?></a>
+        </li>
+        <li id="loginOptions"<?php if($account->isLoggedIn()): ?> class="hidden"<?php endif ?>>
+          <?php if ($sessionInitiator = $account->getSessionInitiator($this->serverUrl($this->url('myresearch-home')))): ?>
+            <a href="<?=$this->escapeHtmlAttr($sessionInitiator)?>"><i class="fa fa-sign-in"></i> <?=$this->transEsc("Institutional Login")?></a>
+          <?php else: ?>
+            <a href="<?=$this->url('myresearch-favorites')?>" title="<?=$this->transEsc("Login")?>"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc("Favorites")?></a>
+          <?php endif; ?>
+        </li>
+      <?php endif; ?>
+
+      <li>
+        <a href="<?=$this->url('myresearch-userlogin')?>" class="modal-link" rel="tooltip" title="<?=$this->transEsc("My Library")?>"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc("My Library")?></a>
+      </li>
+
+      <?php if (isset($this->layout()->themeOptions) && count($this->layout()->themeOptions) > 1): ?>
+        <li class="dropdown">
+          <form method="post" name="themeForm" action="" id="themeForm">
+            <input type="hidden" name="ui"/>
+          </form>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->transEsc("Theme")?> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <?php foreach ($this->layout()->themeOptions as $current): ?>
+              <li<?=$current['selected'] ? ' class="active"' : ''?>><a href="#" onClick="document.themeForm.ui.value='<?=$this->escapeHtmlAttr($current['name'])?>';document.themeForm.submit()"><?=$this->transEsc($current['desc'])?></a></li>
+            <?php endforeach; ?>
+          </ul>
+        </li>
+      <?php endif; ?>
+
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc("Password")?></a>
+          <ul class="dropdown-menu">
+              <li><a href="https://www.tub.tuhh.de/ext/lbspw/index.php?lang=<?=$this->layout()->userLang?>" target="_blank"><?=$this->transEsc('Change Password')?></a></li>
+              <li><a href="https://www.tub.tuhh.de/ext/lbspw/forgotten/index.php?lang=<?=$this->layout()->userLang?>" target="_blank"><?=$this->transEsc('lostpassword')?></a></li>
+            <!-- TZ 2016-01-25: new way (looks bad with opac template)
+            <li><a href="#" id="info-pwchange" class="locationInfox modal-link"><?=$this->transEsc('Change Password')?><span data-title="<?=$this->transEsc('Change Password')?>" data-location="Undefined" data-iframe="https://www.tub.tuhh.de/ext/lbspw" class="modal-dialog hidden"><?=$this->transEsc('I AM HELPTEXT')?></span></a></li>
+            <li><a href="#" id="info-pwrequest" class="locationInfox modal-link"><?=$this->transEsc('Lost Password?')?><span data-title="<?=$this->transEsc('Lost Password?')?>" data-location="Undefined" data-iframe="https://www.tub.tuhh.de/ext/lbspw/forgotten" class="modal-dialog hidden"><?=$this->transEsc('I AM HELPTEXT')?></span></a></li>
+            -->
+          </ul>
+      </li>
+
+<!--
+      <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
+        <li class="dropdown" id="dropdown_language">
+          <form method="post" name="langForm" action="" id="langForm">
+            <input type="hidden" name="mylang"/>
+          </form>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->transEsc("Language")?> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          <?php foreach ($this->layout()->allLangs as $langCode => $langName): ?>
+            <li<?=$this->layout()->userLang == $langCode ? ' class="active"' : ''?>><a href="#" id="href_<?=$langCode?>" onClick="document.langForm.mylang.value='<?=$langCode?>';document.langForm.submit()"><?=$this->displayLanguageOption($langName)?></a></li>
+          <?php endforeach; ?>
+          </ul>
+        </li>
+      <?php endif; ?>
+-->
+    </ul>
+    </nav>
+  </div>
+<?php endif; ?>
