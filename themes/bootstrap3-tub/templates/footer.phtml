@@ -1,0 +1,39 @@
+<footer class="hidden-print">
+  <div class="footer-container">
+    <div class="footer-column">
+    <p><strong><?=$this->transEsc('Search Options')?></strong></p>
+    <ul>
+      <li><a href="<?=$this->url('search-history')?>"><?=$this->transEsc('Search History')?></a></li>
+    </ul>
+    <br/><a href="<?=$this->url('search-advanced')?>" style="color:white;">E</a>
+    </div>
+    <div class="footer-column">
+    <p><strong><?=$this->transEsc('Services')?></strong></p>
+    <ul>
+      <li><?=$this->translate('wp_link_getalibrarycard')?></li>
+      <?php
+        $opc_lang = "DU";
+        if ($this->layout()->userLang == "en") {
+            $opc_lang = "EN";
+        }
+      ?>
+      <li><a href="https://katalog.b.tuhh.de/DB=1/LNG=<?=$opc_lang?>/" target="_blank"><?=$this->transEsc('classic_catalog')?></a></li>
+      <li><?=$this->translate('acq_prop')?></li>
+    </ul>
+    </div>
+    <div class="footer-column">
+    <p><strong><?=$this->transEsc('Information')?></strong></p>
+    <ul>
+      <li><?=$this->translate('wp_electronic_accessconditions')?></li>
+      <li><a href="<?=$this->url('help-home')?>?topic=search" class="help-link" title="<?=$this->transEsc('Search Tips')?>"><?=$this->transEsc('Search Tips')?></a></li>
+      <li><?=$this->translate('wp_link_tubfindblog')?></li>
+    </ul>
+    </div>
+  </div>
+
+    <?=$this->render('layout/wp_footer_'.$this->layout()->userLang.'.phtml')?>
+
+  <div class="poweredby">
+    <?=$this->layout()->poweredBy ?>
+  </div>
+</footer>

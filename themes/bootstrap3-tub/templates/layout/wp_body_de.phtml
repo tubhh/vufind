@@ -1,0 +1,110 @@
+
+
+<body class="custom-background two-column right-sidebar">
+<div id="page" class="hfeed">
+    
+        <header id="branding" role="banner"> 
+        
+            <div id="tulogo"> 
+        	<a href="http://www.tuhh.de">
+        	<img src="https://www.tub.tuhh.de/wp-content/themes/TUBHH4-twentyeleven-child/images/logo/TUHH-LOGO.png"  alt="TUHH HOME" title="TUHH HOME" />
+                </a>
+            </div><!-- logo -->
+            <div id="tulogosmall">
+	    <a id="box-link" href="http://www.tuhh.de"></a>
+            </div>
+            
+            <div id="apbranding-box">
+                <div class="sitename">
+            	    <a style="color:#000000;" href="https://www.tub.tuhh.de/" 
+            	    title="Universitätsbibliothek" rel="home">
+            	    Universitätsbibliothek</a>
+                </div>
+		<div> <!-- 3 Spalten für DE|EN Search Logo -->
+                    <div class="msls">
+      <?php if (isset($this->layout()->allLangs) && count($this->layout()->allLangs) > 1): ?>
+          <form method="post" name="langFormH" action="" id="langFormH">
+            <input type="hidden" name="mylang"/>
+          </form>
+        <a href="#" id="href_de" onClick="document.langFormH.mylang.value='de';document.langFormH.submit()">DE</a> | <a href="#" id="href_en" onClick="document.langFormH.mylang.value='en';document.langFormH.submit()">EN</a>
+      <?php endif; ?>
+                    </div>
+
+            	    <div class="tubsearch">
+                        <form method="GET" action="https://katalog.tub.tuhh.de/Search/Results" id="searchformx">
+                        <label for="s" class="assistive-text">Suchen</label>
+                        <input type="text" class="field" name="lookfor" id="s" placeholder="Suchen" />
+                        <input type="submit" class="submit" name="submit" id="searchsubmit" value="Suchen" />
+                        <input type="hidden" name="localonly" value="1" />
+                        <input type="hidden" name="mylang" value="de" />
+                        <input type="hidden" name="type" value="TUBHHWebsite" />
+                        </form>
+            	    </div>
+
+        	    <div class="tublogo"> 
+			<a href="<?=$this->url('home')?>">
+        		<img src="<?=$this->url('home')?>/themes/bootprint3-tub/images/tub_find_logo.png"  alt="tub.find" title="tub.find" width="160px" />
+            		</a>
+		    </div>
+            	</div> <!-- 3 Spalten ende-->
+
+                <div class="clear"></div>
+            </div><!-- branding-box -->
+
+			<nav id="access" role="navigation">
+				<h3 class="assistive-text">Hauptmenü</h3>
+								<div class="skip-link"><a class="assistive-text" href="#content" title="Zum Inhalt wechseln">Zum Inhalt wechseln</a></div>
+				<div class="skip-link"><a class="assistive-text" href="#secondary" title="Zum sekundären Inhalt wechseln">Zum sekundären Inhalt wechseln</a></div>
+								<div class="menu-tub-container"><ul id="menu-tub" class="menu"><li id="menu-item-7092" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-has-children menu-item-7092"><a href="https://www.tub.tuhh.de/">Universitätsbibliothek</a>
+<ul class="sub-menu">
+	<li id="menu-item-7095" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7095"><a href="https://www.tub.tuhh.de/home/ueber-uns/">Über uns</a></li>
+	<li id="menu-item-10017" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10017"><a href="https://www.tub.tuhh.de/home/adresse/">Adresse</a></li>
+	<li id="menu-item-10666" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10666"><a href="https://www.tub.tuhh.de/home/oeffnungszeiten/">Öffnungszeiten</a></li>
+	<li id="menu-item-7101" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7101"><a href="https://www.tub.tuhh.de/home/ansprechpartner/">Kontakt</a></li>
+	<li id="menu-item-7100" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7100"><a href="https://www.tub.tuhh.de/home/projekte/">Projekte</a></li>
+	<li id="menu-item-7099" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7099"><a href="https://www.tub.tuhh.de/home/ausbildung/">Ausbildung</a></li>
+</ul>
+</li>
+<li id="menu-item-14660" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-14660"><a title="Aktuelles und Wissenswertes aus der Bibliothek" href="https://www.tub.tuhh.de/blog/">Aktuelles</a></li>
+<li id="menu-item-6941" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6941"><a title="Informationen rund um die Ausleihe" href="https://www.tub.tuhh.de/service/">Ausleihen</a>
+<ul class="sub-menu">
+	<li id="menu-item-15170" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15170"><a title="Bibliotheksausweis beantragen" href="https://www.tub.tuhh.de/service/anmeldung/">Anmeldung</a></li>
+	<li id="menu-item-6942" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6942"><a title="Ausleihe, Rückgabe und mehr" href="https://www.tub.tuhh.de/service/ausleihe/">Ausleihe</a></li>
+	<li id="menu-item-15171" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-15171"><a title="Zu Ihrem Bibliothekskonto" href="https://www.tub.tuhh.de/account/de">Bibliothekskonto</a></li>
+	<li id="menu-item-14960" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14960"><a title="Literatur aus anderen Bibliotheken bestellen" href="https://www.tub.tuhh.de/service/fernleihe/">Fernleihe</a></li>
+	<li id="menu-item-21075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21075"><a title="Formulare, die für die Benutzung der Bibliothek gebraucht werden können" href="https://www.tub.tuhh.de/service/formulare/">Formulare</a></li>
+	<li id="menu-item-18843" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18843"><a href="https://www.tub.tuhh.de/service/gebuehren/">Gebühren</a></li>
+</ul>
+</li>
+<li id="menu-item-6948" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6948"><a href="https://www.tub.tuhh.de/finden/">Finden</a>
+<ul class="sub-menu">
+	<li id="menu-item-19974" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19974"><a title="tub.find &#8211; Unser Katalog für Bücher, Artikel, Journals &#038; mehr" href="https://katalog.tub.tuhh.de/?mylang=de">tub.find &#8211; Katalog</a></li>
+	<li id="menu-item-19961" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19961"><a title="Datenbank-Infosystem (DBIS)" href="https://www.tub.tuhh.de/finden/datenbanken/">Datenbanken</a></li>
+	<li id="menu-item-6949" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6949"><a href="https://www.tub.tuhh.de/fachinformation/">Fachinformation</a></li>
+	<li id="menu-item-8309" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8309"><a href="https://www.tub.tuhh.de/fachinformation/fachreferenten/">Fachreferat</a></li>
+	<li id="menu-item-6973" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6973"><a href="https://www.gbv.de/gsomenu/?id=home&#038;ln=de">GBV Kataloge</a></li>
+	<li id="menu-item-11656" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11656"><a href="https://www.tub.tuhh.de/finden/hamburger-bibliotheken/">Hamburger Bibliotheken</a></li>
+	<li id="menu-item-9938" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9938"><a href="https://www.tub.tuhh.de/finden/normen/">Normen</a></li>
+	<li id="menu-item-14674" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14674"><a title="Informationen zur Recherche nach Patenten" href="https://www.tub.tuhh.de/finden/patente/">Patente</a></li>
+	<li id="menu-item-9086" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9086"><a href="https://www.tub.tuhh.de/finden/stg/">Schiffbau-Dokumentation</a></li>
+	<li id="menu-item-10726" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10726"><a href="https://www.tub.tuhh.de/finden/zeitschriften/">Zeitschriften</a></li>
+</ul>
+</li>
+<li id="menu-item-15107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15107"><a href="https://www.tub.tuhh.de/lernen/">Lernen und Arbeiten</a></li>
+<li id="menu-item-6946" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6946"><a href="https://www.tub.tuhh.de/publizieren/">Publizieren</a>
+<ul class="sub-menu">
+	<li id="menu-item-18479" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18479"><a href="https://www.tub.tuhh.de/publizieren/forschungsdaten/">Forschungsdaten</a></li>
+	<li id="menu-item-7273" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7273"><a title="Hochschulschriften an der TUHH" href="https://www.tub.tuhh.de/publizieren/hochschulschriften/">Hochschulschriften</a></li>
+	<li id="menu-item-6947" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6947"><a href="https://www.tub.tuhh.de/publizieren/literaturverwaltung/">Literaturverwaltung</a></li>
+	<li id="menu-item-7184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7184"><a href="https://www.tub.tuhh.de/publizieren/openaccess/">Open Access</a></li>
+	<li id="menu-item-18730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18730"><a title="Open Researcher &#038; Contributor ID" href="https://www.tub.tuhh.de/publizieren/orcid/">ORCID iD</a></li>
+	<li id="menu-item-21596" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21596"><a title="TUHH Open Research: Repository der TUHH" href="https://www.tub.tuhh.de/publizieren/tubdok/">TUHH Open Research</a></li>
+	<li id="menu-item-7255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7255"><a href="https://www.tub.tuhh.de/publizieren/urheberrecht/">Urheberrecht</a></li>
+</ul>
+</li>
+</ul></div>			</nav><!-- #access -->
+			
+	</header><!-- #branding -->
+
+
+	<div id="main">
