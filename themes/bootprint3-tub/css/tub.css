@@ -197,3 +197,53 @@ label {display: inline;}
 #apbranding-box .tublogo {
     width: 170px !important;
 }
+
+.search-submit {
+    padding: 5px;
+    vertical-align: middle;
+    background-color: #d8f2fc;
+    border: 1px solid #aaa;
+    font-weight: bold;
+}
+
+.btn-primary {
+    padding: 5px;
+    vertical-align: middle;
+    background-color: #d8f2fc;
+    border: 1px solid #aaa;
+    font-weight: bold;
+    color: black;
+}
+
+.active-filters .filters .filter-value {
+    padding: 2px 8px;
+    margin: 5px;
+    font-weight: normal;
+    color: #000;
+    background: #d8f2fc;
+    border: 1px solid #aaa;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+body a, body .btn-link {
+    color: #06C;
+}
+
+.searchForm_lookfor, .searchForm_type {
+    border-color: #aaa;
+}
+
+.slider-container .slider-handle {
+    background: #d8f2fc;
+    border: 1px solid #aaa;
+}
+
+.searchForm .nav-tabs li.active a, .searchForm .nav-tabs li.active a:hover {
+    background: #FFF;
+    border-color: #d8f2fc;
+    border-bottom-color: rgb(97, 145, 68);
+    border-bottom: 0;
+    text-decoration: none;
+    z-index: 5;
+}
