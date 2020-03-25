@@ -809,7 +809,7 @@ class DAIA extends AbstractBase implements
             // check if item is loanable or presentation
             foreach ($item['available'] as $available) {
                 if (isset($available['service'])
-                    && in_array($available['service'], ['loan', 'presentation'])
+                    && in_array($available['service'], ['loan', 'presentation', 'remote'])
                 ) {
                     $services['available'][] = $available['service'];
                 }
@@ -817,7 +817,7 @@ class DAIA extends AbstractBase implements
                 if (isset($available['service'])
                     && in_array(
                         $available['service'],
-                        ['loan', 'presentation', 'openaccess']
+                        ['loan', 'presentation', 'remote', 'openaccess']
                     )
                 ) {
                     // set item available if service is loan, presentation or
@@ -829,6 +829,13 @@ class DAIA extends AbstractBase implements
                         // save the link to the ils if we have a href for loan
                         // service
                         $serviceLink = $available['href'];
+                    }
+                    if (($available['service'] == 'remote' || $available['service'] == 'openaccess')
+                        && isset($available['href'])
+                    ) {
+                        // save the link to the ils if we have a href for loan
+                        // service
+                        $webLink = $available['href'];
                     }
                 }
 
@@ -915,6 +922,9 @@ class DAIA extends AbstractBase implements
 
         if (!empty($serviceLink)) {
             $return['ilslink'] = $serviceLink;
+        }
+        if (!empty($webLink)) {
+            $return['weblink'] = $webLink;
         }
 
         $return['item_notes']      = $item_notes;

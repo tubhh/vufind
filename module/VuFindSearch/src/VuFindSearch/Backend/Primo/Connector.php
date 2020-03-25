@@ -507,6 +507,7 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
 
             // Container data
             $addata = $prefix->PrimoNMBib->record->addata;
+            $item['doi'] = (string)$addata->doi;
             $item['container_title'] = (string)$addata->jtitle;
             $item['container_volume'] = (string)$addata->volume;
             $item['container_issue'] = (string)$addata->issue;
