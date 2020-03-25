@@ -1,0 +1,360 @@
+<?
+  // Set up some variables for convenience:
+  $id = $this->driver->getUniqueId();
+  $cart = $this->cart();
+  $cartId = $this->driver->getResourceSource() . '|' . $id;
+  $summDate = $this->driver->getPublicationDates();
+?>
+<? /* We need to find out if we're supposed to display an OpenURL link ($openUrlActive),
+    but even if we don't plan to display the link, we still want to get the $openUrl
+    value for use in generating a COinS (Z3988) tag -- see bottom of file.
+  */
+$openUrl = $this->openUrl($this->driver, 'results');
+$openUrlActive = $openUrl->isActive();
+// Account for replace_other_urls setting
+$urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
+?>
+<div class="<?=$this->driver->supportsAjaxStatus()?'ajaxItem ':''?>col-xs-12">
+  <div class="row">
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getResourceSource())?>" class="hiddenSource" />
+    <? if ($cover = $this->record($this->driver)->getCover('result-list', 'medium', $this->recordLink()->getUrl($this->driver))): ?>
+      <div class="col-md-2 col-sm-3 col-xs-4 left">
+      <?=$cover ?>
+      <span class="tub-resultnumber"><?=$this->recordNumber?></span>
+      </div>
+    <? endif ?>
+
+    <?
+      $displayTitle = '';
+      $summHighlightedTitle = $this->driver->getHighlightedTitle();
+      $summTitle = $this->driver->getTitleAdvanced();
+      if (!empty($summHighlightedTitle)) {
+        $displayTitle = $this->highlight($this->addEllipsis($summHighlightedTitle, $summTitle));
+      } else if (!empty($summTitle) && is_array($summTitle) === false) {
+        $displayTitle = $summTitle;
+      } else if (is_array($summTitle)) {
+        $displayTitle = $summTitle[0];
+      } else {
+        $displayTitle = $this->transEsc('Title not available');
+      }
+    ?>
+    <div class="col-md-7 col-sm-9 col-xs-8 middle"> <!-- version for not breaking already at 991 (sm): col-md-7 col-sm-6 col-xs-8 middle -->
+      <div class="row tub-middle-top">
+        <div class="col-xs-11 tub-bibliographic">
+        <!-- Title -->
+        <a href="<?=$this->recordLink()->getUrl($this->driver)?>" rel="tooltip" title="<?=$displayTitle?>" class="title">
+        <?
+          echo $this->escapeHtml($this->truncate($displayTitle, 100));
+          $summSeries = $this->driver->getSeriesShort();
+          if (!empty($summSeries)) {
+              foreach ($summSeries as $ser) {
+                  echo ' <span>('.$ser['name'].' '.$ser['number'].')</span>';
+              }
+          }
+        ?>
+        </a>
+
+      <!-- Volume -->
+      <?
+        $volumename = $this->driver->getVolumeName();
+        if (!empty($volumename)): ?>
+        <div class="resultItemLine2" style="font-size:smaller;">
+          <?=$this->transEsc('volume_title')?>:
+          <?
+          foreach ($volumename as $field) {
+            echo $field;
+          }
+          ?>
+        </div>
+      <? endif; ?>
+
+      <!-- Collection -->
+      <div>
+        <? if($this->driver->isCollection()): ?>
+<!--          <?=implode('<br>', array_map(array($this, 'escapeHtml'), $this->driver->getSummary())); ?> -->
+        <? else: ?>
+          <? $summAuthors = $this->driver->getPrimaryAuthorsWithHighlighting(); if (!empty($summAuthors)): ?>
+            <?=$this->transEsc('by')?>
+            <? $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
+              <a href="<?=$this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a><?=$i + 1 < $authorCount ? ',' : ''?>
+            <? endforeach; ?>
+          <? endif; ?>
+
+          <? $journalTitle = $this->driver->getContainerTitle(); ?>
+          <? if (!empty($journalTitle)): ?>
+            <?=!empty($summAuthor) ? '<br />' : ''?>
+            <?=$this->transEsc('Published in')?>
+            <? $containerID = $this->driver->getContainerRecordID(); ?>
+            <? /* TODO: handle highlighting more elegantly here: */?>
+            <a href="<?=($containerID ? $this->recordLink()->getUrl("VuFind|$containerID") : $this->record($this->driver)->getLink('journaltitle', str_replace(array('{{{{START_HILITE}}}}', '{{{{END_HILITE}}}}'), '', $journalTitle)))?>"><?=$this->highlight($journalTitle) ?></a>
+            <?=!empty($summDate) ? ' (' . $this->escapeHtml($summDate[0]) . ')' : ''?>
+          <? endif; ?>
+          <? $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
+            <? foreach ($summInCollection as $collId => $collText): ?>
+              <div>
+                <b><?=$this->transEsc("in_collection_label")?></b>
+                <a class="collectionLinkText" href="<?=$this->url('collection', array('id' => $collId))?>?recordID=<?=urlencode($this->driver->getUniqueID())?>">
+                  <?=$this->escapeHtml($collText)?>
+                </a>
+              </div>
+            <? endforeach; ?>
+          <? endif; ?>
+        <? endif; ?>
+
+      </div>
+
+    <!-- Cart button -->
+    <? if ($cart->isActive()): ?>
+      <div id="bookbag-menu">
+        <input id="cartId" type="hidden" name="ids[<?=$this->driver->getUniqueId() ?>]" value="<?=$cartId ?>" />
+        <a id="single-cart-add" class="single-cart-add <? if(!$cart->contains($cartId)): ?>correct <? endif ?>hidden fa fa-thumb-tack tub_bookbag_off" href="#" data-recordid="<?=$cartId ?>"> <span class="bookbag_label"><?=$this->transEsc('Add to Book Bag') ?></span></a>
+        <a id="single-cart-remove" class="single-cart-remove <? if($cart->contains($cartId)): ?>correct <? endif ?>hidden fa fa-thumb-tack tub_bookbag_on" href="#" data-recordid="<?=$cartId ?>"> <span class="bookbag_label"><?=$this->transEsc('Remove from Book Bag') ?></span></a>
+        <noscript>
+          <form method="post" name="addForm" action="<?=$this->url('cart-home')?>">
+            <input type="hidden" name="ids[]" value="<?=$cartId ?>" />
+            <? if ($cart->contains($cartId)): ?>
+              <input class="btn btn-default" type="submit" name="delete" value="<?=$this->transEsc('Remove from Book Bag')?>"/>
+            <? else: ?>
+              <input class="btn btn-default" type="submit" name="add" value="<?=$this->transEsc('Add to Book Bag')?>"/>
+            <? endif; ?>
+          </form>
+        </noscript>
+      </div>
+    <? endif; ?>
+
+<? /*
+      <? if(!$this->driver->isCollection()): ?>
+        <? if ($snippet = $this->driver->getHighlightedSnippet()): ?>
+          <? if (!empty($snippet['caption'])): ?>
+            <strong><?=$this->transEsc($snippet['caption']) ?>:</strong> ';
+          <? endif; ?>
+          <? if (!empty($snippet['snippet'])): ?>
+            <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
+          <? endif; ?>
+        <? endif; ?>
+      <? endif; ?>
+*/
+?>
+
+      <?
+      /* Display information on duplicate records if available */
+      $dedupData = $this->driver->getDedupData();
+      if ($dedupData): ?>
+      <div class="dedupInformation">
+      <?
+        $i = 0;
+        foreach ($dedupData as $source => $current) {
+          if (++$i == 1) {
+            ?><span class="currentSource"><a href="<?=$this->recordLink()->getUrl($this->driver)?>"><?=$this->transEsc("source_$source", array(), $source)?></a></span><?
+          } else {
+            if ($i == 2) {
+              ?> <span class="otherSources">(<?=$this->transEsc('Other Sources')?>: <?
+            } else {
+              ?>, <?
+            }
+            ?><a href="<?=$this->recordLink()->getUrl($current['id'])?>"><?=$this->transEsc("source_$source", array(), $source)?></a><?
+          }
+        }
+        if ($i > 1) {
+          ?>)</span><?
+        }?>
+      </div>
+      <? endif; ?>
+
+        <!-- Todo: Maybe move again to:
+        'ORIGINAL POSITION class="supplemental"' -->
+<?
+/*     <!-- Additional links from marc etc -->
+        <br />
+        <span class="supplemental">
+            <? if (!empty($urls)): ?>
+                <? if (!is_array($urls)) $urls = array();
+                    if(!$this->driver->isCollection()):
+                        foreach ($urls as $current): ?>
+                            <?
+                                // @TODO TZ 2015-09-20: SolrTubdok & SolrWeblog too - didn't work. Where?
+                                $i++;
+                                if ($current['url'] == $current['desc']) {
+                                    $description = $this->transEsc('Get full text');
+                                    $grabclass = 'grab-fulltext'.$i;
+                                } else {
+                                    $description = $this->escapeHtml($current['desc']);
+                                    $grabclass = '';
+                                }
+                            ?>
+                            <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" class="<?=$grabclass?> fulltext" target="new"><i class="fa fa-external-link"></i> <?=$description?></a><br/>
+                        <? endforeach; ?>
+                <? endif; ?>
+            <? endif; ?>
+        </span>
+*/
+?>
+
+      <div>
+
+      <?=$this->record($this->driver)->getPreviews()?>
+
+      <? $account = $this->auth()->getManager(); ?>
+      <? if($account->isLoggedIn()): ?>
+        <? if ($this->userlist()->getMode() !== 'disabled'): ?>
+          <? /* Saved lists */ ?>
+          <div class="savedLists alert alert-info hidden">
+            <strong><?=$this->transEsc("Saved in")?>:</strong>
+          </div>
+        <? endif; ?>
+      <? endif ?>
+    </div>
+
+        </div> <!-- end tub-bibliographic -->
+        <div class="col-xs-1 tub-FUTURE"></div>
+      </div> <!-- end tub-middle-top -->
+      <div class="row tub-middle-bottom">
+        <div class="col-xs-6 col-sm-2 tub-format">
+         <?=str_replace('class="', 'class="tub_label tublabel-info ', $this->record($this->driver)->getFormatList())?>
+        </div>
+        <? $doi_span = 10; $doi_pull = 0; ?>
+        <? if (!empty($summDate)) : ?>
+          <div class="col-xs-2 col-sm-2 col-sm-push-8 tub-year text-right">
+            <?=$this->escapeHtml($summDate[0])?>
+            <? $doi_span = 8; $doi_pull = 2; ?>
+          </div>
+        <? endif; ?>
+          <div class="col-xs-12 col-sm-<?=$doi_span?> col-sm-pull-<?=$doi_pull?> tub-doi">
+          <? $doi = $this->driver->getContainerDoi(); ?>
+            <? if (!empty($doi)): ?>
+              <?
+                $patterns[0] = '/\./';    $replacements[0] = '.&#8203;';
+                $patterns[1] = '/-/';     $replacements[1] = '-&#8203;';
+                $patterns[2] = '/\//';    $replacements[2] = '/&#8203;';
+                $doi_br = preg_replace($patterns, $replacements, $doi);
+              ?>
+              <!-- DOI: <a href="http://dx.doi.org/<?=$doi?>"><?=$doi?></a> -->
+              <span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/<?=$doi?>" rel="tooltip" title="<?=$doi?>"><?=$doi_br?></a></span></span>
+            <? endif; ?>
+        </div>
+      </div> <!-- end tub-middle-bottom -->
+    </div> <!-- end middle -->
+
+
+    <div class="col-md-3 col-sm-9 col-xs-8 col-md-offset-0 col-sm-offset-3 col-xs-offset-4 right"> <!-- version for not breaking already at 991 (sm): col-md-3 col-sm-3 col-xs-0 col-sm-offset-0 col-xs-offset-4 right -->
+        <span class="tub_holdingguide" record-id="<?=$id?>">
+            <? if ($openUrlActive || !empty($urls)): ?>
+                <? if ($openUrlActive): ?>
+                    <?=$openUrl->renderTemplate(true)?>
+                <? endif; ?>
+            <? endif; ?>
+<?=get_class($this->driver)?>
+<?=$this->driver->checkInterlibraryLoan()?>
+            <? if ($this->driver->checkInterlibraryLoan() == '0'): ?>
+                <? if ($this->driver->supportsAjaxStatus()): ?>
+                    <span class="oa-fulltextes"></span>
+                    <span class="holdlocation"><i class="tub_loading fa fa-circle-o-notch fa-spin"></i> <?=$this->transEsc('Loading')?>...</span>
+                <? endif; ?>
+            <? else: ?>
+                <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
+                <script>
+                  // ILL Button
+                  loc_button = create_button(href   = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+                                       hover  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
+                                       text   = '<?=$this->transEsc('interlibrary loan')?>',
+                                       icon   = 'fa-truck',
+                                       css_classes = 'holdil',
+                                       target = '_blank');
+                  loc_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+                                          loc_code    = 'ext_ill',
+                                          link_title  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
+                                          modal_title = '<?=$this->transEsc('loc_modal_Title_ill')?>',
+                                          modal_body  = '<?=$this->transEsc('loc_modal_Body_ill')?>',
+                                          iframe_src  = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+                                          modal_foot  = '');
+                  document.write(loc_button+loc_modal_link);
+                </script>
+            <? endif; ?>
+
+            <? if ($this->driver->checkAcquisitionProposal() == '1'): ?>
+                <script>
+                  // Aquisition proposal button
+                  loc_button = create_button(href   = '<?=$this->transEsc('Erwerbungsvorschlag_Url')?><?=$this->driver->getOpenUrl()?>&gvk_ppn=<?=$this->driver->getUniqueId() ?>',
+                                       hover  = '<?=$this->transEsc('loc_btn_Hover_acqProposal')?>',
+                                       text   = '<?=$this->transEsc('Erwerbungsvorschlag')?>',
+                                       icon   = 'fa-shopping-cart',
+                                       css_classes = 'holdwish',
+                                       target = '_blank');
+                  loc_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+                                          loc_code    = 'ext_acqusition',
+                                          link_title  = '<?=$this->transEsc('loc_btn_Hover_acqProposal')?>',
+                                          modal_title = '<?=$this->transEsc('loc_modal_Title_acqProposal')?>',
+                                          modal_body  = '<?=$this->transEsc('loc_modal_Body_acqProposal')?>',
+                                          iframe_src  = '<?=$this->transEsc('Erwerbungsvorschlag_Url')?><?=$this->driver->getOpenUrl()?>&gvk_ppn=<?=$this->driver->getUniqueId() ?>',
+                                          modal_foot  = '');
+                  document.write(loc_button+loc_modal_link);
+                </script>
+            <? endif; ?>
+        </span>
+
+      <!-- ORIGINAL POSITION class="supplemental" -->
+
+      <? /* Display qrcode if appropriate: */ ?>
+      <? if ($QRCode = $this->record($this->driver)->getQRCode("results")): ?>
+        <?
+          // Add JS Variables for QrCode
+          $this->jsTranslations()->addStrings(array('qrcode_hide' => 'qrcode_hide', 'qrcode_show' => 'qrcode_show'));
+        ?>
+        <span class="hidden-xs hidden-print">
+          <i class="fa fa-qrcode"></i> <a href="<?=$this->escapeHtmlAttr($QRCode);?>" class="qrcodeLink"><?=$this->transEsc('qrcode_show')?></a>
+          <div class="qrcode hidden">
+            <script type="text/template" class="qrCodeImgTag">
+              <img alt="<?=$this->transEsc('QR Code')?>" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
+            </script>
+          </div><br/>
+        </span>
+      <? endif; ?>
+
+
+      <? /* Hierarchy tree link */ ?>
+      <? $trees = $this->driver->tryMethod('getHierarchyTrees'); if (!empty($trees)): ?>
+        <? foreach ($trees as $hierarchyID => $hierarchyTitle): ?>
+          <div class="hierarchyTreeLink">
+            <input type="hidden" value="<?=$this->escapeHtmlAttr($hierarchyID)?>" class="hiddenHierarchyId" />
+            <i class="fa fa-sitemap"></i>
+            <a class="hierarchyTreeLinkText modal-link" href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>">
+              <?=$this->transEsc('hierarchy_view_context')?><? if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><? endif; ?>
+            </a>
+          </div>
+        <? endforeach; ?>
+      <? endif; ?>
+
+  <? if($account->isLoggedIn()): ?>
+      <? if ($this->userlist()->getMode() !== 'disabled'): ?>
+        <? /* Add to favorites */ ?>
+        <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
+        <script>
+          // Save button
+          loc_button3 = create_button(href   = '<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>',
+                               hover  = '<?=$this->transEsc('help_btn_Hover_favsave')?>',
+                               text   = '<?=$this->transEsc('Add to favorites')?>',
+                               icon   = 'fa-plus-square',
+                               css_classes = 'save-record modal-link',
+                               target = '',
+                               id = '<?=$this->driver->getUniqueId() ?>',
+                               custom = 'data-recordid="<?=$cartId ?>"');
+          /*
+          loc3_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+                                  loc_code    = '',
+                                  link_title  = '<?=$this->transEsc('help_btn_Hover_favsave')?>',
+                                  modal_title = '<?=$this->transEsc('help_modal_Title_favsave')?>',
+                                  modal_body  = '<?=$this->transEsc('help_modal_Body_favsave')?>');
+          */
+          document.write(loc_button3);
+        </script>
+      <noscript>
+        <i class="fa fa-plus"></i> <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="save-record modal-link" id="<?=$this->driver->getUniqueId() ?>" title="<?=$this->transEsc('Add to favorites')?>"><?=$this->transEsc('Add to favorites')?></a><br/>
+      </noscript>
+      <? endif; ?>
+  <? endif ?>
+
+      <?=$this->driver->supportsCoinsOpenUrl()?'<span class="Z3988" title="'.$this->escapeHtmlAttr($this->driver->getCoinsOpenUrl()).'"></span>':''?>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<table class="table table-condensed holding_ajax_table">
+  <tr>
+    <th><?=$this->transEsc('Location')?></th>
+    <th><?=$this->transEsc('Call Number')?></th>
+    <th><?=$this->transEsc('Status')?></th>
+  </tr>
+  <? $i = 0; foreach ($this->statusItems as $item): ?>
+    <? if (++$i == 10) break; // Show no more than 5 items ?>
+    <tr class="ajaxItem_modal">
+      <td><?=$this->transEsc('location_' . $item['location'], array(), $item['location'])?></td>
+      <td><?=$this->escapeHtml($item['callnumber'])?></td>
+      <td class="holding_ajax_table_status">
+        <input type="hidden" value="<?=$item['id']?>" class="hiddenId" />
+        <span class="tub_holdingguide" record-id="<?=$item['id']?>">
+            <!-- <span class="oa-fulltextes"></span> -->
+            <span class="holdlocation_modal">
+                <? if (isset($item['use_unknown_message']) && $item['use_unknown_message']): ?>
+                  <span><?=$this->transEsc("status_unknown_message")?></span>
+                <? elseif ($item['availability']): ?>
+                  <span class="text-success"><?=($item['reserve'] == 'Y') ? $this->transEsc("On Reserve") : $this->transEsc("Available")?></span>
+                <? else: ?>
+                  <span class="text-danger"><?=$this->transEsc($item['status'])?></span>
+                <? endif; ?>
+            </span>
+        </span>
+      </td>
+    </tr>
+  <? endforeach; ?>
+<? if (count($this->statusItems) > 10): ?>
+  <tr><td colspan="3"><a href="<?=$this->url('record', array('id' => $this->statusItems[0]['id']))?>"><?=count($this->statusItems) - 5?> <?=$this->transEsc('more')?> ...</a></td></tr>
+<? endif; ?>
+</table>

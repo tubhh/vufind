@@ -1,0 +1,326 @@
+<?php
+  // Set up some variables for convenience:
+  $id = $this->driver->getUniqueId();
+  $cart = $this->cart();
+  $cartId = $this->driver->getSourceIdentifier() . '|' . $id;
+?>
+<div class="<?=$this->driver->supportsAjaxStatus()?'ajaxItem ':''?>col-xs-12">
+  <div class="row">
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
+    <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+    <?php if ($cover = $this->record($this->driver)->getCover('result-list', 'medium', $this->recordLink()->getUrl($this->driver))): ?>
+      <div class="col-md-2 col-sm-3 col-xs-4 left">
+      <?=$cover ?>
+      <span class="tub-resultnumber"><?=$this->recordNumber?></span>
+      </div>
+    <?php endif ?>
+<!--
+    <div class="col-md-2 col-sm-3 col-xs-4 left">
+      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
+      <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
+      <a href="<?=$this->recordLink()->getUrl($this->driver)?>">
+        <?php if ($summThumb = $this->record($this->driver)->getThumbnail('medium')): ?>
+          <img class="primorecordcover recordcover" src="<?=$this->escapeHtmlAttr($summThumb)?>" alt="<?=$this->transEsc('Cover Image')?>"/>
+        <?php else: ?>
+          <img class="primorecordcover recordcover" src="<?=$this->url('cover-unavailable')?>" alt="<?=$this->transEsc('No Cover Image')?>"/>
+        <?php endif; ?>
+      </a>
+      <span class="tub-resultnumber"><?=$this->recordNumber?></span>
+    </div>
+-->
+    <div class="col-md-7 col-sm-9 col-xs-8 middle"> <!-- version for not breaking already at 991 (sm): col-md-7 col-sm-6 col-xs-8 middle -->
+      <div class="row tub-middle-top">
+        <div class="col-xs-11 tub-bibliographic">
+        <a href="<?=$this->recordLink()->getUrl($this->driver)?>" class="title">
+        <?php
+          $summHighlightedTitle = $this->driver->getHighlightedTitle();
+          $summTitle = $this->driver->getTitle();
+          if (!empty($summHighlightedTitle)) {
+            echo $this->highlight($this->addEllipsis($summHighlightedTitle, $summTitle));
+          } else if (!empty($summTitle)) {
+            echo $this->escapeHtml($this->truncate($summTitle, 180));
+          } else {
+            echo $this->transEsc('Title not available');
+          }
+          $summSeriesTitle = $this->driver->getSeriesTitle();
+          if ($summSeriesTitle) {
+              echo ' <span style="font-size:smaller;">('.$summSeriesTitle.')</span>';
+          }
+        ?>
+        </a>
+
+      <div>
+        <?php if($this->driver->isCollection()): ?>
+          <?=implode('<br>', array_map(array($this, 'escapeHtml'), $this->driver->getSummary())); ?>
+        <?php else: ?>
+          <?php $summAuthors = $this->driver->getPrimaryAuthorsWithHighlighting(); if (!empty($summAuthors)): ?>
+            <?=$this->transEsc('by')?>
+            <?php $authorCount = count($summAuthors); foreach ($summAuthors as $i => $summAuthor): ?>
+              <a href="<?=$this->record($this->driver)->getLink('author', $this->highlight($summAuthor, null, true, false))?>"><?=$this->highlight($summAuthor)?></a><?=$i + 1 < $authorCount ? ',' : ''?>
+            <?php endforeach; ?>
+          <?php endif; ?>
+
+          <?php $journalTitle = $this->driver->getContainerTitle(); ?>
+          <?php if (!empty($journalTitle)): ?>
+            <?=!empty($summAuthor) ? '<br />' : ''?>
+            <?=$this->transEsc('In')?>:
+            <a class="parentlink nolink"><?=$journalTitle?></a>
+            <?php  $summDate = $this->driver->getPublicationDate();
+                $ref = $this->driver->getContainerReference();
+                if (!empty($ref)) {
+                    echo $this->escapeHtml($ref); 
+                } else if (!empty($summDate)) {
+                    echo ' (' . $this->escapeHtml($summDate) . ')';
+                }
+          ?>
+          <?php endif; ?>
+          <?php $summInCollection = $this->driver->getContainingCollections(); if (!empty($summInCollection)): ?>
+            <?php foreach ($summInCollection as $collId => $collText): ?>
+              <div>
+                <b><?=$this->transEsc("in_collection_label")?></b>
+                <a class="collectionLinkText" href="<?=$this->url('collection', array('id' => $collId))?>?recordID=<?=urlencode($this->driver->getUniqueID())?>">
+                  <?=$this->escapeHtml($collText)?>
+                </a>
+              </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        <?php endif; ?>
+
+      <?php if(!$this->driver->isCollection()): ?>
+        <?php if ($snippet = $this->driver->getHighlightedSnippet()): ?>
+          <?php if (!empty($snippet['caption'])): ?>
+            <strong><?=$this->transEsc($snippet['caption']) ?>:</strong> ';
+          <?php endif; ?>
+          <?php if (!empty($snippet['snippet'])): ?>
+            <span class="quotestart">&#8220;</span>...<?=$this->highlight($snippet['snippet']) ?>...<span class="quoteend">&#8221;</span><br/>
+          <?php endif; ?>
+        <?php endif; ?>
+      <?php endif; ?>
+
+      <?php
+      /* Display information on duplicate records if available */
+      $dedupData = $this->driver->getDedupData();
+      if ($dedupData): ?>
+      <div class="dedupInformation">
+      <?php
+        $i = 0;
+        foreach ($dedupData as $source => $current) {
+          if (++$i == 1) {
+            ?><span class="currentSource"><a href="<?=$this->recordLink()->getUrl($this->driver)?>"><?=$this->transEsc("source_$source", array(), $source)?></a></span><?php
+          } else {
+            if ($i == 2) {
+              ?> <span class="otherSources">(<?=$this->transEsc('Other Sources')?>: <?php
+            } else {
+              ?>, <?php
+            }
+            ?><a href="<?=$this->recordLink()->getUrl($current['id'])?>"><?=$this->transEsc("source_$source", array(), $source)?></a><?php
+          }
+        }
+        if ($i > 1) {
+          ?>)</span><?php
+        }?>
+      </div>
+      <?php endif; ?>
+
+      </div>
+
+    <!-- Cart button -->
+    <?php if ($this->cart()->isActiveInSearch() && $this->params->getOptions()->supportsCart() && $this->cart()->isActive()): ?>
+        <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br/>
+    <?php endif; ?>
+
+      <?php $account = $this->auth()->getManager(); ?>
+      <?php if($account->isLoggedIn()): ?>
+      <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
+        <?php /* Saved lists */ ?>
+        <div class="savedLists alert alert-info hidden">
+          <strong><?=$this->transEsc("Saved in")?>:</strong>
+        </div>
+      <?php endif; ?>
+      <?php endif ?>
+
+        </div> <!-- end tub-bibliographic -->
+        <div class="col-xs-1 tub-FUTURE"></div>
+      </div> <!-- end tub-middle-top -->
+      <div class="row tub-middle-bottom">
+        <div class="col-xs-10 col-sm-3 tub-format">
+         <?=str_replace('class="', 'class="tub_label tublabel-info ', $this->record($this->driver)->getFormatList())?>
+        </div>
+        <?php $doi_span = 9; $doi_pull = 0; ?>
+        <?php if (!empty($summDate)) : ?>
+        <?php
+            if (strlen($summDate) > 4) {
+                $summDate = date("Y", strtotime($summDate));
+            }
+        ?>
+          <div class="col-xs-2 col-sm-2 col-sm-push-7 tub-year text-right">
+            <?=$this->escapeHtml($summDate)?>
+            <?php $doi_span = 7; $doi_pull = 2; ?>
+          </div>
+        <?php endif; ?>
+          <div class="col-xs-12 col-sm-<?=$doi_span?> col-sm-pull-<?=$doi_pull?> tub-doi">
+            <?php $doi = $this->driver->getContainerDoi(); ?>
+              <?php if (!empty($doi)): ?>
+                <?php
+                  $patterns[0] = '/\./';    $replacements[0] = '.&#8203;';
+                  $patterns[1] = '/-/';     $replacements[1] = '-&#8203;';
+                  $patterns[2] = '/\//';    $replacements[2] = '/&#8203;';
+                  $doi_br = preg_replace($patterns, $replacements, $doi);
+                ?>
+                <!-- DOI: <a href="http://dx.doi.org/<?=$doi?>"><?=$doi?></a> -->
+                <span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/<?=$doi?>" rel="tooltip" title="<?=$doi?>"><?=$doi_br?></a></span></span>
+              <?php endif; ?>
+        </div>
+      </div> <!-- end tub-middle-bottom -->
+    </div> <!-- end middle -->
+
+    <div class="col-md-3 col-sm-9 col-xs-8 col-md-offset-0 col-sm-offset-3 col-xs-offset-4 right"> <!-- version for not breaking already at 991 (sm): col-md-3 col-sm-3 col-xs-0 col-sm-offset-0 col-xs-offset-4 right -->
+      <span class="tub_holdingguide" record-id="<?=$id?>">
+      <?php /* We need to find out if we're supposed to display an OpenURL link ($openUrlActive),
+            but even if we don't plan to display the link, we still want to get the $openUrl
+            value for use in generating a COinS (Z3988) tag -- see bottom of file.
+          */
+        $openUrl = $this->openUrl($this->driver, 'results');
+        $openUrlActive = $openUrl->isActive();
+        // Account for replace_other_urls setting
+        $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
+        $directUrl = $this->driver->getDirectUrl();
+      ?>
+      <?php if ($openUrlActive || !empty($urls) || !empty($directUrl)): ?>
+        <?php if ($openUrlActive): ?>
+          <?=$openUrl->renderTemplate(true)?>
+        <?php endif; ?>
+        <?php if ($directUrl): ?>
+                <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
+                <script>
+                  // ILL Button
+                  loc_button = create_button(href   = '<?=$directUrl?>',
+                                       hover  = '<?=$directUrl?>',
+                                       text   = '<?=$this->transEsc('direct_download')?>',
+                                       icon   = 'fa-file-pdf-o',
+                                       css_classes = 'holddirectdl');
+                  /*
+                  loc_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+                                          loc_code    = 'ext_ill',
+                                          link_title  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
+                                          modal_title = '<?=$this->transEsc('loc_modal_Title_ill')?>',
+                                          modal_body  = '<?=$this->transEsc('loc_modal_Body_ill')?>',
+                                          iframe_src  = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+                                          modal_foot  = '');
+                  document.write(loc_button+loc_modal_link);
+                  */
+                  document.write(loc_button);
+                </script>
+        <?php else: ?>
+            <?php if (!is_array($urls)) $urls = array();
+              if(!$this->driver->isCollection()):
+                foreach ($urls as $current): ?>
+                <?php if (strpos($current['url'], 'sfx.gbv.de') !== false): ?>
+                    <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip" class="sfxlink fulltext hidden"><img src="https://sfx.gbv.de/sfx_tuhh/sfx.gif" alt="SFX" /></a>
+                <?php else: ?>
+                  <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip" class="holdlink fulltext" target="new"><i class="fa fa-external-link"></i> <?=($current['url'] == $current['desc']) ? $this->transEsc('Get full text') : $this->escapeHtml($current['desc'])?></a>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          <?php endif; ?>
+      <?php endif; ?>
+<?php /*********************************************** Do not show GBV button
+      <? if ($this->driver->isGbvRecord()): ?>
+                <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
+                <script>
+                  // ILL Button
+                  gbv_button = create_button(href   = '<?=$this->recordLink()->getUrl($this->driver->getGbvPpn())?>',
+                                       hover  = '',
+                                       text   = '<?=$this->transEsc('GBV-Record')?>',
+                                       icon   = 'fa-university',
+                                       css_classes = '');
+//                  loc_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+//                                          loc_code    = 'ext_ill',
+//                                          link_title  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
+//                                          modal_title = '<?=$this->transEsc('loc_modal_Title_ill')?>',
+//                                          modal_body  = '<?=$this->transEsc('loc_modal_Body_ill')?>',
+//                                          iframe_src  = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+//                                          modal_foot  = '');
+//                  document.write(loc_button+loc_modal_link);
+                  document.write(gbv_button);
+                </script>
+      <?php endif; ?>
+***************************************/ ?>
+      <?php if ($this->driver->supportsAjaxStatus()): ?>
+          <span class="holdlocation"><i class="tub_loading fa fa-circle-o-notch fa-spin"></i> <?=$this->transEsc('Loading')?>...</span>
+      <?php endif ?>
+      </span>
+
+
+      <span>
+      <?php if (!$openUrlActive && empty($urls) && $this->driver->supportsAjaxStatus()): ?>
+        <span class="status ajax-availability hidden">
+          <span class="label label-default"><i class="tub_loading fa fa-circle-o-notch fa-spin"></i> <?=$this->transEsc('Loading')?>...</span>
+        </span>
+      <?php endif; ?>
+      </span>
+      <?=$this->record($this->driver)->getPreviews()?>
+
+    <span class="hidden-print">
+      <?php /* Display qrcode if appropriate: */ ?>
+      <?php if ($QRCode = $this->record($this->driver)->getQRCode("results")): ?>
+        <?php
+          // Add JS Variables for QrCode
+          $this->jsTranslations()->addStrings(array('qrcode_hide' => 'qrcode_hide', 'qrcode_show' => 'qrcode_show'));
+        ?>
+        <span class="hidden-xs">
+          <i class="fa fa-qrcode"></i> <a href="<?=$this->escapeHtmlAttr($QRCode);?>" class="qrcodeLink"><?=$this->transEsc('qrcode_show')?></a>
+          <div class="qrcode hidden">
+            <script type="text/template" class="qrCodeImgTag">
+              <img alt="<?=$this->transEsc('QR Code')?>" src="<?=$this->escapeHtmlAttr($QRCode);?>"/>
+            </script>
+          </div><br/>
+        </span>
+      <?php endif; ?>
+    </span>
+
+  <?php if($account->isLoggedIn()): ?>
+      <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
+        <?php /* Add to favorites */ ?>
+        <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
+        <script>
+          // Save button
+          loc_button3 = create_button(href   = '<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>',
+                               hover  = '<?=$this->transEsc('help_btn_Hover_favsave')?>',
+                               text   = '<?=$this->transEsc('Add to favorites')?>',
+                               icon   = 'fa-plus-square',
+                               css_classes = 'save-record modal-link',
+                               target = '',
+                               id = '<?=$this->driver->getUniqueId() ?>',
+                               custom = 'data-recordid="<?=$cartId ?>"');
+          /*
+          loc3_modal_link = create_modal(id    = '<?=$this->driver->getUniqueId() ?>',
+                                  loc_code    = '',
+                                  link_title  = '<?=$this->transEsc('help_btn_Hover_favsave')?>',
+                                  modal_title = '<?=$this->transEsc('help_modal_Title_favsave')?>',
+                                  modal_body  = '<?=$this->transEsc('help_modal_Body_favsave')?>');
+          */
+          document.write(loc_button3);
+        </script>
+      <noscript>
+        <i class="fa fa-plus"></i> <a href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" class="save-record modal-link" id="<?=$this->driver->getUniqueId() ?>" title="<?=$this->transEsc('Add to favorites')?>"><?=$this->transEsc('Add to favorites')?></a><br/>
+      </noscript>
+      <?php endif; ?>
+  <?php endif ?>
+
+      <?php /* Hierarchy tree link */ ?>
+      <?php $trees = $this->driver->tryMethod('getHierarchyTrees'); if (!empty($trees)): ?>
+        <?php foreach ($trees as $hierarchyID => $hierarchyTitle): ?>
+          <div class="hierarchyTreeLink">
+            <input type="hidden" value="<?=$this->escapeHtmlAttr($hierarchyID)?>" class="hiddenHierarchyId" />
+            <i class="fa fa-sitemap"></i>
+            <a class="hierarchyTreeLinkText modal-link" href="<?=$this->recordLink()->getTabUrl($this->driver, 'HierarchyTree')?>?hierarchy=<?=urlencode($hierarchyID)?>#tabnav" title="<?=$this->transEsc('hierarchy_tree')?>">
+              <?=$this->transEsc('hierarchy_view_context')?><? if (count($trees) > 1): ?>: <?=$this->escapeHtml($hierarchyTitle)?><? endif; ?>
+            </a>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
+      <?=$this->driver->supportsCoinsOpenUrl()?'<span class="Z3988" title="'.$this->escapeHtmlAttr($this->driver->getCoinsOpenUrl()).'"></span>':''?>
+    </div>
+  </div>
+</div>
