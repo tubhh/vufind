@@ -1,0 +1,140 @@
+<?php
+/**
+ * ILS driver plugin manager
+ *
+ * PHP version 7
+ *
+ * Copyright (C) Villanova University 2010.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @category VuFind
+ * @package  ILS_Drivers
+ * @author   Demian Katz <demian.katz@villanova.edu>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @link     https://vufind.org/wiki/development:plugins:ils_drivers Wiki
+ */
+namespace TUBfind\ILS\Driver;
+
+use Zend\ServiceManager\Factory\InvokableFactory;
+
+/**
+ * ILS driver plugin manager
+ *
+ * @category VuFind
+ * @package  ILS_Drivers
+ * @author   Demian Katz <demian.katz@villanova.edu>
+ * @license  http://opensource.org/licenses/gpl-2.0.php GNU General Public License
+ * @link     https://vufind.org/wiki/development:plugins:ils_drivers Wiki
+ */
+class PluginManager extends \VuFind\ILS\Driver\PluginManager
+{
+    /**
+     * Default plugin aliases.
+     *
+     * @var array
+     */
+    protected $aliases = [
+        'aleph' => Aleph::class,
+        'alma' => Alma::class,
+        'amicus' => Amicus::class,
+        'daia' => 'TUBfind\ILS\Driver\DAIA',
+        'demo' => Demo::class,
+        'evergreen' => Evergreen::class,
+        'folio' => Folio::class,
+        'horizon' => Horizon::class,
+        'horizonxmlapi' => HorizonXMLAPI::class,
+        'innovative' => Innovative::class,
+        'koha' => Koha::class,
+        'kohailsdi' => KohaILSDI::class,
+        'lbs4' => LBS4::class,
+        'multibackend' => MultiBackend::class,
+        'newgenlib' => NewGenLib::class,
+        'noils' => NoILS::class,
+        'paia' => 'TUBfind\ILS\Driver\PAIA',
+        'polaris' => Polaris::class,
+        'sample' => Sample::class,
+        'sierra' => Sierra::class,
+        'sierrarest' => SierraRest::class,
+        'symphony' => Symphony::class,
+        'unicorn' => Unicorn::class,
+        'virtua' => Virtua::class,
+        'voyager' => Voyager::class,
+        'voyagerrestful' => VoyagerRestful::class,
+        'xcncip2' => XCNCIP2::class,
+    ];
+
+    /**
+     * Default plugin factories.
+     *
+     * @var array
+     */
+    protected $factories = [
+        'TUBfind\ILS\Driver\DAIA' =>
+            'TUBfind\ILS\Driver\DriverWithDateConverterFactory',
+        'TUBfind\ILS\Driver\PAIA' => 'TUBfind\ILS\Driver\PAIAFactory',
+        Aleph::class => AlephFactory::class,
+        Alma::class => AlmaFactory::class,
+        Amicus::class => InvokableFactory::class,
+        Demo::class => DemoFactory::class,
+        Evergreen::class => InvokableFactory::class,
+        Folio::class => FolioFactory::class,
+        Horizon::class => DriverWithDateConverterFactory::class,
+        HorizonXMLAPI::class => DriverWithDateConverterFactory::class,
+        Innovative::class => InvokableFactory::class,
+        Koha::class => DriverWithDateConverterFactory::class,
+        KohaILSDI::class => DriverWithDateConverterFactory::class,
+        LBS4::class => DriverWithDateConverterFactory::class,
+        MultiBackend::class => MultiBackendFactory::class,
+        NewGenLib::class => InvokableFactory::class,
+        NoILS::class => NoILSFactory::class,
+        Polaris::class => InvokableFactory::class,
+        Sample::class => InvokableFactory::class,
+        Sierra::class => InvokableFactory::class,
+        SierraRest::class => SierraRestFactory::class,
+        Symphony::class => SymphonyFactory::class,
+        Unicorn::class => DriverWithDateConverterFactory::class,
+        Virtua::class => InvokableFactory::class,
+        Voyager::class => DriverWithDateConverterFactory::class,
+        VoyagerRestful::class => VoyagerRestfulFactory::class,
+        XCNCIP2::class => InvokableFactory::class,
+    ];
+
+    /**
+     * Constructor
+     *
+     * Make sure plugins are properly initialized.
+     *
+     * @param mixed $configOrContainerInstance Configuration or container instance
+     * @param array $v3config                  If $configOrContainerInstance is a
+     * container, this value will be passed to the parent constructor.
+     */
+    public function __construct($configOrContainerInstance = null,
+        array $v3config = []
+    ) {
+        $this->addAbstractFactory('TUBfind\ILS\Driver\PluginFactory');
+        parent::__construct($configOrContainerInstance, $v3config);
+    }
+
+    /**
+     * Return the name of the base class or interface that plug-ins must conform
+     * to.
+     *
+     * @return string
+     */
+    protected function getExpectedInterface()
+    {
+        return \VuFind\ILS\Driver\DriverInterface::class;
+    }
+}
