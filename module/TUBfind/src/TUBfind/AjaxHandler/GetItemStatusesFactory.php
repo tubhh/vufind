@@ -62,12 +62,17 @@ class GetItemStatusesFactory implements \Zend\ServiceManager\Factory\FactoryInte
         if (!empty($options)) {
             throw new \Exception('Unexpected options passed to factory.');
         }
-        return new $requestedName(
+        $driver = new $requestedName(
             $container->get(\VuFind\Session\Settings::class),
             $container->get(\VuFind\Config\PluginManager::class)->get('config'),
             $container->get(\TUBfind\ILS\Connection::class),
             $container->get('ViewRenderer'),
             $container->get(\VuFind\ILS\Logic\Holds::class)
         );
+        $d = $container->get(\TUBfind\RecordDriver\PluginManager::class)->get(\TUBfind\RecordDriver\Primo::class);
+        $driver->setAuxPrimoDriver($d);
+        $l = $container->get(\VuFind\Record\Loader::class);
+        $driver->setAuxRecordLoader($l);
+        return $driver;
     }
 }

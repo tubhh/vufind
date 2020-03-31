@@ -1,0 +1,33 @@
+<?php
+    $openUrl = $this->openUrl($this->driver, 'holdings');
+    $openUrlActive = $openUrl->isActive();
+    // Account for replace_other_urls setting
+    $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
+
+    // Set page title.
+    $this->headTitle($this->translate('Holdings') . ': ' . $this->driver->getBreadcrumb());
+?>
+
+<div class="tub-doi">
+  <?php $doi = $this->driver->getContainerDoi(); ?>
+    <?php if (!empty($doi)): ?>
+      <span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://doi.org/<?=$doi?>"><?=$doi?></a></span></span>
+    <?php endif; ?>
+</div>
+
+
+<?php if (!empty($urls) || $openUrlActive): ?>
+  <h3 class="urllabel"><?=$this->transEsc("Internet")?></h3>
+  <?php if ($openUrlActive): ?><?=$openUrl->renderTemplate()?><?php endif; ?>
+  <?php if (!empty($urls)): ?>
+    <span class="marclinks">
+    <?php foreach ($urls as $current): ?>
+        <?php if (strpos($current['url'], 'sfx.gbv.de') !== false): ?>
+            <br/><a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip"  class="sfxlink"><img src="https://sfx.gbv.de/sfx_tuhh/sfx.gif" alt="SFX" /></a>
+        <?php else: ?>
+            <br/><span class="externalurl"><a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip"><i class="fa fa-download"></i> <?=$this->escapeHtml($current['desc'])?></a></span>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    </span>
+  <?php endif; ?>
+<?php endif; ?>

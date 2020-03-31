@@ -22,6 +22,7 @@ $config = [
             'TUBfind\ILS\Logic\Holds' => 'VuFind\ILS\Logic\LogicFactory',
             'TUBfind\Content\Covers\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
             'VuFind\Cover\Loader' => 'TUBfind\Cover\LoaderFactory',
+            'VuFind\Record\Loader' => 'VuFind\Record\LoaderFactory',
           ],
         'aliases' => [
             'VuFind\ILSDriverPluginManager' => 'TUBfind\ILS\Driver\PluginManager',
