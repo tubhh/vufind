@@ -84,6 +84,9 @@ class GetItemStatuses extends \VuFind\AjaxHandler\AbstractBase implements Transl
      */
     protected $holdLogic;
 
+    protected $auxDriver;
+    protected $auxLoader;
+
     /**
      * Constructor
      *
@@ -101,6 +104,14 @@ class GetItemStatuses extends \VuFind\AjaxHandler\AbstractBase implements Transl
         $this->ils = $ils;
         $this->renderer = $renderer;
         $this->holdLogic = $holdLogic;
+    }
+
+    public function setAuxPrimoDriver(\TUBfind\RecordDriver\Primo $d) {
+        $this->auxDriver = $d;
+    }
+
+    public function setAuxRecordLoader(\VuFind\Record\Loader $l) {
+        $this->auxLoader = $l;
     }
 
     /**
@@ -755,10 +766,51 @@ var_dump($results);
      */
     protected function getPrintedStatusArray($id)
     {
+/*
+        $queryString = $params->fromQuery('querystring');
+        $queryString = urldecode(
+            str_replace('&amp;', '&',
+                substr_replace(
+                    trim($queryString), '', 0, 1
+                )
+            )
+        );
+
+        $queryArray = explode('&', $queryString);
+        $searchParams = [];
+        foreach ($queryArray as $queryItem) {
+            $arrayKey = false;
+            list($key, $value) = explode('=', $queryItem, 2);
+            if (preg_match('/[0-9](\[\]$)/', $key, $matches)) {
+                $key = str_replace($matches[1], '', $key);
+                $arrayKey = true;
+            }
+            if ($arrayKey) {
+                $searchParams[$key][] = $value;
+            } else {
+                $searchParams[$key] = $value;
+            }
+        }
+
+        $backend = $params->fromQuery('source', DEFAULT_SEARCH_BACKEND);
+        $results = $this->resultsManager->get($backend);
+        $paramsObj = $results->getParams();
+        $paramsObj->getOptions()->disableHighlighting();
+        $paramsObj->getOptions()->spellcheckEnabled(false);
+        $paramsObj->initFromRequest(new Parameters($searchParams));
+
+        $total = $results->getResultTotal();
+
+        $data = [
+            'total' => $total,
+        ];
+        return $this->formatResponse($data);
+*/
+
         try {
-            $driver = $this->getRecordLoader()->load(
+            $driver = $this->auxLoader->load(
                 $id,
-                $this->params()->fromPost('source', 'Primo')
+                $this->params->fromPost('source', 'Primo')
             );
             $containerID = $driver->getContainerRecordID();
             $ebookLink = $driver->getPrintedEbookRecordID();
@@ -782,8 +834,8 @@ var_dump($results);
         $parentLinkHtml = null;
         if ($link_printed) {
             $view = ['refId' => $link_printed];
-            $linkPrintedHtml = $this->getViewRenderer()->render('ajax/link_printed.phtml', $view);
-            $parentLinkHtml = $this->getViewRenderer()->render('ajax/parentlink.phtml', $view);
+            $linkPrintedHtml = $this->renderer->render('ajax/link_printed.phtml', $view);
+            $parentLinkHtml = $this->renderer->render('ajax/parentlink.phtml', $view);
         }
         return [
             'id'                   => $id,

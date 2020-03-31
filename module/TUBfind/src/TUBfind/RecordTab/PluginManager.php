@@ -47,6 +47,7 @@ class PluginManager extends \VuFind\RecordTab\PluginManager
      */
     protected $aliases = [
         'holdingsils' => 'TUBfind\RecordTab\HoldingsILS',
+        'holdingselectronic' => 'TUBfind\RecordTab\HoldingsElectronic',
     ];
 
 }
