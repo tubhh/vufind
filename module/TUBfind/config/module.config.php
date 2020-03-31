@@ -18,11 +18,19 @@ $config = [
             'TUBfind\ILS\Connection' => 'TUBfind\ILS\ConnectionFactory',
             'TUBfind\ILS\Driver\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
             'TUBfind\RecordDriver\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+            'TUBfind\RecordTab\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+            'TUBfind\ILS\Logic\Holds' => 'VuFind\ILS\Logic\LogicFactory',
+            'TUBfind\Content\Covers\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+            'VuFind\Cover\Loader' => 'TUBfind\Cover\LoaderFactory',
           ],
         'aliases' => [
             'VuFind\ILSDriverPluginManager' => 'TUBfind\ILS\Driver\PluginManager',
             'VuFind\ILS\Driver\PluginManager' => 'TUBfind\ILS\Driver\PluginManager',
             'VuFind\RecordDriver\PluginManager' => 'TUBfind\RecordDriver\PluginManager',
+            'VuFind\RecordTab\PluginManager' => 'TUBfind\RecordTab\PluginManager',
+            'TUBfind\ILSHoldLogic' => 'TUBfind\ILS\Logic\Holds',
+            'VuFind\ContentCoversPluginManager' => 'TUBfind\Content\Covers\PluginManager',
+            'TUBfind\ContentCoversPluginManager' => 'TUBfind\Content\Covers\PluginManager',
         ]
     ],
  ];

@@ -127,7 +127,7 @@
         <tr>
           <th class="coreTable"><?=$this->transEsc('Other Contributors')?>: </th>
           <td>
-            <?php $i = 0; foreach ($authors['secondary'] as $author => $roles): ?><?=($i++ == 0)?'':'<br/>'?><span property="contributor"><a href="<?=$this->record($this->driver)->getLink('author', $author)?>"><?=$this->escapeHtml($author)?></a><?php if (count($roles) > 0): ?> (<?php $j = 0; foreach ($roles as $role): ?><?=($j++ == 0)?'':', '?><?=$this->transEsc("CreatorRoles::" . $role)?><?php endforeach; ?>)<?php endif; ?></span><?php endforeach; ?>
+            <?php $i = 0; foreach ($authors['secondary'] as $author => $roles): ?><?=($i++ == 0)?'':'<br/>'?><span property="contributor"><a href="<?=$this->record($this->driver)->getLink('author', $author)?>"><?=$this->escapeHtml($author)?></a><?php if (count($roles) > 0): ?> (<?php $j = 0; foreach ($roles as $role): ?><?=($j++ == 0)?'':', '?><?=$this->transEsc("CreatorRoles::" . $role[0])?><?php endforeach; ?>)<?php endif; ?></span><?php endforeach; ?>
           </td>
         </tr>
       <?php endif; ?>

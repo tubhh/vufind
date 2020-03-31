@@ -70,6 +70,20 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
     ];
 
     /**
+     * Default delegator factories.
+     *
+     * @var string[][]|\Zend\ServiceManager\Factory\DelegatorFactoryInterface[][]
+     *
+    protected $delegators = [
+        'TUBfind\RecordDriver\SolrMarc' =>
+            ['VuFind\RecordDriver\IlsAwareDelegatorFactory'],
+        'TUBfind\RecordDriver\SolrGBV' =>
+            ['VuFind\RecordDriver\IlsAwareDelegatorFactory'],
+        'VuFind\RecordDriver\SolrMarcRemote' =>
+            ['VuFind\RecordDriver\IlsAwareDelegatorFactory'],
+    ];
+*/
+    /**
      * Default plugin factories.
      *
      * @var array
