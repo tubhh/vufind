@@ -67,6 +67,39 @@ class SolrGBVFactory extends \VuFind\RecordDriver\AbstractBaseFactory
         $finalOptions = [$config, $config];
         $driver = parent::__invoke($container, $requestedName, $finalOptions);
         $driver->attachSearchService($container->get(\VuFindSearch\Service::class));
+        $driver->attachILS(
+            $container->get(\TUBfind\ILS\Connection::class),
+            $container->get(\TUBfind\ILSHoldLogic::class),
+            $container->get(\VuFind\ILSTitleHoldLogic::class)
+        );
+
+        $ilsBackends = $this->getIlsBackends($container);
+        $driver->setIlsBackends($ilsBackends);
+
         return $driver;
+    }
+
+    /**
+     * Get the ILS backend configuration.
+     *
+     * @param ContainerInterface $container Service container
+     *
+     * @return string[]
+     */
+    protected function getIlsBackends(ContainerInterface $container)
+    {
+        // Get a list of ILS-compatible backends.
+        static $ilsBackends = null;
+        if (!is_array($ilsBackends)) {
+            $config = $container->get(\VuFind\Config\PluginManager::class)
+                ->get('config');
+            $settings = isset($config->Catalog) ? $config->Catalog->toArray() : [];
+
+            // If the setting is missing, default to the default backend; if it
+            // is present but empty, don't put an empty string in the final array!
+            $rawSetting = $settings['ilsBackends'] ?? [DEFAULT_SEARCH_BACKEND];
+            $ilsBackends = empty($rawSetting) ? [] : (array)$rawSetting;
+        }
+        return $ilsBackends;
     }
 }
