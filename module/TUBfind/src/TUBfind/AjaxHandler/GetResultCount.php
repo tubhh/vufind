@@ -28,7 +28,7 @@
 namespace TUBfind\AjaxHandler;
 
 use VuFind\AjaxHandler\AbstractBase;
-use Libraries\Search\Results\PluginManager as ResultsManager;
+use VuFind\Search\Results\PluginManager as ResultsManager;
 use Zend\Mvc\Controller\Plugin\Params;
 use Zend\Stdlib\Parameters;
 use Zend\Config\Config;
@@ -95,7 +95,9 @@ class GetResultCount extends AbstractBase
             }
         }
 
-        $backend = $params->fromQuery('source', DEFAULT_SEARCH_BACKEND);
+        $searchParams['lookfor'] = $params->fromQuery('lookfor');
+
+        $backend = $params->fromQuery('source', 'Solr');
         $results = $this->resultsManager->get($backend);
         $paramsObj = $results->getParams();
         $paramsObj->getOptions()->disableHighlighting();
@@ -111,4 +113,3 @@ class GetResultCount extends AbstractBase
     }
 
 }
-

@@ -512,8 +512,33 @@ VuFind.register('itemStatuses', function ItemStatuses() {
                                             modal_foot  = '');
               fallbackOption = loc_button + ' ' + loc_modal_link;
             }
+
+          // Show link to printed edition for electronic edition (if available)
+          // Todo: can we show the exact location?
+          if (result.link_printed != null) {
+            loc_button = create_button(href   = VuFind.path + '/Record/'+result.link_printed_href,
+                                       hover  = VuFind.translate('loc_modal_Title_printEdAvailable'),
+                                       text   = VuFind.translate('available_printed'),
+                                       icon   = 'fa-book',
+                                       css_classes = 'holdprinted');
+            loc_modal_link = create_modal(id          = result.id,
+                                          loc_code    = loc_abbr,
+                                          link_title  = VuFind.translate('infoIcon_Hover'),
+                                          modal_title = VuFind.translate('loc_modal_Title_printEdAvailable'),
+                                          modal_body  = VuFind.translate('loc_modal_Body_printEdAvailable'),
+                                          iframe_src  = '',
+                                          modal_foot  = '');
+            fallbackOption = loc_button + ' ' + loc_modal_link;
+
+            // Change the link to article container into parentlink (the journal this article has been published in)
+            $item.find('.parentlink').attr('href', result.parentlink);
+            $item.find('.parentlink').removeClass('nolink');
+            // Hide SFX link (but do not hide fulltext button)
+            $item.find('.holdlink.fulltext').addClass('hidden');
+          }
+
           $item.find('.status').empty().append(bestOption);
-          $item.find('.holdlocation').empty();
+          //$item.find('.holdlocation').empty();
           if (fallbackOption) {
               $item.find('.holdlocation').empty().append(fallbackOption);
           }
