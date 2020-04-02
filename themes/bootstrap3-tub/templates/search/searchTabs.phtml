@@ -3,7 +3,7 @@
     <?php foreach ($searchTabs as $tab): ?>
         <?php if ($this->permission()->allowDisplay($tab['permission'])): ?>
           <li class="searchTab <?=substr($tab['label'],4)?> <?=$tab['selected'] ? 'active"' : 'searchTabResultCount" data-searchclass="' . $tab['class'] . '" data-lookfor=' .json_encode(strval($this->lookfor)). ' data-query=' . json_encode(strval($this->query)) . ''?>>
-            <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>><?=$this->transEsc($tab['label']); ?></a>
+            <a <?=$tab['selected'] ? '' : 'href="' . $this->escapeHtmlAttr($tab['url']) . '"' ?>><?=$this->transEsc($tab['label']); ?><?= (isset($this->resultCount) && $tab['selected']) ? ' ('.$this->localizedNumber($this->resultCount).')' : '' ?></a>
           </li>
         <?php elseif ($block = $this->permission()->getAlternateContent($tab['permission'])): ?>
             <?=$block?>
