@@ -1,0 +1,10 @@
+<?php if ($handler = $this->recommend->getNewHandler()): ?>
+  <div class="alert alert-info">
+    <?=$this->translate("suggest_changetype",
+                    [
+                        '%%newTypeName%%' => $this->transEsc($this->recommend->getNewHandlerName()),
+                    ]
+                ) ?>
+    <a href="<?=$this->recommend->getResults()->getUrlQuery()->setHandler($handler)?>"><?=$this->transEsc($this->recommend->getNewHandlerName())?></a>
+  </div>
+<?php endif; ?>

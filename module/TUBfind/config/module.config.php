@@ -23,6 +23,7 @@ $config = [
             'TUBfind\Content\Covers\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
             'VuFind\Cover\Loader' => 'TUBfind\Cover\LoaderFactory',
             'VuFind\Record\Loader' => 'VuFind\Record\LoaderFactory',
+            'TUBfind\Recommend\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
           ],
         'aliases' => [
             'VuFind\ILSDriverPluginManager' => 'TUBfind\ILS\Driver\PluginManager',
@@ -32,6 +33,8 @@ $config = [
             'TUBfind\ILSHoldLogic' => 'TUBfind\ILS\Logic\Holds',
             'VuFind\ContentCoversPluginManager' => 'TUBfind\Content\Covers\PluginManager',
             'TUBfind\ContentCoversPluginManager' => 'TUBfind\Content\Covers\PluginManager',
+            'VuFind\RecommendPluginManager' => 'TUBfind\Recommend\PluginManager',
+            'VuFind\Recommend\PluginManager' => 'TUBfind\Recommend\PluginManager',
         ]
     ],
  ];
