@@ -441,6 +441,12 @@ class SearchHandler
                 $operation[1], $operation[2], $string
             );
             break;
+        case 'prepend':
+            $string = $operation[1].$string;
+            break;
+        case 'quotmarks':
+            $string = '"'.$string.'"';
+            break;
         case 'ucfirst':
             $string = ucfirst($string);
             break;

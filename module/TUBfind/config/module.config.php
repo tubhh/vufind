@@ -24,6 +24,7 @@ $config = [
             'VuFind\Cover\Loader' => 'TUBfind\Cover\LoaderFactory',
             'VuFind\Record\Loader' => 'VuFind\Record\LoaderFactory',
             'TUBfind\Recommend\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+#            'TUBfind\Auth\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
           ],
         'aliases' => [
             'VuFind\ILSDriverPluginManager' => 'TUBfind\ILS\Driver\PluginManager',
@@ -35,6 +36,7 @@ $config = [
             'TUBfind\ContentCoversPluginManager' => 'TUBfind\Content\Covers\PluginManager',
             'VuFind\RecommendPluginManager' => 'TUBfind\Recommend\PluginManager',
             'VuFind\Recommend\PluginManager' => 'TUBfind\Recommend\PluginManager',
+#            'VuFind\Auth\PluginManager' => 'TUBfind\Auth\PluginManager',
         ]
     ],
  ];

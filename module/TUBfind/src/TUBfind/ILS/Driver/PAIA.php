@@ -56,8 +56,14 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
     public function __construct(\VuFind\Date\Converter $converter, \Zend\Session\SessionManager $sessionManager)
     {
         parent::__construct($converter, $sessionManager);
-#        $this->recordLoader = $loader;
-#        $this->ldapConfig = $config;
+    }
+
+    public function setRecordLoader($loader) {
+        $this->recordLoader = $loader;
+    }
+
+    public function setLdapConfig($config) {
+        $this->ldapConfig = $config;
     }
 
     /**
@@ -219,12 +225,14 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
             $recordList['error'] = 'Cannot get data from LDAP';
         }
         finally {
+            if (isset($userinfo) && is_array($userinfo)) {
             $recordList['email'] = $userinfo['email'];
             $recordList['zip'] = $userinfo['zip'];
             $recordList['address1'] = $userinfo['street'];
             $recordList['city'] = $userinfo['city'];
             $recordList['language'] = $userinfo['language'];
             $recordList['phone'] = $userinfo['phone'];
+            }
 //        $recordList['group'] = $userinfo['group'];
             if ($recordList['firstname'] === null) {
                 $recordList = $user;
@@ -400,6 +408,20 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
         $items = $this->paiaGetItems($patron, $filter);
 
         return count($items);
+    }
+
+    /**
+     * return 'ok' if duedate is in the future
+     * return 'due' if duedate is due today
+     * return 'overdue' if duedate is over
+     */
+    public function getDueStatus($duedate) {
+        $duedateArray = explode("-", $duedate);
+        $duedateTimestamp = mktime(23,59,59,$duedateArray[0],$duedateArray[1],$duedateArray[2]);
+        $today = mktime(23,59,59);
+        if ($duedateTimestamp < strtotime('- 1 day')) return 'overdue';
+        elseif ($duedateTimestamp == $today) return 'due';
+        return 'ok';
     }
 
     /**

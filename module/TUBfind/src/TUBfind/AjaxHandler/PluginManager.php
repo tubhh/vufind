@@ -45,7 +45,11 @@ class PluginManager extends \VuFind\AjaxHandler\PluginManager
      */
     protected $aliases = [
         'getItemStatuses' => 'TUBfind\AjaxHandler\GetItemStatuses',
-        'getResultCount' => 'TUBfind\AjaxHandler\GetResultCount'
+        'getResultCount' => 'TUBfind\AjaxHandler\GetResultCount',
+        'getUserFines' => 'VuFind\AjaxHandler\GetUserFines',
+        'getUserTransactions' => 'VuFind\AjaxHandler\GetUserTransactions',
+        'getUserHolds' => 'VuFind\AjaxHandler\GetUserHolds',
+        'getUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\GetUserStorageRetrievalRequests'
     ];
 
     /**
@@ -56,6 +60,10 @@ class PluginManager extends \VuFind\AjaxHandler\PluginManager
     protected $factories = [
         'TUBfind\AjaxHandler\GetItemStatuses' => 'TUBfind\AjaxHandler\GetItemStatusesFactory',
         'TUBfind\AjaxHandler\GetResultCount' => 'TUBfind\AjaxHandler\GetResultCountFactory',
+        'VuFind\AjaxHandler\GetUserFines' => 'VuFind\AjaxHandler\GetUserFinesFactory',
+        'VuFind\AjaxHandler\GetUserTransactions' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory',
+        'VuFind\AjaxHandler\GetUserHolds' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory',
+        'VuFind\AjaxHandler\GetUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory'
     ];
 
 }

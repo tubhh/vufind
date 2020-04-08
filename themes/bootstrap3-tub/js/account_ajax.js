@@ -196,10 +196,10 @@ $(document).ready(function registerAccountAjax() {
     render: function render($element, status, ICON_LEVELS) {
       var level = ICON_LEVELS.NONE;
       if (status.available > 0) {
-        $element.html('<i class="fa fa-bell text-success" data-toggle="tooltip" title="' + VuFind.translate('hold_available') + '"></i>');
+        $element.html('<span class="badge ok" data-toggle="tooltip" title="' + VuFind.translate('hold_available') + '">' + (status.available+status.in_transit) + '</span><i class="fa fa-bell text-success" data-toggle="tooltip" title="' + VuFind.translate('hold_available') + '"></i>');
         level = ICON_LEVELS.GOOD;
       } else if (status.in_transit > 0) {
-        $element.html('<i class="fa fa-clock-o text-warning" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '"></i>');
+        $element.html('<span class="badge warn" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '">'+(status.available+status.in_transit)+'</span><i class="fa fa-clock-o text-warning" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '"></i>');
       } else {
         $element.addClass("holds-status hidden");
       }
@@ -232,10 +232,10 @@ $(document).ready(function registerAccountAjax() {
     render: function render($element, status, ICON_LEVELS) {
       var level = ICON_LEVELS.NONE;
       if (status.available > 0) {
-        $element.html('<i class="fa fa-bell text-success" data-toggle="tooltip" title="' + VuFind.translate('storage_retrieval_request_available') + '"></i>');
+        $element.html('<span class="badge ok" data-toggle="tooltip" title="' + VuFind.translate('storage_retrieval_request_available') + '">'+status.available+'</span><i class="fa fa-bell text-success" data-toggle="tooltip" title="' + VuFind.translate('storage_retrieval_request_available') + '"></i>');
         level = ICON_LEVELS.GOOD;
       } else if (status.in_transit > 0) {
-        $element.html('<i class="fa fa-clock-o text-warning" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '"></i>');
+        $element.html('<span class="badge warn" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '">'+status.in_transit+'</span><i class="fa fa-clock-o text-warning" data-toggle="tooltip" title="' + VuFind.translate('request_in_transit') + '"></i>');
       } else {
         $element.addClass("holds-status hidden");
       }
