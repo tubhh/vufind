@@ -61,9 +61,13 @@ class PAIAFactory extends DriverWithDateConverterFactory
         if (!empty($options)) {
             throw new \Exception('Unexpected options passed to factory.');
         }
-        return parent::__invoke(
+        $driver = parent::__invoke(
             $container, $requestedName,
             [$container->get(\Zend\Session\SessionManager::class)]
         );
+        $driver->setRecordLoader($container->get('VuFind\RecordLoader'));
+        $driver->setLdapConfig($container->get('VuFind\Config')->get('config'));
+
+        return $driver;
     }
 }

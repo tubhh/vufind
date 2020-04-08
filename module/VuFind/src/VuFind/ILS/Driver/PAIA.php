@@ -1515,6 +1515,7 @@ class PAIA extends DAIA
 
             // status: provided (the document is ready to be used by the patron)
             $result['available'] = $doc['status'] == 4 ? true : false;
+            $result['in_transit'] = $doc['status'] == 1 ? true : false;
 
             $results[] = $result;
         }
@@ -1535,6 +1536,9 @@ class PAIA extends DAIA
 
         foreach ($items as $doc) {
             $result = $this->getBasicDetails($doc);
+
+            // status: provided (the document is ready to be used by the patron)
+            $result['available'] = $doc['status'] == 2 ? true : false;
 
             $results[] = $result;
         }
@@ -1600,6 +1604,8 @@ class PAIA extends DAIA
             $result['borrowingLocation'] = ($doc['storage'] ?? '');
 
             // storageid (0..1) location URI
+
+            $result['dueStatus'] = $this->getDueStatus($result['dueTime']);
 
             // Optional VuFind fields
             /*
