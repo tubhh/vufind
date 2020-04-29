@@ -18,8 +18,10 @@
     $formats = $this->driver->getFormats();
     $remarks = $this->driver->getRemarksFromMarc();
 
-//    $allppns = $this->ils()->getAllPpnsFrom($user);
-$allppns = false;
+    $allppns = [];
+    if ($user) {
+        $allppns = $this->ils()->getAllPpnsFrom($user);
+    }
     // Set page title.
     $this->headTitle($this->translate('Holdings') . ': ' . $this->driver->getBreadcrumb());
 ?>
@@ -165,7 +167,7 @@ $allppns = false;
               <?php else: ?>
                 <?php /* Begin Available Items (Holds) */ ?>
                  <span class="text-success"><?=$this->transEsc("Available")?><link property="availability" href="http://schema.org/InStock" /></span>
-                <?php if (isset($row['link']) && $row['link'] && in_array($row['id'], $allppns) == false): ?>
+                <?php if (isset($row['link']) && $row['link'] && $user && in_array($row['id'], $allppns) == false): ?>
                   <a class="<?=$check ? 'checkRequest ' : ''?>placehold" data-lightbox href="<?=$this->recordLink()->getRequestUrl($row['link'])?>"><i class="fa fa-clock-o holdreserve" aria-hidden="true"></i>&nbsp;<?=$this->transEsc($check ? "Check Hold" : "Place a Hold")?></a>
                 <?php endif; ?>
                 <?php if (isset($row['weblink']) && $row['weblink']): ?>
