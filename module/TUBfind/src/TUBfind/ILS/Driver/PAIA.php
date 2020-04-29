@@ -314,6 +314,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
      *
      * @return array
      */
+/*
     public function getNumberOf($patron, $which = null)
     {
         $retval = [];
@@ -335,7 +336,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
         }
         return $retval;
     }
-
+*/
     /**
      * Calculate the total fine
      *
@@ -380,6 +381,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
      *
      * @return int Total number of the patron's $which on success,
      */
+/*
     protected function getNumberOfMy($patron, $which)
     {
         switch ($which) {
@@ -409,7 +411,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
 
         return count($items);
     }
-
+*/
     /**
      * return 'ok' if duedate is in the future
      * return 'due' if duedate is due today
@@ -434,8 +436,10 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
         $ppnarr = [];
         $items = $this->paiaGetItems($patron);
         foreach ($items['doc'] as $item) {
-            $ppn = $this->getPaiaItemPpn($item['edition']);
-            $ppnarr[] = $ppn;
+            if (array_key_exists('edition', $item)) {
+                $ppn = $this->getPaiaItemPpn($item['edition']);
+                $ppnarr[] = $ppn;
+            }
         }
         return $ppnarr;
     }

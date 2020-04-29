@@ -37,7 +37,7 @@ use VuFindSearch\Backend\Solr\Backend;
 use VuFindSearch\Query\Query;
 use VuFindSearch\ParamBag;
 
-use VuFind\MultipartList;
+use TUBfind\Content\MultipartList;
 
 use VuFind\Search\Factory\PrimoBackendFactory;
 use VuFind\Search\Factory\SolrDefaultBackendFactory;

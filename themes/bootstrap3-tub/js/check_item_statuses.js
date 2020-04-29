@@ -243,6 +243,53 @@ VuFind.register('itemStatuses', function ItemStatuses() {
             //alert('Hier ist ein komischer Fall bei '+loc_callno);
           }
 
+          // Early exit: display VOLUMES button (if this item has volumes)
+          if (result.multiVols == true) {
+            // Create a readin room button (last 5 years) - use same button as for case 'local'
+            loc_modal_button_last5years = '';
+            title = loc_modal_body+ '\n' + VuFind.translate('loc_modal_Title_refonly_generic');
+            if (loc_abbr == 'LS1' || loc_abbr == 'LS2') {
+                loc_modal_button_last5years = create_modal(id = result.id,
+                                            loc_code    = loc_abbr,
+                                            link_title  = title,
+                                            modal_title = loc_modal_title,
+                                            modal_body  = loc_modal_body+' ' + VuFind.translate('loc_modal_Title_refonly_generic'),
+                                            iframe_src  = '',
+                                            modal_foot  = '',
+                                            icon_class  = 'holdrefonly',
+                                            icon        = 'fa-home',
+                                            text        = loc_abbr + ' ' + loc_callno);
+            }
+            // Add button "See volumes"
+            loc_modal_button_volumes = create_modal(id = result.id,
+                                          loc_code    = 'Multi',
+                                          link_title  = VuFind.translate('loc_modal_Title_multi'),
+                                          modal_title = VuFind.translate('loc_modal_Title_multi'),
+                                          modal_body  = VuFind.translate('loc_modal_Body_multi'),
+                                          iframe_src  = '',
+                                          modal_foot  = '',
+                                          icon_class  = 'holdtomes',
+                                          icon        = 'fa-stack-overflow',
+                                          text        = VuFind.translate('loc_volumes'));
+            bestOption = loc_modal_button_last5years + loc_modal_button_volumes;
+            $item.find('.holdlocation').empty();
+            $item.find('.status').empty().append(bestOption);
+            // If something has multiple volumes, our voyage ends here already;
+            // @todo: It does, doesn't it? It happens only for print (so no E-Only info icon is needed)
+
+            // preload volume list
+            // @todo: loads too much
+            setTimeout(function(){
+                $.ajax({
+                    dataType: 'json',
+                    url: VuFind.path + '/AJAX/JSON?method=loadVolumeList',
+                    data: {"id":result.id}
+                });
+            }, 500);
+
+            return true;
+          }
+
             var bestOption = '';
             var fallbackOption = ''; // we need this, because the sfx button comes from another source - and we have to check, if it exists before adding buttons in some cases
             switch(result.patronBestOption) {
@@ -538,7 +585,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
           }
 
           $item.find('.status').empty().append(bestOption);
-          //$item.find('.holdlocation').empty();
+          $item.find('.holdlocation').empty();
           if (fallbackOption) {
               $item.find('.holdlocation').empty().append(fallbackOption);
           }
