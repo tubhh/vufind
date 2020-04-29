@@ -609,8 +609,13 @@ var_dump($results);
                 }
             }
             else {
+                $nu_holdings = [];
                 foreach ($holdings as $holding) {
-                    $statuses[] = $this->getTUBItemStatus([ $holding ]);
+                    if (array_key_exists($holding['id'], $nu_holdings) && is_array($nu_holdings[$holding['id']]) === false) $nu_holdings[$holding['id']] = [];
+                    $nu_holdings[$holding['id']][] = $holding;
+                }
+                foreach ($nu_holdings as $nu_holding) {
+                    $statuses[] = $this->getTUBItemStatus( $nu_holding );
                 }
             }
             //$statuses = array_merge($statuses, $this->getStatusesFromCatalog($statusesFromCatalog));
@@ -1043,7 +1048,8 @@ var_dump($results);
 
         // if this record is already on loan or reserved by the current patron, we can save a lot of time and stop here
 /*
-        if ($this->getUser()) {
+        $patron = $this->ils->storedCatalogLogin();
+        if ($patron) {
             $id = (isset($record[0]) && isset($record[0]['id'])) ? $record[0]['id'] : 'no_id';
             $catalog = $this->getILS();
             $patron = $this->catalogLogin();
@@ -1319,8 +1325,9 @@ var_dump($results);
             $additional_availability_message = $availability;
         }
 
+        $id = (isset($record[0]) && isset($record[0]['id'])) ? $record[0]['id'] : 'no_id';
 
-//        $multiVol = $this->getMultiVolumes();
+        $multiVol = $this->getMultiVolumes($id);
 
         // Quick check if all calculation are valid
         $tmp .= "totalCount: $counts[total]
@@ -1333,7 +1340,6 @@ var_dump($results);
                 dienstappCount: $counts[dienstapp]";
         // */
 
-        $id = (isset($record[0]) && isset($record[0]['id'])) ? $record[0]['id'] : 'no_id';
         $placed_requests = (isset($bestOpt['fullrecord']) && isset($bestOpt['fullrecord']['requests_placed'])) ? $bestOpt['fullrecord']['requests_placed'] : 0;
         // Send back the collected details:
 //TZ: Todo: take advantage of patronBestOption in check_item_statuses.js
@@ -1359,7 +1365,7 @@ var_dump($results);
             'electronic' => $electronic,
             'reference_location' => $referenceLocation,
             'reference_callnumber' => $referenceCallnumber,
-//            'multiVols' => $multiVol,
+            'multiVols' => $multiVol,
             'tmp' => $tmp //implode('  --  ', $bestLocationPriority)
         ];
     }
@@ -1703,11 +1709,12 @@ var_dump($results);
      *
      * @return bool
      */
-    protected function getMultiVolumes()
+    protected function getMultiVolumes($id)
     {
         try {
-            $driver = $this->getRecordLoader()->load(
-                $_REQUEST['id'][0]
+            $driver = $this->auxLoader->load(
+                $id,
+                $this->params->fromPost('source', 'Solr')
             );
             return $driver->isMultipartChildren();
         } catch (\Exception $e) {

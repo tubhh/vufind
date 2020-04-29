@@ -49,7 +49,9 @@ class PluginManager extends \VuFind\AjaxHandler\PluginManager
         'getUserFines' => 'VuFind\AjaxHandler\GetUserFines',
         'getUserTransactions' => 'VuFind\AjaxHandler\GetUserTransactions',
         'getUserHolds' => 'VuFind\AjaxHandler\GetUserHolds',
-        'getUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\GetUserStorageRetrievalRequests'
+        'getUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\GetUserStorageRetrievalRequests',
+        'getSaveStatuses' => 'VuFind\AjaxHandler\GetSaveStatuses',
+        'loadVolumeList' => 'TUBfind\AjaxHandler\LoadVolumeList'
     ];
 
     /**
@@ -63,7 +65,9 @@ class PluginManager extends \VuFind\AjaxHandler\PluginManager
         'VuFind\AjaxHandler\GetUserFines' => 'VuFind\AjaxHandler\GetUserFinesFactory',
         'VuFind\AjaxHandler\GetUserTransactions' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory',
         'VuFind\AjaxHandler\GetUserHolds' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory',
-        'VuFind\AjaxHandler\GetUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory'
+        'VuFind\AjaxHandler\GetUserStorageRetrievalRequests' => 'VuFind\AjaxHandler\AbstractIlsAndUserActionFactory',
+        'VuFind\AjaxHandler\GetSaveStatuses' => 'VuFind\AjaxHandler\GetSaveStatusesFactory',
+        'TUBfind\AjaxHandler\LoadVolumeList' => 'TUBfind\AjaxHandler\LoadVolumeListFactory'
     ];
 
 }
