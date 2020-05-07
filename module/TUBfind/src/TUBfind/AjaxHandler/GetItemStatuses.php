@@ -30,6 +30,7 @@
 namespace TUBfind\AjaxHandler;
 
 use VuFind\Exception\ILS as ILSException;
+use VuFind\Auth\ILSAuthenticator;
 use VuFind\I18n\Translator\TranslatorAwareInterface;
 use VuFind\ILS\Connection;
 use VuFind\ILS\Logic\Holds;
@@ -84,6 +85,9 @@ class GetItemStatuses extends \VuFind\AjaxHandler\AbstractBase implements Transl
      */
     protected $holdLogic;
 
+    protected $ilsAuthenticator;
+    protected $loggedInUser;
+
     protected $auxDriver;
     protected $auxLoader;
 
@@ -97,13 +101,15 @@ class GetItemStatuses extends \VuFind\AjaxHandler\AbstractBase implements Transl
      * @param Holds             $holdLogic Holds logic
      */
     public function __construct(SessionSettings $ss, Config $config, Connection $ils,
-        RendererInterface $renderer, Holds $holdLogic
+        RendererInterface $renderer, Holds $holdLogic, ILSAuthenticator $ilsAuthenticator, $user
     ) {
         $this->sessionSettings = $ss;
         $this->config = $config;
         $this->ils = $ils;
         $this->renderer = $renderer;
         $this->holdLogic = $holdLogic;
+        $this->ilsAuthenticator = $ilsAuthenticator;
+        $this->loggedInUser = $user;
     }
 
     public function setAuxPrimoDriver(\TUBfind\RecordDriver\Primo $d) {
@@ -1047,13 +1053,12 @@ var_dump($results);
         $referenceLocation   = false;
 
         // if this record is already on loan or reserved by the current patron, we can save a lot of time and stop here
-/*
-        $patron = $this->ils->storedCatalogLogin();
+        $patron = $this->loggedInUser;
         if ($patron) {
             $id = (isset($record[0]) && isset($record[0]['id'])) ? $record[0]['id'] : 'no_id';
-            $catalog = $this->getILS();
-            $patron = $this->catalogLogin();
-            $patronsPpns = $catalog->getAllPpnsFrom($patron);
+            //$catalog = $this->getILS();
+            //$patron = $this->catalogLogin();
+            $patronsPpns = $this->ils->getAllPpnsFrom($patron);
             if (in_array($id, $patronsPpns)) {
                 return [
                     'id' => $id,
@@ -1064,7 +1069,7 @@ var_dump($results);
                 ];
             }
         }
-*/
+
         // Analyze each item of the record (title)
         foreach ($record as $key => $info) {
 

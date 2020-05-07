@@ -67,7 +67,9 @@ class GetItemStatusesFactory implements \Zend\ServiceManager\Factory\FactoryInte
             $container->get(\VuFind\Config\PluginManager::class)->get('config'),
             $container->get(\TUBfind\ILS\Connection::class),
             $container->get('ViewRenderer'),
-            $container->get(\VuFind\ILS\Logic\Holds::class)
+            $container->get(\VuFind\ILS\Logic\Holds::class),
+            $container->get(\VuFind\Auth\ILSAuthenticator::class),
+            $container->get(\VuFind\Auth\Manager::class)->isLoggedIn()
         );
         $d = $container->get(\TUBfind\RecordDriver\PluginManager::class)->get(\TUBfind\RecordDriver\Primo::class);
         $driver->setAuxPrimoDriver($d);

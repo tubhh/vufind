@@ -5,6 +5,6 @@ return [
         'tub.css'
     ],
     'js' => [
-        'gethits.js'
+        'gethits.js',
     ]
 ];
