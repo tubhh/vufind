@@ -724,3 +724,212 @@ VuFind.register('itemStatuses', function ItemStatuses() {
 
   return { init: init, check: checkItemStatuses };
 });
+
+/**
+ * Load volume list into a modal on request
+ *
+ * @todo
+ * - This view and the tab view used in themes/bootstrap3-tub/templates/record/view.phtml
+ *   (prepared in themes/bootstrap3-tub/templates/record/view-tabs.phtml) should.
+ *   just use the same template (most likely best place: themes/bootstrap3-tub/templates/ajax)
+ *   > hmm, just include themes/bootstrap3-tub/templates/record/hold.phtml somehow?
+ * - (Multilanguage table header)
+ * - Add paging (bit overkill - (1000, volcount))
+ *
+ * @note:
+ * - rip off of themes/bootstrap3-tub/js/multipart.js
+ * - Related
+ *   > module/VuFind/src/VuFind/Controller/AjaxController.php
+ *   > module/VuFind/src/VuFind/MultipartList.php
+ *   > module/VuFind/src/VuFind/RecordTab/TomesVolumes.php
+ *   > module/VuFind/src/VuFind/RecordDriver/SolrGBV.php    > getMultipartChildren()?
+ *   > themes/bootstrap3-tub/templates/RecordTab/tomesvolumes.phtml
+ *
+ * @param recID     The PPN (of a multivolume item)
+ *
+ * @return Populates data-modal_postload_ajax (@see Jquery.document.ready above)
+ */
+function get_volume_tab(recID) {
+    ppnlink = recID;
+    var volume_rows = [""];
+
+    jQuery.ajax({
+        //http://lincl1.b.tu-harburg.de:81/vufind2-test/AJAX/JSON?method=getMultipart&id=680310649&start=0&length=10000
+//        url:VuFind.path+'/AJAX/JSON?method=getMultipart&id='+ppnlink+'&start=0&length=10000',
+        url:VuFind.path+'/AJAX/JSON?method=loadVolumeList&id='+ppnlink+'&start=0&length=10000',
+        dataType:'json',
+        success:function(data, textStatus) {
+            var volcount = data.data.length;
+            var visibleCount = Math.min(1000, volcount);
+
+            if (visibleCount == 0) {
+                return false;
+            }
+            for (var index = 0; index < visibleCount; index++) {
+                var entry = data.data[index];
+                var volume_ajax_row = '<tr><td class="volume_'+entry.id+' volumeItems_ajax_loaded" colspan="3"></td></tr>';
+
+                volume_rows.push('<tr class="volume_entry"><td><a href="'+VuFind.path+'/Record/'+entry.id+'">'+entry.part+'</a> ('+entry.date+')</td><td><a href="'+VuFind.path+'/Record/'+entry.id+'">'+entry.title+'</a></td><td><a href="'+VuFind.path+'/Record/'+entry.id+'" class="holdlink" id="'+entry.id+'"><i class="fa fa-bars"></i> '+VuFind.translate("copies")+'</a></td></tr>'+volume_ajax_row);
+            }
+            if (volcount > visibleCount) {
+                for (var index = visibleCount; index < data.data.length; index++) {
+                    var entry = data.data[index];
+                    volume_rows.push('<tr class="offscreen"><td><a href="'+VuFind.path+'/Record/'+entry.id+'">'+entry.part+'</a> ('+entry.date+')</td><td><a href="'+VuFind.path+'/Record/'+entry.id+'">'+entry.title+'</a></td><td><a href="'+VuFind.path+'/Record/'+entry.id+'" class="holdlink" id="'+entry.id+'"><i class="fa fa-bars"></i> '+VuFind.translate("copies")+'</a></td></tr>'+volume_ajax_row);
+                }
+            }
+
+            // Append to modal and return
+            var myreturn = '<table class="datagrid extended"><thead><tr><th>'+VuFind.translate("volume_number")+' ('+VuFind.translate("year")+')</th><th>'+VuFind.translate("volume_title")+'</th><th>'+VuFind.translate("copies")+'</th></tr></thead><tbody>' + volume_rows.join('') + '</tbody></table>';
+            $('.data-modal_postload_ajax').empty().append(myreturn);
+            return true;
+        }
+    });
+
+}
+
+/**
+ * JQuery ready stuff
+ *
+ * - call displayHolding
+ * - add trigger/listener for modal(s)
+ *
+ * @return void
+ */
+$(document).ready(function() {
+  /**
+   * Show modal on button click
+   *
+   * @todo 2015-01-27
+   * Most of the modal handling should move somewhere else (e.g. common.js)
+   * since it isn't used for action buttons only anymore
+   *
+   * //https://stackoverflow.com/questions/1359018/in-jquery-how-to-attach-events-to-dynamic-html-elements
+   */
+  $('body').on('click', 'a.locationInfox', function(event) {
+    event.preventDefault();
+
+        // TMP: Test Postloading Holding/Volumes
+        // Get full-status only on clicking link; add the result into span with class "data-postload_ajax" (part of modal-body)
+        recPPN = $(this).attr('id').replace('info-', ''); // Strip the info that is set in createModal()
+        // END TMP: Test Postloading Holding
+    
+    var loc = $(this).children('span').attr('data-location');
+    var additional_content = '';
+    var modal_iframe_href;
+    var modal_frame = '';
+    var preload_animation = '';
+    var force_logoff_loan4 = false;
+
+    if (loc == 'Loaned' || loc == 'Magazin') {
+      additional_content = '';
+      force_logoff_loan4 = false;
+    }
+    else if (loc == 'Multi') {
+      preload_animation = '<i class="tub_loading fa fa-circle-o-notch fa-spin"></i> Loading...';
+      get_volume_tab(recPPN); //TEST - reicht für LS-Sachen, wenn überhaupt sinnvoll
+    }
+    else if (loc == 'SO' || loc == 'ACQ') {
+      //
+    }
+    else if (loc === 'Undefined') {
+      //
+    }
+    else if (loc == 'DIG') {
+      //
+    }
+    else if (loc == 'DIGfail') {
+      //
+    }
+    else if (loc == 'Web') {
+      //
+    }
+    else if (loc == 'TUBdok') {
+      //
+    }
+    else {
+      // Got shelf location
+      var roomMap = [];
+      roomMap['LS1'] = path + '/themes/bootstrap3-tub/images/tub/LS1_main.jpg';
+      roomMap['LS2'] = path + '/themes/bootstrap3-tub/images/tub/LS2_main.jpg';
+      roomMap['LBS'] = path + '/themes/bootstrap3-tub/images/tub/LS1_lbs.jpg';
+      roomMap['SEM'] = path + '/themes/bootstrap3-tub/images/tub/LS2_sem.jpg';
+      additional_content = (roomMap[loc]) ? '<img src="'+ roomMap[loc] +'" />' : '';
+
+      //This loads a holding list, only really useful for "Multi"-case
+      //preload_animation = '<i class="tub_loading fa fa-circle-o-notch fa-spin"></i> Loading...';
+      //get_holding_tab(recPPN);
+    }
+
+    // TODO: Lightbox has methods to do this?
+    $('#modalTitle').html($(this).children('span').attr('data-title'));
+    $('.modal-body').html('<p>'+ $(this).children('span').text() + '</p>' + additional_content + '<span class="data-modal_postload_ajax" id="'+recPPN+'">'+preload_animation+'</span>' + modal_frame);
+    
+    
+    // Remove iframe - prevents browser history
+    function closeModalIframe() {
+      $('#modalIframe').remove();
+    }
+      
+    // NOTE: it's default to stay logged in unless the close link is clicked OR
+    //  the session times out in loan4 (the forced log off would be new, albeit
+    //  could be a hassle for patrons that want to request multiple items in sucession)
+    function closeLoan4() {
+      // TEST: Force loan4 logoff, delay it a little so the iframe can be reloaded with the logoff url
+      $('#modalIframe').attr("src", 'https://katalog.b.tuhh.de/LBS_WEB/j_spring_security_logout');
+      // Argh, with something like alert after the src change it works, timeout
+      // etc. does not. Ok, fix this later, already solved this some time ago somewhere else...
+      // Problem is most likely ajax timing like for fix_sfx
+      // correct way would be like https://api.jquery.com/ajaxSuccess/ or https://stackoverflow.com/a/9865124
+      alert('Logged off');
+    }
+      
+    // Add generic function as close action if modal_iframe_href is used
+    if (modal_iframe_href !== undefined) {
+      Lightbox.addCloseAction(closeModalIframe);
+    }
+      
+    // Add special function as close action if loan4 is opened
+    if (force_logoff_loan4 === true) {
+      Lightbox.addCloseAction(closeLoan4);
+    }
+    
+    // 2015-01-27 On clicking input fields in Safari, the modal jumps to top of
+    // the page. This hack prevents this
+    // https://github.com/twbs/bootstrap/issues/9023#issuecomment-27701089
+    // @todo: Check if a new version of bootstrap fixes this problem and remove!
+    if( navigator.userAgent.match(/iPhone|iPad|iPod/i) ) {
+      $('.modal').on('show.bs.modal', function() {
+        // Position modal absolute and bump it down to the scrollPosition
+        $(this)
+          .css({
+            position: 'absolute',
+            marginTop: $(window).scrollTop() + 'px',
+            bottom: 'auto'
+          });
+
+        // Position backdrop absolute and make it span the entire page
+        //
+        // Also dirty, but we need to tap into the backdrop after Boostrap
+        // positions it but before transitions finish.
+        //
+        setTimeout( function() {
+          $('.modal-backdrop').css({
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: Math.max(
+              document.body.scrollHeight, document.documentElement.scrollHeight,
+              document.body.offsetHeight, document.documentElement.offsetHeight,
+              document.body.clientHeight, document.documentElement.clientHeight
+            ) + 'px'
+          });
+        }, 0);
+      });
+    }
+
+    
+    // Show everything
+    $('#modal').modal('show');
+    });
+});
