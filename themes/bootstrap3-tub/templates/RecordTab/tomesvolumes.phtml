@@ -1,0 +1,16 @@
+<?php
+    // Set page title.
+    $this->headTitle($this->translate('Tomes/Volumes') . ': ' . $this->driver->getBreadcrumb());
+
+    // Set up standard record scripts:
+    //$this->headScript()->appendFile("check_item_statuses.js");    // hmm, loading it in record/view.phtml
+    //$this->inlineScript()->appendFile('check_item_statuses.js');
+?>
+
+<div class="data-modal_postload_ajax">
+<i class="tub_loading fa fa-circle-o-notch fa-spin"></i> <?=$this->transEsc('Loading')?>...
+</div>
+
+<script type="text/javascript">
+get_volume_tab("<?=$this->driver->getUniqueId()?>");
+</script>
