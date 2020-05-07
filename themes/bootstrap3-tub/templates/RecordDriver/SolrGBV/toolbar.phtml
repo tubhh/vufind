@@ -1,0 +1,47 @@
+<?php
+  $addThis = $this->addThis();
+  if (!empty($addThis)) {
+    $this->headScript()->appendFile('https://s7.addthis.com/js/250/addthis_widget.js?pub=' . urlencode($addThis));
+  }
+
+  // Set up some variables for convenience:
+  $id = $this->driver->getUniqueId();
+  $cart = $this->cart();
+  $cartId = $this->driver->getSourceIdentifier() . '|' . $id;
+?>
+<ul class="nav nav-pills hidden-print">
+  <?php if (count($this->driver->getCitationFormats()) > 0): ?>
+    <li><a id="cite-record" class="modal-link" href="<?=$this->url('record-cite', array('id'=>$id)) ?>" title="<?=$this->transEsc('Cite this')?>" rel="nofollow"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Cite this')?></a></li>
+  <?php endif; ?>
+<!--  <li><a id="sms-record" class="modal-link" href="<?=$this->url('record-sms', array('id'=>$id)) ?>" title="<?=$this->transEsc('Text this')?>" rel="nofollow"><i class="fa fa-mobile"></i> <?=$this->transEsc('Text this')?></a></li> -->
+  <li><a id="mail-record" class="modal-link" href="<?=$this->url('record-email', array('id'=>$id)) ?>" title="<?=$this->transEsc('Email this')?>" rel="nofollow"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Email this')?></a></li>
+
+  <li><a id="feedback-record" class="modal-link" href="<?=$this->transEsc('Wp_Feedback_url')?><?=$this->driver->getOpenUrl()?>&gvk_ppn=<?=$this->driver->getUniqueId() ?>" rel="nofollow" target="_blank"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Feedback about this record')?></a></li>
+
+  <?php $exportFormats = $this->export()->getFormatsForRecord($this->driver); ?>
+  <?php if(count($exportFormats) > 0): ?>
+    <li class="dropdown">
+      <a class="export-toggle dropdown-toggle" data-toggle="dropdown" href="<?=$this->recordLink()->getActionUrl($this->driver, 'Export')?>" rel="nofollow"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Export Record') ?></a>
+      <ul class="dropdown-menu" role="menu">
+        <?php foreach ($exportFormats as $exportFormat): ?>
+          <li><a <?php if ($this->export()->needsRedirect($exportFormat)): ?>target="<?=$this->escapeHtmlAttr($exportFormat)?>Main" <?php endif; ?>href="<?=$this->recordLink()->getActionUrl($this->driver, 'Export')?>?style=<?=$this->escapeHtmlAttr($exportFormat)?>" rel="nofollow"><?=$this->transEsc('Export to')?> <?=$this->transEsc($this->export()->getLabelForFormat($exportFormat))?></a></li>
+        <?php endforeach; ?>
+      </ul>
+    </li>
+  <?php endif; ?>
+
+  <?php $account = $this->auth()->getManager(); ?>
+  <?php if($account->isLoggedIn()): ?>
+      <?php if ($this->userlist()->getMode() !== 'disabled'): ?>
+          <li><a id="save-record" class="modal-link" href="<?=$this->recordLink()->getActionUrl($this->driver, 'Save')?>" title="<?=$this->transEsc('Add to favorites')?>" rel="nofollow"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Add to favorites')?></a></li>
+      <?php endif; ?>
+  <?php endif ?>
+  <?php if (!empty($addThis)): ?>
+    <li><a class="addThis addthis_button" href="https://www.addthis.com/bookmark.php?v=250&amp;pub=<?=urlencode($addThis)?>"><i class="tub_lielement fa fa-angle-right"></i> <?=$this->transEsc('Bookmark')?></a></li>
+  <?php endif; ?>
+  <!-- Cart button -->
+    <?php if ($this->cart()->isActive()): ?>
+        <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br/>
+    <?php endif; ?>
+
+</ul>
