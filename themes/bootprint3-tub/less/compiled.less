@@ -1,6 +1,47 @@
 @import "bootprint";
 
 /**
+ * 00 - 04
+ * Overrides for CSS that is not part of Vufind
+ *
+ */
+@import "tub_00_wp-overrides";
+
+
+/**
+ * 05 - 09
+ * Overrides for vanilla Vufind less instructions
+ *
+ * - /srv/www/vufind2/vufind-test/themes/bootprint3-tub/less/bootprint.less
+ * - /srv/www/vufind2/vufind-test/themes/bootstrap3-tub/less/bootstrap.less
+ * Note:    This makes comparison with new versions easier. Yet, the
+ *          this compiles the original + the overrides, but the
+ *          overrides rule. It's maybe not the very best solution.
+ */
+@import "tub_05_overrides_generic_bootprint";
+@import "tub_06_overrides_generic_bootstrap";
+
+
+/**
+ * 10 - 19
+ * Additional classes and some additions to existing classes
+ *
+ */
+@import "tub_10_searchbox";
+@import "tub_11_searchcontrols";
+@import "tub_12_holdingguide";
+
+
+/**
+ * 20 -
+ * Only custom responsiveness modifications
+ *
+ */
+@import "tub_20_responsive";
+
+
+
+/**
  * This file prevents multiple instances of the Bootstrap library from
  * being included by utilizing the theme inheritance feature of Vufind.
  *
