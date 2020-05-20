@@ -1,0 +1,240 @@
+/**
+ * TUB: Customization for a good responsivness experience
+ *
+ * Boostrap Sizes
+ *  xs: Extra small devices (<768px)        search "767" - here menus collapse
+ *  sm: Small devices (>=768px)             search "991"
+ *  md: Desktops (>=992px)                  no customizations
+ *  lg: Large devices Desktops (>=1200px)   no customizations
+ *
+ * Extragröße TUBfind
+ *  "wtub"                                  Search <480px
+ *  (This is the minimum size - works for everything down to 320 (old iphone))
+ *
+ */
+
+
+/* --- Generic --- */
+.container {
+    @media (max-width: 991px) {
+        /*  Between width 767 and 991px (this are Bootstrap sm classes) there is
+            a lot padding/margin.
+            .container (Bootstrap class) is set to 734px, but this is too early
+            BUT WHERE? */
+        width: 95%;
+    }
+    @media (max-width: 767px) {
+        width: 100%;
+    }
+}
+
+
+/* --- Logo and navigation --- */
+header .navbar {
+    padding: 0px 20px 0px 0px;
+    width: 98%;
+    @media (max-width: 991px) {
+        width: 95%;
+    }
+    .navbar-brand {
+        @media (max-width: 991px) {
+            height: 35px;
+            width: 130px;
+        }
+    }
+}
+
+
+/* --- Search box (tabs and input) --- */
+.searchbox {
+    .navbar-left { /* same as #searchForm, but I think it changed in vanilla Vufind already */
+        .nav-tabs {
+            @media (max-width: 767px) {
+                width: 350px;
+                .searchTab  {
+                    width: 170px;
+                }
+            }
+            @media (max-width: 479px) {
+                width:300px;
+                .searchTab  {
+                    width: 145px;
+                } /* 2*145 + 1* 10px padding = 300px; */
+            }
+        }
+        .twitter-typeahead, .search-query {
+            width:350px;
+            @media (max-width: 479px) {
+                width:300px;
+            }
+        }
+        select {
+            @media (max-width: 767px) {
+                margin-top: 4px;
+                display: inline;
+                width: 350px;
+            }
+            @media (max-width: 479px) {
+                width: 270px;
+            }
+        }
+        .search-submit {
+            @media (max-width: 479px) {
+                margin-top: -2px;
+                .search-submit-collapse {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+/* --- Searchtools (sorting) --- */
+.main .container > .row > div {
+    @media (max-width: 767px) {
+        &:not(.sidebar) {
+            margin: 0;
+        }
+    }
+}
+
+/* --- Sidebar collapsing below main content (all screens except search result view - see below) --- */
+.sidebar {
+    @media (max-width: 767px) {
+        margin: 15px 8px;
+        background: none;
+    }
+}
+
+/* --- Sidebar filter; search result (2015-12-26: move it to top as button) --- */
+.sidebar_result {
+    @media (max-width: 767px) {
+        margin: 0;
+        background: none;
+        position: absolute;
+        z-index: 5;
+        #filter-button {
+            border-color: @tub-border-strong;
+            background: transparent;
+            margin-left: 2px;
+            height: 34px;
+            &:hover {
+                background-color: @tub-hover-color;
+            }
+        }
+    }
+}
+
+
+/* --- Result row --- */
+.result {
+    /* --- Left result column (COVER) --- */
+    .left {
+        text-align: left;
+        .recordcover {
+            width: 100px;
+            min-width: 100px;
+            min-height: 150px;
+            max-height: 150px;
+            padding: 0;
+            margin:0;
+            border: 1px solid lightgrey;
+            @media (max-width: 991px) {
+                width: 80px;
+                min-width: 80px;
+                min-height: 120px;
+                max-height: 120px;
+            }
+            @media (max-width: 479px) {
+                width: 70px;
+                min-width: 70px;
+                min-height: 100px;
+                max-height: 100px;
+            }
+        }
+        .tub-resultnumber {
+            position: absolute;
+            bottom: 1px; left: 8px;
+            padding: 3px;
+            background-color: #ffffff;
+            -moz-border-top-right-radius: 10px;
+            border-top-right-radius: 10px;
+            opacity:0.95;
+            min-width: 25px;
+        }
+    }
+    /* --- Middle result column (METADATA) --- */
+    .middle {
+        min-height: 151px;
+        .tub-middle-top {
+            margin-bottom: 40px; /* add enough margin, so .tub-middle-bottom is never overflowed */
+            .tub-bibliographic {
+            }
+            .tub-FUTURE {
+            }
+            
+            @media (max-width: 767px) {
+                /* Test setting tub-middle-bottom to relative instead margin-bottom: 45px; */
+                margin-bottom: auto;
+            }
+        }
+        .tub-middle-bottom {
+            position:absolute;
+            bottom: 0px;
+            width: 100%;
+            @media (max-width: 767px) {
+                position:relative;
+                margin-top: 0.85rem;
+            }
+            .tub-format {
+            }
+            .tub-doi {
+                line-height: 150%;
+                @media (max-width: 767px) {
+                    padding-top: 5px;
+                }
+                .doi_outer span {
+                    @media (max-width: 479px) {
+                        font-size: x-small;
+                    }
+                }
+            }
+            .tub-year {
+            }
+
+        }
+        @media (max-width: 991px) {
+            min-height: 121px;
+        }
+        @media (max-width: 479px) {
+            min-height: 101px;
+        }
+    }
+    /* --- Right result column (SFX & ACTION BUTTONS) --- */
+    .right {
+        min-height: 151px;
+        @media (max-width: 991px) {
+            min-height: auto;
+            margin-top: 20px;
+            display: inline-block;
+            .tub_holdingguide {
+                /* white-space: nowrap; */
+                vertical-align: top;
+                .openUrlControls, .holdlink {
+                    padding-left: 3px;
+                    vertical-align: top;
+                }
+                img {
+                    /* height: 22px; -weird, there is some check for height? Info i appears */
+                }
+                .locationInfox {
+                    margin-right: 25px; /* for if button is shown in a row */
+                }
+                @media (max-width: 479px) {
+                    margin-left: 0px;
+                }
+            }
+        }
+    }
+}

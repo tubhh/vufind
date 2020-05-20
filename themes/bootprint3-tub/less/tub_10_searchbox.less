@@ -1,0 +1,137 @@
+/**
+ * TUB: Overrides and custom for anything in .searchbox
+ *
+ * This file contains only classes that override existing vufind classes from
+ * bootprint.less
+ * 
+ */
+
+
+/* --- START Modding Search Tabs --- */
+/* searchTab == .nav-tabs li below */
+.searchTab {
+    font-size: 1.2em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: @tub-border-faint;
+    color: #ffffff;
+    white-space: nowrap;
+    width: 170px;
+    > a {
+        background: transparent none repeat scroll 100% 0px;
+        color: @tub-link;
+        float: left;
+        line-height: 2em;
+        padding-right: 10px;
+        text-decoration: none;
+        width: 100%;
+        text-align: center;
+        border: none !important;
+        > .matches {
+           font-size: 14px;
+           padding-top: 12px;
+           font-weight: normal;
+        }
+    }
+    &:not(.active) {
+        &:hover {
+            cursor: pointer;
+            background-color: @tub-hover-color;
+            >a {
+                color: #ffffff;
+            }
+        }
+    }
+    &.books {
+        margin-right: 10px;
+        border-top-right-radius: 35px;
+        border-top-left-radius: 4px;
+    }
+    &.articles {
+        border-top-left-radius: 35px;
+        border-top-right-radius: 4px;
+    }
+    &.active {
+        background-color: @tub-active-color;
+    }
+}
+
+
+
+/* --- START modding search input --- */
+/* --- Search input --- */
+#searchForm_lookfor, #searchForm_type {
+    border-color: @tub-border-faint;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    padding-right: 20px; /* little space for the "delete"-x */
+}
+
+/* --- Clearable icon ---   @see themes/bootstrap3-tub/js/common.js --> "// Clearable input (search)" */
+.clearable{
+    background: #fff url(data:image/gif;base64,R0lGODlhBwAHAIAAAP///5KSkiH5BAAAAAAALAAAAAAHAAcAAAIMTICmsGrIXnLxuDMLADs=) no-repeat right -10px center;
+    border: 1px solid @tub-border-faint;
+    border-radius: 3px;
+    padding: 3px 18px 3px 4px; /* Use the same right padding (18) in jQ! */
+    transition: background 0.4s;
+    &.x {
+        background-position: right 5px center;
+    }
+    &.onX {
+        cursor: pointer;
+    }
+}
+/* --- END modding search input --- */
+
+
+
+/* --- Submit button and retain filter checkbox --- */
+.search-submit {
+    padding: 5px;
+    vertical-align: middle;
+    background-color: @tub-selectable-color;
+    border: 1px solid @tub-border-strong;
+    font-weight: bold;
+}
+.search-retainfilter {
+    padding: 4px;
+}
+
+
+
+[name=searchForm] {
+/*--  margin:6px 8px 8px;
+--  padding:0;
+--  & .btn-primary,& .form-control,
+--  .template-dir-eds.template-name-advanced & .clear-btn,
+--  .template-dir-search.template-name-advanced & .clear-btn {
+--    font-size:14px;
+--    height:32px;
+--    padding:5px 8px;
+--    &[multiple] {height:auto} 
+--  } */
+    .nav-tabs {
+        border-bottom:0;
+        padding: 0;
+        margin: 0;
+        li {
+            a {
+/*              margin-bottom:-1px;
+                border-bottom:0;
+                padding-bottom:6px; */
+                &:hover {
+/*                  background:none;
+                    border-color:transparent; */
+                    text-decoration:none;
+                }
+            }
+            &.active a, &.active a:hover {
+                background: transparent none repeat scroll 0 0;
+                border-bottom: 0 none;
+                border-color: none;
+            }
+        }
+    }
+}
+/* --- END Modding Search Tabs --- */
+
