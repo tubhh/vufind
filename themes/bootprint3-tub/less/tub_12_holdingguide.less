@@ -1,0 +1,143 @@
+/**
+ * TUB: Everything for the holding guide
+ *      > Action-Buttons
+ *      > Information icons
+ *      > Modal associated with Action & Information
+ *      > DOI-Link
+ *
+ */
+
+
+
+/* --- Container for action buttons --- */
+.tub_holdingguide {
+  /* customize Position of buttons span */
+}
+
+
+
+/* --- Small spacing under SFX-Button (if available) --- */
+.imagebased {margin-bottom: 10px;}
+
+
+
+/* --- Action buttons --- */
+.holdlink {
+    background-color: @tub-selectable-color;
+    color: #000;
+    border: thin solid @tub-border-strong;
+    border-radius: 3px;
+    opacity: 1;
+    display: inline-block;
+    margin: 0px 0 10px 2px;
+    padding: 0px;
+    width: 118px;
+    font-size: 13px;
+    text-align: left;
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+        cursor: pointer;
+        background-color: @tub-hover-color;
+        color: #ffffff !important;
+    }
+    &:active {
+        text-decoration: none;
+    }
+    &:visited {
+        text-decoration: none;
+    }
+    > i {
+        padding: 3px;
+        background-color: @tub-selectable-color;
+        color: @tub-icon;
+        font-size: 15px;
+        /* Customize button for single option */
+        &.holdelectronic   {}
+        &.holdshelf        {}
+        &.holdorder        {}
+        &.holdreserve      {}
+        &.holdrefonly      {}
+        &.holdil           {}
+        &.holdwish         {}
+        &.holdacquired     {}
+    }
+}
+
+
+
+/* --- Info icons (modal) --- */
+i {
+    &.tub_fa-info_p {
+        margin-top: 4px;
+        margin-bottom: 0;
+        padding-left: 2px;
+        cursor: pointer;
+    }
+    /* info icon sfx-volltext (ganz oben) */
+    &.tub_fa-info_e {
+        margin-top: 4px;
+        padding-left: 4px;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+    /* info icon facet */
+    &.tub_fa-info_f {
+       padding-left: 2px;
+       cursor: pointer;
+    }
+    /* info icon print */
+    &.fa-info-circle {color: @tub-selectable-color-secondary;}
+}
+
+
+
+/* --- DOI "button" --- */
+.doi_outer  {
+    font-size: small;
+    >.doi_prefix {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        background-color: @tub-icon;
+        color: #ffffff;
+        padding: 3px 8px;
+        border-right: thin solid @tub-border-strong;
+    }
+    >.doi_link   {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color: @tub-selectable-color;
+        padding: 3px 4px;
+    }
+}
+
+
+/* --- Modal and modal content --- */
+.modal-dialog {
+    z-index:1050;
+}
+/* ORDENTLICH MACHEN AB HIER */
+.data-modal_postload_ajax table {
+    tr.volume_entry:not(:first-child) > td {
+        border-top: 1px solid @tub-border-strong;
+    }
+    th {
+        font-weight: bold;
+    }
+    td {
+        border: none;
+        padding: 5px 10px 2px 2px;
+        a {
+            color: #003366;
+        }
+    }
+    .holding_ajax_table {
+        background-color: #F8F8F8; width: 90%;
+        th {
+            font-weight: bolder;
+        }
+        .holding_ajax_table_status  {
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+/**
+ * TUB: Override for anything in .search-controls
+ *
+ */
+
+/* --- Area below search form --- */
+.search-controls  {
+    background-image: linear-gradient(to top, @tub-gradient-from, @tub-gradient-to);
+    >.col-sm-6 {
+        width: 100%;
+        padding: 0;
+    }
+    &.row {
+        margin: 0px -7px;
+    }
+}
+
+
+/* Result sorting; hmm, this toggle looks nicer: http://www.bootply.com/92189 */
+.tub_btn-group {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #fff;
+    padding: 3px 15px;
+    border-bottom: 2px dotted @tub-border-strong;
+    button {
+        min-width: 30px;
+        margin: 0;
+        padding: 4px;
+        border: 1px solid @tub-border-strong;
+        background-color: #fff;
+        &.active {
+            background-color: @tub-active-color;
+            color: #000000;
+            font-weight: normal;
+            &:hover {
+                cursor: text;
+            }
+        }
+        &:not(.active) {
+            &:hover {
+                background-color: @tub-hover-color;
+            }
+        }
+    }
+}

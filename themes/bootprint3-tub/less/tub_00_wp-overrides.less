@@ -1,0 +1,55 @@
+/**
+ * TUB: Override for wordpress theme
+ *
+ * Included in: themes/bootstrap3-tub/templates/layout/layout.phtml
+ * Via:         https://www.tub.tuhh.de/ext/wp-frame/index.php
+ *
+ * Fixes small problems
+ *
+ */
+/* Menu width */
+#access ul ul a   {width: 188px !important;}
+
+/* TZ: z-index: spezifisches Wordpress-Theme (weit über 1000 scheint zmdst. FF zu ignorieren*/
+.sub-menu {z-index: 1000 !important}
+#branding {z-index: 1000 !important}
+
+/* Right header */
+#apbranding-box {
+    /* language switch */
+    .msls {
+        width: auto !important;
+    }
+    .tubsearch {
+        display: none;
+    }
+    /* logo */
+    .tublogo {
+        width: 170px !important;
+        @media (max-width: 991px) {
+            width: 120px !important;
+        }
+    }
+}
+
+/* Footer - wow, lot's and lot's of css...  */
+#supplementary          {padding: 0 !important; width: 100% !important;}
+#supplementary > div    {width: 33% !important;}
+#supplementary.three .widget-area           {margin-right: 0 !important;}
+#supplementary.three .widget-area #second   {float: right !important;}
+.textwidget > div {padding: 0 !important;}
+.linklist    {padding: 0 !important;}
+.linklist ul {margin-left: 0 !important;}
+.social     {
+    margin-top: 10px;
+    >img {
+        width: 33px !important;
+    }
+    @media (max-width: 479px) {
+        float: right !important;
+    }
+}
+
+ul.nav-tabs {
+    margin-left: 0;
+}

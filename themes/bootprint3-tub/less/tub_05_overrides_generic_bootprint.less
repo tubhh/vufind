@@ -1,0 +1,133 @@
+/**
+ * BOOTPRINT-TUB-Override for "Vanilla Vufind" overrides in
+ * themes/bootprint3-tub/less/bootprint.less
+ *
+ * This file contains only classes that override existing vufind clases from
+ * bootprint.less
+ * 
+ */
+
+/* --- Logo --- */
+header {
+    .navbar {
+        .navbar-brand {
+            background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
+            height: 53px;
+            width: 195px;
+        }
+    }
+    .searchbox {
+        background: transparent linear-gradient(to bottom, #FFF, #EEE) repeat scroll 0% 0%;
+    }
+    /* Neu TZ 2020-05-13 */
+    .nav {
+        li    {
+            a {
+                &:focus,
+                &:hover {
+                    outline: none;
+                }
+            }
+        }
+    }
+    /* neu Ende */
+}
+
+
+/* --- Logo --- */
+.main .container {
+    padding: 0;
+    /* Perfectly dock between search area and result/filter area a) */
+    >.row {
+        padding-top: 0;
+    }
+}
+
+
+/* --- Search Home --- */
+.searchHomeContent {
+    width: auto;
+    .well {
+        background: transparent linear-gradient(to bottom, #FFF, #EEE) repeat scroll 0% 0%;
+        border: none;
+        padding: 0;
+    }
+}
+
+
+/* --- Any row --- */
+.row {
+    /* this is all rows, there is no class top-row anyway?! */
+    &:not(.top-row) {
+        padding: 0;
+        margin: 0;
+    }
+    /* Perfectly dock between search area and result/filter area a) */
+    &.search-controls {
+        padding: 0 0 3px 4px;
+    }
+    &.result {
+        padding: 12px 6px;
+        margin: 0 4px;
+        border-bottom: 2px dotted @tub-border-strong;
+        &:nth-child(even) {
+            background:#ffffff;
+        }
+        a {
+            color: @tub-link;
+            &:hover {
+                text-decoration: none; color: #09f;
+            }
+            // Custom tub class for (some) serials
+            &.nolink {
+                color: #000000;
+                &:hover {
+                    cursor: text;
+                }
+            }
+        }
+    }
+}
+
+
+
+/* --- Sidebar ---*/
+.sidebar {
+    background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
+    >#filter-sidebar {
+        /* (if collapsed to nav menu it looks bad otherwise) */
+        background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
+    }
+    .list-group-item {
+        &.active {
+            background: @tub-active-color;
+            border-color: @tub-active-color;
+            color:#555;
+            &:hover {background: @tub-hover-color; border-color: @tub-hover-color; color: #ffffff;}
+            .badge {color:@tub-active-color;}
+        }
+    }
+    label {
+        margin-left: 0;
+    }
+}
+
+
+
+/* --- Pagination --- */
+.pagination {
+    & > .active {
+        & > a, & > span, & > a:hover, & > span:hover, & > a:focus, & > span:focus {
+            color: #000000;
+            background:@tub-active-color none repeat scroll 0 0;
+        }
+    }
+}
+
+
+
+/* --- Footer --- */
+footer {
+    margin-top: 10px;
+    ul {padding-left:0px}
+}
