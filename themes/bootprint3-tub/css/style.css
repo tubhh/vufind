@@ -2384,7 +2384,7 @@ p.comment-form-comment {
 	.custom-background {
 	    /* background-color: #a59990 !important; */
 	    /* background-image: url('images/bg/DSC_8555a-2000x4.jpg') !important; */
-	    background: url("/vufind/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
+	    background: url("/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
 	}
 .col50 {
     width:46%;
@@ -2397,7 +2397,7 @@ p.comment-form-comment {
 	.custom-background {
 	    /* background-color: #a59990 !important; */
 	    /*background-image: url('images/bg/DSC_8555a-1280x4.jpg') !important; */
-	    background: url("/vufind/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
+	    background: url("/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
 	}
 }
 
@@ -2406,7 +2406,7 @@ p.comment-form-comment {
 	.custom-background {
 	    /* background-color: #a59990 !important; */
 	    /*background-image: url('images/bg/DSC_8555a-1024x4.jpg') !important; */
-	    background: url("/vufind/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
+	    background: url("/themes/bootprint3-tub/images/bg-tile.jpg") repeat fixed 50% 0% rgb(221, 221, 221);
 	}
 	
 	#apbranding-box {

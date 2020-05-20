@@ -27,7 +27,7 @@ $(document).ready(function() {
         var queryString = $(this).data('query');
         var lookfor = $(this).data('lookfor');
         jQuery.ajax({
-            url:'/vufind/AJAX/JSON?method=getResultCount',
+            url:'/AJAX/JSON?method=getResultCount',
             dataType:'json',
             data:{lookfor:lookfor, querystring:queryString, source:searchClass},
             success:function(data, textStatus){

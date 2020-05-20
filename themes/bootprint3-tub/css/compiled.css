@@ -12450,12 +12450,6 @@ ul.nav-tabs {
  * 
  */
 /* --- Logo --- */
-header {
-  /* Neu TZ 2020-05-13 */
-
-  /* neu Ende */
-
-}
 header .navbar .navbar-brand {
   background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
   height: 53px;
@@ -12464,10 +12458,12 @@ header .navbar .navbar-brand {
 header .searchbox {
   background: transparent linear-gradient(to bottom, #ffffff, #eeeeee) repeat scroll 0% 0%;
 }
-header .nav li a:focus,
-header .nav li a:hover {
+/* Neu TZ 2020-05-13 */
+.nav li a:focus,
+.nav li a:hover {
   outline: none;
 }
+/* neu Ende */
 /* --- Logo --- */
 .main .container {
   padding: 0;
