@@ -93,6 +93,31 @@ function create_modal(id, loc_code, link_title, modal_title, modal_body, iframe_
     iframe = ' data-iframe="'+iframe_src+'" ';
   }
 
+  modal = '<a href="#" id="info-'+id+modal_suffix+'" rel="tooltip" title="' + link_title + '" data-lightbox class="locationInfoxx '+href_class+' modal-link hidden-print"><i class="fa '+icon+' '+icon_class+'"></i> ' + text + '<span data-title="' + modal_title + '" data-location="' + loc_code +'" '+iframe+' class="modal-dialog hidden">'+modal_body+modal_foot+'</span></a>';
+
+  return modal;
+}
+
+function create_volume_button(id, loc_code, link_title, modal_title, modal_body, iframe_src, modal_foot, icon_class, icon, text, modal_suffix = '') {
+  // Set function defaults if empty
+  iframe_src = iframe_src || '';
+  modal_foot = modal_foot || '';
+  icon_class = icon_class || 'tub_fa-info_p';
+  icon = icon || 'fa-info-circle';
+  text = text || '';
+
+  var href_class = '';
+  var modal;
+  var iframe = '';
+
+  // If text is given, add our Button class. Otherwise it's just an info icon
+  if (text != '') href_class = 'holdlink';
+
+
+  if (iframe_src != '') {
+    iframe = ' data-iframe="'+iframe_src+'" ';
+  }
+
   modal = '<a href="#" id="info-'+id+modal_suffix+'" rel="tooltip" title="' + link_title + '" data-lightbox class="locationInfox '+href_class+' modal-link hidden-print"><i class="fa '+icon+' '+icon_class+'"></i> ' + text + '<span data-title="' + modal_title + '" data-location="' + loc_code +'" '+iframe+' class="modal-dialog hidden">'+modal_body+modal_foot+'</span></a>';
 
   return modal;
@@ -107,7 +132,7 @@ function create_paia_modal(id, loc_code, link_title, modal_title, modal_body, hr
   // If text is given, add our Button class. Otherwise it's just an info icon
   if (text != '') href_class = 'holdlink';
 
-  modal = '<div><a class="locationInfox holdlink modal-link hidden-print" rel="tooltip" title="' + link_title + '" data-lightbox href="'+href+'"><i class="fa '+icon+' '+icon_class+'"></i>&nbsp;'+text+'</a><span data-title="' + modal_title + '" data-location="' + loc_code +'" class="modal-dialog hidden">'+modal_body+modal_foot+'</span></div>';
+  modal = '<div><a class="locationInfoxx holdlink modal-link hidden-print" rel="tooltip" title="' + link_title + '" data-lightbox href="'+href+'"><i class="fa '+icon+' '+icon_class+'"></i>&nbsp;'+text+'</a><span data-title="' + modal_title + '" data-location="' + loc_code +'" class="modal-dialog hidden">'+modal_body+modal_foot+'</span></div>';
 
   return modal;
 }
@@ -249,7 +274,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
             loc_modal_button_last5years = '';
             title = loc_modal_body+ '\n' + VuFind.translate('loc_modal_Title_refonly_generic');
             if (loc_abbr == 'LS1' || loc_abbr == 'LS2') {
-                loc_modal_button_last5years = create_modal(id = result.id,
+                loc_modal_button_last5years = create_volume_button(id = result.id,
                                             loc_code    = loc_abbr,
                                             link_title  = title,
                                             modal_title = loc_modal_title,
@@ -261,7 +286,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
                                             text        = loc_abbr + ' ' + loc_callno);
             }
             // Add button "See volumes"
-            loc_modal_button_volumes = create_modal(id = result.id,
+            loc_modal_button_volumes = create_volume_button(id = result.id,
                                           loc_code    = 'Multi',
                                           link_title  = VuFind.translate('loc_modal_Title_multi'),
                                           modal_title = VuFind.translate('loc_modal_Title_multi'),
@@ -289,7 +314,6 @@ VuFind.register('itemStatuses', function ItemStatuses() {
 
             return true;
           }
-
             var bestOption = '';
             var fallbackOption = ''; // we need this, because the sfx button comes from another source - and we have to check, if it exists before adding buttons in some cases
             switch(result.patronBestOption) {
@@ -376,7 +400,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
                 break;
             case 'see_copies':
                 // Add button "See copies"
-                loc_modal_button_vols = create_simple_button(id = result.id,
+                loc_modal_button_vols = create_volume_button(id = result.id,
                                           loc_code    = 'Copies',
                                           link_title  = VuFind.translate('loc_btn_Hover_holdings'),
                                           modal_title = VuFind.translate('loc_modal_Title_holdings'),
@@ -423,7 +447,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
               }
               break;
             case 'shelf': //fa-hand-lizard-o is nice too (but only newest FA)
-              loc_modal_button = create_modal(id          = result.id,
+              loc_modal_button = create_volume_button(id          = result.id,
                                             loc_code    = loc_abbr,
                                             link_title  = loc_modal_body,
                                             modal_title = loc_modal_title,
@@ -849,10 +873,10 @@ $(document).ready(function() {
     else {
       // Got shelf location
       var roomMap = [];
-      roomMap['LS1'] = path + '/themes/bootstrap3-tub/images/tub/LS1_main.jpg';
-      roomMap['LS2'] = path + '/themes/bootstrap3-tub/images/tub/LS2_main.jpg';
-      roomMap['LBS'] = path + '/themes/bootstrap3-tub/images/tub/LS1_lbs.jpg';
-      roomMap['SEM'] = path + '/themes/bootstrap3-tub/images/tub/LS2_sem.jpg';
+      roomMap['LS1'] = VuFind.path + '/themes/bootstrap3-tub/images/tub/LS1_main.jpg';
+      roomMap['LS2'] = VuFind.path + '/themes/bootstrap3-tub/images/tub/LS2_main.jpg';
+      roomMap['LBS'] = VuFind.path + '/themes/bootstrap3-tub/images/tub/LS1_lbs.jpg';
+      roomMap['SEM'] = VuFind.path + '/themes/bootstrap3-tub/images/tub/LS2_sem.jpg';
       additional_content = (roomMap[loc]) ? '<img src="'+ roomMap[loc] +'" />' : '';
 
       //This loads a holding list, only really useful for "Multi"-case

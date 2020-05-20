@@ -50,9 +50,9 @@ label {display: inline;}
 }
 
 /* Bookbag toogle inline */
-#bookbag-menu .tub_bookbag_on  {color: #576ca0; font-size:small;}
+#bookbag-menu .tub_bookbag_on  {color: #576ca0; font-size:small; font: 15px Helvetica, Arial, "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
 /*#bookbag-menu .tub_bookbag_off {color: #a8ddf0; font-size:small;}*/
-#bookbag-menu .tub_bookbag_off {color: #576ca0; font-size:small;}
+#bookbag-menu .tub_bookbag_off {color: #576ca0; font-size:small; font: 15px Helvetica, Arial, "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
 
 /** class to make stuff "invisible" but still readable by screen readers
  * maybe use .offcanvas ?!?
@@ -249,10 +249,11 @@ body a, body .btn-link {
     z-index: 5;
 }
 */
+/*
 .searchForm .nav-tabs li.active a, .searchForm .nav-tabs li.active a:hover {
     z-index: 1000;
 }
-
+*/
 body {
     background: url("../images/tub/bg-tile.jpg") repeat fixed 50% 0 rgb(221, 221, 221);
     margin: 2.5em 0;
@@ -394,7 +395,7 @@ body {
     margin: 0 4px;
     border-bottom: 2px dotted #aaa;
 }
-*/
+
 .searchTab {
     font-size:1.2em;
     border-width: 1px;
@@ -435,3 +436,4 @@ li.active {
     text-align: center;
     border: none !important;
 }
+*/
