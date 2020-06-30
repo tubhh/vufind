@@ -109,6 +109,19 @@ $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
         <?=$this->render('record/cart-buttons.phtml', ['id' => $this->driver->getUniqueId(), 'source' => $this->driver->getSourceIdentifier()]); ?><br/>
     <?php endif; ?>
 
+  <?php $doi = $this->driver->tryMethod('getCleanDOI'); if (!empty($doi)): ?>
+                <?php
+                  $patterns[0] = '/\./';    $replacements[0] = '.&#8203;';
+                  $patterns[1] = '/-/';     $replacements[1] = '-&#8203;';
+                  $patterns[2] = '/\//';    $replacements[2] = '/&#8203;';
+                  $doi_br = preg_replace($patterns, $replacements, $doi);
+                ?>
+            <?php $doi_span = 12; $doi_pull = 0; ?>
+          <div class="col-xs-12 col-sm-<?=$doi_span?> col-sm-pull-<?=$doi_pull?> tub-doi">
+                <span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/<?=$doi?>" rel="tooltip" title="<?=$doi?>"><?=$doi_br?></a></span></span>
+          </div>
+  <?php endif; ?>
+
 <?php /*
       <?php if(!$this->driver->isCollection()): ?>
         <?php if ($snippet = $this->driver->getHighlightedSnippet()): ?>
