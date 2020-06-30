@@ -80,6 +80,13 @@ class Results extends \VuFind\Search\Base\Results
      */
     protected $cursorMark = null;
 
+    protected $solrRealtime = null;
+
+    public function getSolrRealtime() {
+        return $this->solrRealtime;
+    }
+
+
     /**
      * Hierarchical facet helper
      *
@@ -187,6 +194,7 @@ class Results extends \VuFind\Search\Base\Results
 
         $this->responseFacets = $collection->getFacets();
         $this->resultTotal = $collection->getTotal();
+        $this->solrRealtime = $collection->getSolrQTime();
 
         // Process spelling suggestions
         $spellcheck = $collection->getSpellcheck();
