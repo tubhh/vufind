@@ -11424,7 +11424,7 @@ i.fa-visual,
   width: 16px;
 }
 .fa-x {
-  background-image: url("../../bootprint3/images/icons/page_white.png");
+  background-image: url("../../../bootprint3/images/icons/page_white.png");
 }
 /**
  * Toolbar Button Icons
@@ -11434,325 +11434,325 @@ i.fa-visual,
 }
 .btn-type-add::before,
 i.fa-plus-circle {
-  background-image: url("../../bootprint3/images/icons/add.png");
+  background-image: url("../../../bootprint3/images/icons/add.png");
 }
 .btn-type-cite::before,
 i.fa-asterisk {
-  background-image: url("../../bootprint3/images/icons/list.png");
+  background-image: url("../../../bootprint3/images/icons/list.png");
 }
 .btn-type-delete::before,
 i.fa-trash,
 i.fa-trash-o {
-  background-image: url("../../bootprint3/images/icons/bin.png");
+  background-image: url("../../../bootprint3/images/icons/bin.png");
 }
 .btn-type-email::before,
 i.fa-email,
 i.fa-envelope,
 i.fa-envelope-o {
-  background-image: url("../../bootprint3/images/icons/email.png");
+  background-image: url("../../../bootprint3/images/icons/email.png");
 }
 .btn-type-empty::before,
 i.fa-close {
-  background-image: url("../../bootprint3/images/icons/cross.png");
+  background-image: url("../../../bootprint3/images/icons/cross.png");
 }
 .btn-type-export::before,
 i.fa-external-link {
-  background-image: url("../../bootprint3/images/icons/link_go.png");
+  background-image: url("../../../bootprint3/images/icons/link_go.png");
 }
 .btn-type-minus::before,
 i.fa-minus-circle,
 i.fa-minus-sign {
-  background-image: url("../../bootprint3/images/icons/delete.png");
+  background-image: url("../../../bootprint3/images/icons/delete.png");
 }
 .btn-type-phone::before,
 i.fa-mobile {
-  background-image: url("../../bootprint3/images/icons/phone.png");
+  background-image: url("../../../bootprint3/images/icons/phone.png");
 }
 .btn-type-print::before,
 i.fa-print {
-  background-image: url("../../bootprint3/images/icons/printer.png");
+  background-image: url("../../../bootprint3/images/icons/printer.png");
 }
 .btn-type-save::before,
 i.fa-star {
-  background-image: url("../../bootprint3/images/icons/star.png");
+  background-image: url("../../../bootprint3/images/icons/star.png");
 }
 /**
  * Other FontAwesome overrides
  */
 i.fa-archive {
-  background-image: url("../../bootprint3/images/icons/package.png");
+  background-image: url("../../../bootprint3/images/icons/package.png");
 }
 i.fa-atlas {
-  background-image: url("../../bootprint3/images/icons/map.png");
+  background-image: url("../../../bootprint3/images/icons/map.png");
 }
 i.fa-bell {
-  background-image: url("../../bootprint3/images/icons/bell.png");
+  background-image: url("../../../bootprint3/images/icons/bell.png");
 }
 i.fa-book {
-  background-image: url("../../bootprint3/images/icons/book.png");
+  background-image: url("../../../bootprint3/images/icons/book.png");
 }
 i.fa-bookbag-add {
-  background-image: url("../../bootprint3/images/icons/bookbag_add.png");
+  background-image: url("../../../bootprint3/images/icons/bookbag_add.png");
 }
 i.fa-bookbag-delete {
-  background-image: url("../../bootprint3/images/icons/bookbag_delete.png");
+  background-image: url("../../../bootprint3/images/icons/bookbag_delete.png");
 }
 i.fa-bookbag-empty {
-  background-image: url("../../bootprint3/images/icons/bookbag_empty.png");
+  background-image: url("../../../bootprint3/images/icons/bookbag_empty.png");
 }
 i.fa-bookmark {
-  background-image: url("../../bootprint3/images/icons/bookmark_add.png");
+  background-image: url("../../../bootprint3/images/icons/bookmark_add.png");
 }
 i.fa-braille {
-  background-image: url("../../bootprint3/images/icons/page_red.png");
+  background-image: url("../../../bootprint3/images/icons/page_red.png");
 }
 i.fa-cancel-all-holds {
-  background-image: url("../../bootprint3/images/icons/holdCancelAll.png");
+  background-image: url("../../../bootprint3/images/icons/holdCancelAll.png");
 }
 i.fa-cancel-all-storage-retrieval-requests {
-  background-image: url("../../bootprint3/images/icons/holdCancelAll.png");
+  background-image: url("../../../bootprint3/images/icons/holdCancelAll.png");
 }
 i.fa-cancel-holds {
-  background-image: url("../../bootprint3/images/icons/holdCancel.png");
+  background-image: url("../../../bootprint3/images/icons/holdCancel.png");
 }
 i.fa-cancel-storage-retrieval-requests {
-  background-image: url("../../bootprint3/images/icons/holdCancel.png");
+  background-image: url("../../../bootprint3/images/icons/holdCancel.png");
 }
 i.fa-cdrom {
-  background-image: url("../../bootprint3/images/icons/cd.png");
+  background-image: url("../../../bootprint3/images/icons/cd.png");
 }
 i.fa-chart {
-  background-image: url("../../bootprint3/images/icons/chart_bar.png");
+  background-image: url("../../../bootprint3/images/icons/chart_bar.png");
 }
 i.fa-chipcartridge {
-  background-image: url("../../bootprint3/images/icons/server.png");
+  background-image: url("../../../bootprint3/images/icons/server.png");
 }
 i.fa-collage {
-  background-image: url("../../bootprint3/images/icons/pictures.png");
+  background-image: url("../../../bootprint3/images/icons/pictures.png");
 }
 i.fa-disccartridge {
-  background-image: url("../../bootprint3/images/icons/cd.png");
+  background-image: url("../../../bootprint3/images/icons/cd.png");
 }
 i.fa-drawing {
-  background-image: url("../../bootprint3/images/icons/photo.png");
+  background-image: url("../../../bootprint3/images/icons/photo.png");
 }
 i.fa-ebook {
-  background-image: url("../../bootprint3/images/icons/book_addresses.png");
+  background-image: url("../../../bootprint3/images/icons/book_addresses.png");
 }
 i.fa-edit {
-  background-image: url("../../bootprint3/images/icons/edit.png");
+  background-image: url("../../../bootprint3/images/icons/edit.png");
 }
 i.fa-electronic {
-  background-image: url("../../bootprint3/images/icons/mouse.png");
+  background-image: url("../../../bootprint3/images/icons/mouse.png");
 }
 i.fa-exchange {
-  background-image: url("../../bootprint3/images/icons/arrow_refresh.png");
+  background-image: url("../../../bootprint3/images/icons/arrow_refresh.png");
 }
 i.fa-filmstrip {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-flag {
-  background-image: url("../../bootprint3/images/icons/flag_red.png");
+  background-image: url("../../../bootprint3/images/icons/flag_red.png");
 }
 i.fa-flashcard {
-  background-image: url("../../bootprint3/images/icons/table_lightening.png");
+  background-image: url("../../../bootprint3/images/icons/table_lightening.png");
 }
 i.fa-floppydisk {
-  background-image: url("../../bootprint3/images/icons/disk.png");
+  background-image: url("../../../bootprint3/images/icons/disk.png");
 }
 i.fa-globe {
-  background-image: url("../../bootprint3/images/icons/world.png");
+  background-image: url("../../../bootprint3/images/icons/world.png");
 }
 i.fa-grid {
-  background-image: url("../../bootprint3/images/icons/view_grid.png");
+  background-image: url("../../../bootprint3/images/icons/view_grid.png");
 }
 i.fa-heart {
-  background-image: url("../../bootprint3/images/icons/heart.png");
+  background-image: url("../../../bootprint3/images/icons/heart.png");
 }
 i.fa-home {
-  background-image: url("../../bootprint3/images/icons/house.png");
+  background-image: url("../../../bootprint3/images/icons/house.png");
 }
 i.fa-inbox {
-  background-image: url("../../bootprint3/images/icons/box.png");
+  background-image: url("../../../bootprint3/images/icons/box.png");
 }
 i.fa-journal {
-  background-image: url("../../bootprint3/images/icons/book.png");
+  background-image: url("../../../bootprint3/images/icons/book.png");
 }
 i.fa-kit {
-  background-image: url("../../bootprint3/images/icons/briefcase.png");
+  background-image: url("../../../bootprint3/images/icons/briefcase.png");
 }
 i.fa-leaf,
 .fa-sitemap {
-  background-image: url("../../bootprint3/images/icons/treeCurrent.png");
+  background-image: url("../../../bootprint3/images/icons/treeCurrent.png");
 }
 i.fa-list {
-  background-image: url("../../bootprint3/images/icons/view_list.png");
+  background-image: url("../../../bootprint3/images/icons/view_list.png");
 }
 i.fa-list-alt,
 i.fa-export {
-  background-image: url("../../bootprint3/images/icons/application_add.png");
+  background-image: url("../../../bootprint3/images/icons/application_add.png");
 }
 i.fa-lock {
-  background-image: url("../../bootprint3/images/icons/lock.png");
+  background-image: url("../../../bootprint3/images/icons/lock.png");
 }
 i.fa-manuscript {
-  background-image: url("../../bootprint3/images/icons/script.png");
+  background-image: url("../../../bootprint3/images/icons/script.png");
 }
 i.fa-map {
-  background-image: url("../../bootprint3/images/icons/map.png");
+  background-image: url("../../../bootprint3/images/icons/map.png");
 }
 i.fa-microfilm {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-motionpicture {
-  background-image: url("../../bootprint3/images/icons/television.png");
+  background-image: url("../../../bootprint3/images/icons/television.png");
 }
 i.fa-musicalscore {
-  background-image: url("../../bootprint3/images/icons/music.png");
+  background-image: url("../../../bootprint3/images/icons/music.png");
 }
 i.fa-musicrecording {
-  background-image: url("../../bootprint3/images/icons/music.png");
+  background-image: url("../../../bootprint3/images/icons/music.png");
 }
 i.fa-newspaper {
-  background-image: url("../../bootprint3/images/icons/newspaper.png");
+  background-image: url("../../../bootprint3/images/icons/newspaper.png");
 }
 i.fa-ok {
-  background-image: url("../../bootprint3/images/icons/tick.png");
+  background-image: url("../../../bootprint3/images/icons/tick.png");
 }
 i.fa-online {
-  background-image: url("../../bootprint3/images/icons/computer.png");
+  background-image: url("../../../bootprint3/images/icons/computer.png");
 }
 i.fa-painting {
-  background-image: url("../../bootprint3/images/icons/paintbrush.png");
+  background-image: url("../../../bootprint3/images/icons/paintbrush.png");
 }
 i.fa-photo {
-  background-image: url("../../bootprint3/images/icons/photo.png");
+  background-image: url("../../../bootprint3/images/icons/photo.png");
 }
 i.fa-photonegative {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-physicalobject {
-  background-image: url("../../bootprint3/images/icons/box.png");
+  background-image: url("../../../bootprint3/images/icons/box.png");
 }
 i.fa-plus {
-  background-image: url("../../bootprint3/images/icons/add.png");
+  background-image: url("../../../bootprint3/images/icons/add.png");
 }
 i.fa-qrcode {
-  background-image: url("../../bootprint3/images/icons/qrcode.png");
+  background-image: url("../../../bootprint3/images/icons/qrcode.png");
 }
 i.fa-remove {
-  background-image: url("../../bootprint3/images/icons/delete.png");
+  background-image: url("../../../bootprint3/images/icons/delete.png");
 }
 i.fa-renew {
-  background-image: url("../../bootprint3/images/icons/renew.png");
+  background-image: url("../../../bootprint3/images/icons/renew.png");
 }
 i.fa-renew-all {
-  background-image: url("../../bootprint3/images/icons/renewAll.png");
+  background-image: url("../../../bootprint3/images/icons/renewAll.png");
 }
 i.fa-report {
-  background-image: url("../../bootprint3/images/icons/report.png");
+  background-image: url("../../../bootprint3/images/icons/report.png");
 }
 i.fa-rss {
-  background-image: url("../../bootprint3/images/icons/feed.png");
+  background-image: url("../../../bootprint3/images/icons/feed.png");
 }
 i.fa-search {
-  background-image: url("../../bootprint3/images/icons/magnifier.png");
+  background-image: url("../../../bootprint3/images/icons/magnifier.png");
 }
 i.fa-search-plus {
-  background-image: url("../../bootprint3/images/icons/magnifier_zoom_in.png");
+  background-image: url("../../../bootprint3/images/icons/magnifier_zoom_in.png");
 }
 i.fa-sensorimage {
-  background-image: url("../../bootprint3/images/icons/photo.png");
+  background-image: url("../../../bootprint3/images/icons/photo.png");
 }
 i.fa-serial {
-  background-image: url("../../bootprint3/images/icons/page_white_stack.png");
+  background-image: url("../../../bootprint3/images/icons/page_white_stack.png");
 }
 i.fa-shopping-cart {
-  background-image: url("../../bootprint3/images/icons/cart.png");
+  background-image: url("../../../bootprint3/images/icons/cart.png");
 }
 i.fa-sign-in {
-  background-image: url("../../bootprint3/images/icons/door_in.png");
+  background-image: url("../../../bootprint3/images/icons/door_in.png");
 }
 i.fa-sign-out {
-  background-image: url("../../bootprint3/images/icons/door_out.png");
+  background-image: url("../../../bootprint3/images/icons/door_out.png");
 }
 i.fa-slide {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-software {
-  background-image: url("../../bootprint3/images/icons/drive_cd.png");
+  background-image: url("../../../bootprint3/images/icons/drive_cd.png");
 }
 i.fa-soundcassette {
-  background-image: url("../../bootprint3/images/icons/sound.png");
+  background-image: url("../../../bootprint3/images/icons/sound.png");
 }
 i.fa-sounddisc {
-  background-image: url("../../bootprint3/images/icons/cd.png");
+  background-image: url("../../../bootprint3/images/icons/cd.png");
 }
 i.fa-soundrecording {
-  background-image: url("../../bootprint3/images/icons/sound.png");
+  background-image: url("../../../bootprint3/images/icons/sound.png");
 }
 i.fa-spinner {
-  background-image: url("../../bootprint3/images/icons/ajax_loading.gif");
+  background-image: url("../../../bootprint3/images/icons/ajax_loading.gif");
 }
 i.fa-status-unknown {
-  background-image: url("../../bootprint3/images/icons/bullet_orange.png");
+  background-image: url("../../../bootprint3/images/icons/bullet_orange.png");
 }
 i.fa-suitcase {
-  background-image: url("../../bootprint3/images/icons/bookbag.png");
+  background-image: url("../../../bootprint3/images/icons/bookbag.png");
 }
 i.fa-tapecartridge {
-  background-image: url("../../bootprint3/images/icons/drive.png");
+  background-image: url("../../../bootprint3/images/icons/drive.png");
 }
 i.fa-tapecassette {
-  background-image: url("../../bootprint3/images/icons/drive.png");
+  background-image: url("../../../bootprint3/images/icons/drive.png");
 }
 i.fa-tapereel {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-transparency {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-tree {
-  background-image: url("../../bootprint3/images/icons/treeCurrent.png");
+  background-image: url("../../../bootprint3/images/icons/treeCurrent.png");
 }
 i.fa-tree-muted {
-  background-image: url("../../bootprint3/images/icons/treeMuted.png");
+  background-image: url("../../../bootprint3/images/icons/treeMuted.png");
 }
 i.fa-unknown {
-  background-image: url("../../bootprint3/images/icons/page_white.png");
+  background-image: url("../../../bootprint3/images/icons/page_white.png");
 }
 i.fa-usd {
-  background-image: url("../../bootprint3/images/icons/money_dollar.png");
+  background-image: url("../../../bootprint3/images/icons/money_dollar.png");
 }
 i.fa-user {
-  background-image: url("../../bootprint3/images/icons/user.png");
+  background-image: url("../../../bootprint3/images/icons/user.png");
 }
 i.fa-video {
-  background-image: url("../../bootprint3/images/icons/television.png");
+  background-image: url("../../../bootprint3/images/icons/television.png");
 }
 i.fa-videocartridge {
-  background-image: url("../../bootprint3/images/icons/television.png");
+  background-image: url("../../../bootprint3/images/icons/television.png");
 }
 i.fa-videocassette {
-  background-image: url("../../bootprint3/images/icons/television.png");
+  background-image: url("../../../bootprint3/images/icons/television.png");
 }
 i.fa-videodisc {
-  background-image: url("../../bootprint3/images/icons/cd.png");
+  background-image: url("../../../bootprint3/images/icons/cd.png");
 }
 i.fa-videoreel {
-  background-image: url("../../bootprint3/images/icons/film.png");
+  background-image: url("../../../bootprint3/images/icons/film.png");
 }
 i.fa-visual {
-  background-image: url("../../bootprint3/images/icons/view_visual.png");
+  background-image: url("../../../bootprint3/images/icons/view_visual.png");
 }
 body.rtl i.fa-external-link {
-  background-image: url("../../bootprint3/images/icons/link_go_rtl.png");
+  background-image: url("../../../bootprint3/images/icons/link_go_rtl.png");
 }
 body.rtl i.fa-flag {
-  background-image: url("../../bootprint3/images/icons/flag_red_rtl.png");
+  background-image: url("../../../bootprint3/images/icons/flag_red_rtl.png");
 }
 #cart-empty-label i.fa-close {
-  background-image: url("../../bootprint3/images/icons/briefcase.png");
+  background-image: url("../../../bootprint3/images/icons/briefcase.png");
 }
 .searchHomeContent {
   float: none;
