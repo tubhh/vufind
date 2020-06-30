@@ -376,11 +376,12 @@ body {
     border: thin solid #aaaaaa;
     border-radius: 3px;
     color: #000;
-    float: right;
+/*    float: right; */
     font-weight: normal;
     margin-bottom: 0;
-    margin-left: 5px;
-    margin-right: 5px;
+/*    margin-left: 5px;
+    margin-right: 5px; */
+    margin-top: 5px;
     padding: 2px;
     text-align: center;
     width: 115px;
