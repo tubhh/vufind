@@ -31,7 +31,9 @@ $(document).ready(function() {
             dataType:'json',
             data:{lookfor:lookfor, querystring:queryString, source:searchClass},
             success:function(data, textStatus){
-                $this.find('a').append(' ('+formatNumber(data.data.total)+')')
+                if (searchClass == 'Primo') { var id='hitsprimo'; } else { var id='hitsgbv'; }
+                alert(id);
+                $this.find('a').append('<span class="matches" id="'+id+'"> ('+formatNumber(data.data.total)+')</span>');
             }
         });
     });
