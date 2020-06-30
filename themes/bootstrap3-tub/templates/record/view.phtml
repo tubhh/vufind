@@ -75,6 +75,11 @@
           <?php foreach ($this->tabs as $tab => $obj): ?>
             <?php // add current tab to breadcrumbs if applicable:
               $desc = $obj->getDescription();
+          if ($desc == 'Staff View') {
+              $desc = '<span style="color:#FFFFFF">' . $this->translate($desc) . '</span>';
+          } else {
+              $desc = $this->translate($desc);
+          }
               $tabName = preg_replace("/\W/", "-", strtolower($tab));
               $tabClasses = [ 'record-tab', $tabName ];
               if (0 === strcasecmp($this->activeTab, $tab)) {
@@ -82,14 +87,14 @@
                   $tabClasses[] = 'active';
                 }
                 $tabClasses[] = 'initiallyActive';
-                $this->layout()->breadcrumbs .= '<li class="active">' . $this->transEsc($desc) . '</li>';
+                $this->layout()->breadcrumbs .= '<li class="active">' . $desc . '</li>';
                 $activeTabObj = $obj;
               }
               if (!$obj->isVisible()) { $tabClasses[] = 'hidden'; }
               if (!$obj->supportsAjax()) { $tabClasses[] = 'noajax'; }
             ?>
             <li class="<?=implode(' ', $tabClasses)?>" data-tab="<?=$tabName?>"<?php if ($obj->supportsAjax() && in_array($tab, $this->backgroundTabs)):?> data-background<?php endif ?>>
-              <a href="<?=$this->recordLink()->getTabUrl($this->driver, $tab)?>#tabnav"><?=$this->transEsc($desc)?></a>
+              <a href="<?=$this->recordLink()->getTabUrl($this->driver, $tab)?>#tabnav"><?=$desc?></a>
             </li>
           <?php endforeach; ?>
         </ul>
