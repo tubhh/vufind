@@ -1,0 +1,58 @@
+<?php $list = $this->params->getSortList(); if (!empty($list)): ?>
+
+  <form class="form-inline" action="<?=$this->currentPath()?>" method="get" name="sort">
+    <?=$this->results->getUrlQuery()->asHiddenFields(array('sort' => '/.*/'));?>
+    <!-- <label for="sort_options_1"><?=$this->transEsc('Sort')?></label> -->
+    <?php if (count($list) == 2): ?>
+      <!-- if there are two entries, a toggle will do -->
+    <?php
+      $toggle_style = '';
+      $x = 0;
+      foreach ($list as $sortType => $sortData){
+            $class = '';
+            $tclass = '';
+            if ($sortData['selected']) {
+                $cur_sort = '<span class="sort_order_hint">Currently: '.$this->transEsc($sortData['desc']).'</span>';
+                $class = 'active';
+                $tclass = 'checked';
+            }
+
+            $cur_button = '<button type="submit" name="sort" value="'.$this->escapeHtmlAttr($sortType).'"><i class="fa fa-sort-numeric-desc"></i> '.$this->transEsc($sortData['desc']).'</button>';
+
+            // Left button for toggle
+            if (!isset($buttons)) {
+                $buttons = '<span> '.$this->transEsc('Sort').' </span><button type="submit" name="sort" value="'.$this->escapeHtmlAttr($sortType).'" class="btn-default '.$class.'"> '.$this->transEsc($sortData['desc']).' </button>';
+            }
+            // Right button for toggle
+            else {
+                $buttons .= '<button type="submit" name="sort" value="'.$this->escapeHtmlAttr($sortType).'" class="btn-default '.$class.'"> '.$this->transEsc($sortData['desc']).' </button>';
+            }
+
+            $toggle_style .= '<input id="st'.$x.'" type="radio" '.$tclass.' name="sort"><label onclick="this.submit();" for="st'.$x.'">'.$this->transEsc($sortData['desc']).'</label>';
+            $x++;
+      }
+      ?>
+      <!-- Version 1: Output only text with sort order hint and one button -->
+      <?//=$cur_sort ?>
+      <?//=$cur_button ?>
+      <!-- Version 2: Output two buttons as toggle -->
+        <div class="btn-group tub_btn-group btn-toggle">
+            <?=$buttons;?>
+        </div>
+      <!-- Version 3: Output toggle
+        <div class="switch-toggle">
+            <?=$toggle_style;?>
+        </div>
+      -->
+    <?php else: ?>
+      <!-- Otherwise do it the old way and add a select box -->
+      <select id="sort_options_1" name="sort" class="jumpMenu form-control">
+        <?php foreach ($list as $sortType => $sortData): ?>
+          <option value="<?=$this->escapeHtmlAttr($sortType)?>"<?=$sortData['selected']?' selected="selected"':''?>><?=$this->transEsc($sortData['desc'])?></option>
+        <?php endforeach; ?>
+      </select>
+      <noscript><input type="submit" class="btn btn-default" value="<?=$this->transEsc("Set")?>" /></noscript>
+    <?php endif; ?>
+  </form>
+<?php endif; ?>
+
