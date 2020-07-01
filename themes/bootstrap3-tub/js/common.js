@@ -391,6 +391,32 @@ $(document).ready(function commonDocReady() {
   // support "jump menu" dropdown boxes
   setupJumpMenus();
 
+  // Clearable input (search) 
+  function tog(v) {return v ? 'addClass' : 'removeClass';} 
+
+  $(document).on('input', '.clearable', function(){
+    $(this)[tog(this.value)]('x');
+  }).on('mousemove', '.x', function( e ) {
+    $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX'); 
+  }).on('touchstart click', '.onX', function( ev ){
+    ev.preventDefault();
+    $(this).removeClass('x onX').val('').change();
+  }).on('blur', '.clearable', function(){
+     $(this).removeClass('x');
+  }).on('focus', '.clearable', function(){
+     if($(this).val() !== ''){
+         $(this).addClass('x');
+     }
+  }).on('mouseenter', '.clearable', function(){
+     if($(this).val() !== ''){
+         $(this).addClass('x');
+     }
+  }).on('mouseleave', '.clearable', function(){
+     if($(this).is(":focus") !== true) {
+        $(this).removeClass('x');
+     }  });
+  // END Clearable input (search) 
+
   // Checkbox select all
   $('.checkbox-select-all').change(function selectAllCheckboxes() {
     var $form = this.form ? $(this.form) : $(this).closest('form');
