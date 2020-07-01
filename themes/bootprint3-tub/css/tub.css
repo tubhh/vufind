@@ -390,6 +390,20 @@ body {
 .printedicon {
     background-image: url("../../../themes/bootprint3-tub/images/icons/book.png");
 }
+
+/* START modding search input 
+   @see themes/bootstrap3-tub/js/common.js --> "// Clearable input (search)" */
+.clearable{
+  background: #fff url(data:image/gif;base64,R0lGODlhBwAHAIAAAP///5KSkiH5BAAAAAAALAAAAAAHAAcAAAIMTICmsGrIXnLxuDMLADs=) no-repeat right -10px center;
+  border: 1px solid #999;
+  padding: 3px 18px 3px 4px; /* Use the same right padding (18) in jQ! */
+  border-radius: 3px;
+  transition: background 0.4s;
+}
+.clearable.x  { background-position: right 5px center; }
+.clearable.onX{ cursor: pointer; }
+/* END modding search input */
+
 /*
 .row.result {
     padding: 12px 6px;

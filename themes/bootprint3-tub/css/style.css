@@ -471,7 +471,6 @@ sub {
 }
 
 /* Forms */
-input[type=text],
 input[type=password],
 textarea {
 	background: #fafafa;
