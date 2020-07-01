@@ -956,4 +956,15 @@ $(document).ready(function() {
     // Show everything
     $('#modal').modal('show');
     });
+
+ /**
+   * Activate nice tooltips for create_modal() buttons
+   *
+   * https://getbootstrap.com/javascript/#tooltips
+   */
+  $('body').tooltip({
+    selector: '[rel=tooltip]',
+    placement : 'bottom'
+  });
+
 });
