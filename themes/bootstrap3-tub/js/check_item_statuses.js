@@ -696,6 +696,8 @@ VuFind.register('itemStatuses', function ItemStatuses() {
     'overdrive': OdItemStatusHandler,
   };
 
+  var itemsDone = [];
+
   function checkItemStatus(el) {
     var $item = $(el);
     if ($item.hasClass('js-item-pending') || $item.hasClass('js-item-done')) {
@@ -709,9 +711,12 @@ VuFind.register('itemStatuses', function ItemStatuses() {
     if ($item.find('.handler-name').length > 0) {
       handlerName = $item.find('.handler-name').val();
     }
-
-    //queue the element into the handler
-    checkItemHandlers[handlerName].itemQueueAjax(id, $item);
+    // Only push ID to check once
+    if (itemsDone.indexOf(id) == -1) {
+        //queue the element into the handler
+        checkItemHandlers[handlerName].itemQueueAjax(id, $item);
+        itemsDone.push(id);
+    }
   }
 
   function checkItemStatuses(_container) {
