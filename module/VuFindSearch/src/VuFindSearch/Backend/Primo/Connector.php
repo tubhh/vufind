@@ -505,6 +505,12 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
                 ? (string)$sear->LINKS->openurl
                 : (string)$sear->GETIT->attributes()->GetIt2;
 
+            $searchdata = $prefix->PrimoNMBib->record->search;
+            $item['publicationDate'] = (string)$searchdata->creationdate;
+
+            $facetsdata = $prefix->PrimoNMBib->record->facets;
+            $item['frbrid'] = (string)$facetsdata->frbrgroupid;
+
             // Container data
             $addata = $prefix->PrimoNMBib->record->addata;
             $item['doi'] = (string)$addata->doi;
