@@ -12450,6 +12450,12 @@ ul.nav-tabs {
  * 
  */
 /* --- Logo --- */
+header {
+  /* Neu TZ 2020-05-13 */
+
+  /* neu Ende */
+
+}
 header .navbar .navbar-brand {
   background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
   height: 53px;
@@ -12458,12 +12464,10 @@ header .navbar .navbar-brand {
 header .searchbox {
   background: transparent linear-gradient(to bottom, #ffffff, #eeeeee) repeat scroll 0% 0%;
 }
-/* Neu TZ 2020-05-13 */
-.nav li a:focus,
-.nav li a:hover {
+header .nav li a:focus,
+header .nav li a:hover {
   outline: none;
 }
-/* neu Ende */
 /* --- Logo --- */
 .main .container {
   padding: 0;
@@ -12483,43 +12487,46 @@ header .searchbox {
   padding: 0;
 }
 /* --- Any row --- */
-.row {
+.result {
   /* this is all rows, there is no class top-row anyway?! */
 
   /* Perfectly dock between search area and result/filter area a) */
 
 }
-.row:not(.top-row) {
+.result:not(.top-row) {
   padding: 0;
   margin: 0;
 }
-.row.search-controls {
+.result.search-controls {
   padding: 0 0 3px 4px;
 }
-.row.result {
+.result.ajaxItem {
   padding: 12px 6px;
   margin: 0 4px;
   border-bottom: 2px dotted #aaaaaa;
 }
-.row.result:nth-child(even) {
+.result.ajaxItem:nth-child(even) {
   background: #ffffff;
 }
-.row.result a {
+.result.ajaxItem a {
   color: #576ca0;
 }
-.row.result a:hover {
+.result.ajaxItem a:hover {
   text-decoration: none;
   color: #09f;
 }
-.row.result a.nolink {
+.result.ajaxItem a.nolink {
   color: #000000;
 }
-.row.result a.nolink:hover {
+.result.ajaxItem a.nolink:hover {
   cursor: text;
 }
 /* --- Sidebar ---*/
 .sidebar {
   background: transparent linear-gradient(to top, #ffffff, #eeeeee) repeat scroll 0% 0%;
+}
+.sidebar.right {
+  padding: 0 7px;
 }
 .sidebar > #filter-sidebar {
   /* (if collapsed to nav menu it looks bad otherwise) */

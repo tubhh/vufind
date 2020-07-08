@@ -19,20 +19,19 @@ header {
     .searchbox {
         background: transparent linear-gradient(to bottom, #FFF, #EEE) repeat scroll 0% 0%;
     }
-}
-
-/* Neu TZ 2020-05-13 */
-.nav {
-    li    {
-        a {
-            &:focus,
-            &:hover {
-                outline: none;
+    /* Neu TZ 2020-05-13 */
+    .nav {
+        li    {
+            a {
+                &:focus,
+                &:hover {
+                    outline: none;
+                }
             }
         }
     }
+    /* neu Ende */
 }
-/* neu Ende */
 
 
 /* --- Logo --- */
@@ -57,7 +56,7 @@ header {
 
 
 /* --- Any row --- */
-.row {
+.result {
     /* this is all rows, there is no class top-row anyway?! */
     &:not(.top-row) {
         padding: 0;
@@ -67,7 +66,7 @@ header {
     &.search-controls {
         padding: 0 0 3px 4px;
     }
-    &.result {
+    &.ajaxItem {
         padding: 12px 6px;
         margin: 0 4px;
         border-bottom: 2px dotted @tub-border-strong;
@@ -94,6 +93,7 @@ header {
 
 /* --- Sidebar ---*/
 .sidebar {
+    &.right {padding: 0 7px};
     background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
     >#filter-sidebar {
         /* (if collapsed to nav menu it looks bad otherwise) */
