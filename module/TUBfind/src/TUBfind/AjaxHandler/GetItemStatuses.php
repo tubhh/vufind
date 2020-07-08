@@ -29,6 +29,8 @@
  */
 namespace TUBfind\AjaxHandler;
 
+use DOMDocument;
+
 use VuFind\Exception\ILS as ILSException;
 use VuFind\Auth\ILSAuthenticator;
 use VuFind\I18n\Translator\TranslatorAwareInterface;
@@ -767,7 +769,47 @@ var_dump($results);
         return $status;
     }
 
+/*
+    var $printedHoldings = null;
 
+    private function getPrintedHoldings() {
+//var_dump($this->printedHoldings);
+        if ($this->printedHoldings == null) {
+            $printedholdings = file_get_contents('https://www.tub.tuhh.de/ext/holdings/sfxprinted.xml');
+            $dom = new DomDocument();
+            $dom->loadXML($printedholdings);
+//echo "Got printed holdings file";
+            $this->printedHoldings = $dom;
+         }
+//else { echo "DOM holdings file already here"; }
+         return $this->printedHoldings;
+    }
+
+    var $coverageArray = null;
+
+    private function getCoverageArray() {
+        if ($this->coverageArray == null) {
+            $this->coverageArray = [];
+            $dom = $this->getPrintedHoldings();
+            $items = $dom->documentElement->getElementsByTagName('item');
+var_dump($items);
+            foreach ($items as $item) {
+                $issnArray = $item->getElementsByTagName('issn');
+                foreach ($issnArray as $issnVar) {
+                    $this->coverageArray[$issnVar] = [];
+                    $coverages = $item->getElementsByTagName('coverage');
+                    foreach ($coverages as $coverage) {
+                        $this->coverageArray[$issnVar]["from"] = $coverage->getElementsByTagName('from')->item(0)->getElementsByTagName('year')->item(0)->nodeValue;
+                        $this->coverageArray[$issnVar]["to"] = $coverage->getElementsByTagName('to')->item(0)->getElementsByTagName('year')->item(0)->nodeValue;
+                    }
+                }
+            }
+        }
+//else {
+//echo "Coverage array already existing"; }
+        return $this->coverageArray;
+    }
+*/
     /**
      * Get information for printed items
      *

@@ -215,8 +215,8 @@
             <?php if (!is_array($urls)) $urls = array();
               if(!$this->driver->isCollection()):
                 foreach ($urls as $current): ?>
-                <?php if (strpos($current['url'], 'sfx.gbv.de') !== false): ?>
-                    <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip" class="sfxlink fulltext hidden"><img src="https://sfx.gbv.de/sfx_tuhh/sfx.gif" alt="SFX" /></a>
+                <?php if (strpos($current['url'], 'sfx-49gbv.hosted.exlibrisgroup.com') !== false): ?>
+                    <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip" class="sfxlink fulltext hidden"><img src="https://sfx-49gbv.hosted.exlibrisgroup.com/sfx_tuhh/sfx.gif" alt="SFX" /></a>
                 <?php else: ?>
                   <a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip" class="holdlink fulltext" target="new"><i class="fa fa-external-link"></i> <?=($current['url'] == $current['desc']) ? $this->transEsc('Get full text') : $this->escapeHtml($current['desc'])?></a>
                 <?php endif; ?>

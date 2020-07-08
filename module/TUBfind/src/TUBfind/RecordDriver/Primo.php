@@ -389,6 +389,7 @@ class Primo extends \VuFind\RecordDriver\Primo
 
 
     public function getFrbrRecords($id, $frbrid) {
+        $return = [];
         // cannot work without frbr-ID
         if ($frbrid === null) return null;
 
@@ -399,6 +400,8 @@ class Primo extends \VuFind\RecordDriver\Primo
             }
         }
 */
+
+        $results = null;
 
         $params = new ParamBag();
         $params->set('onCampus', $oncampus);
@@ -487,6 +490,7 @@ class Primo extends \VuFind\RecordDriver\Primo
             $query = new \VuFindSearch\Query\Query($searchQ);
             $q1 = $this->searchService->search('Solr', $query, 0, 0, $params);
             $all = $q1->getTotal();
+//echo "Got $all results in all for ".$searchQ;
             if ($all > 0) {
                 $results = $this->searchService->search('Solr', $query, 0, $all, $params);
             }
@@ -513,6 +517,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                 $aquery = new \VuFindSearch\Query\Query($altquery);
                 $q2 = $this->searchService->search('Solr', $aquery, 0, 0, $p2);
                 $all2 = $q2->getTotal();
+//echo "Got $all2 results in all2 for ".$altquery;
                 if ($all2 > 0) {
                     $results = $this->searchService->search('Solr', $aquery, 0, $all2, $p2);
                 }
@@ -537,6 +542,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                     $naquery = new \VuFindSearch\Query\Query($naltquery);
                     $q3 = $this->searchService->search('Solr', $naquery, 0, 0, $p3);
                     $all3 = $q3->getTotal();
+//echo "Got $all3 results in all3 for ".$naltquery;
                     if ($all3 > 0) {
                         $results = $this->searchService->search('Solr', $naquery, 0, $all3, $p3);
                     }
@@ -569,6 +575,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                 $nnaquery = new \VuFindSearch\Query\Query($nnaltquery);
                 $q4 = $this->searchService->search('Solr', $nnaquery, 0, 0, $p4);
                 $all4 = $q4->getTotal();
+//echo "Got $all4 results in all4 for ".$nnaltquery;
                 if ($all4 > 0) {
                     $results = $this->searchService->search('Solr', $nnaquery, 0, $all4, $p4);
                 }
@@ -597,6 +604,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                 $nnaquery = new \VuFindSearch\Query\Query($nnaltquery);
                 $q5 = $this->searchService->search('Solr', $nnaquery, 0, 0, $p5);
                 $all5 = $q5->getTotal();
+//echo "Got $all5 results in all5 for ".$nnaltquery;
                 if ($all5 > 0) {
                     $results = $this->searchService->search('Solr', $nnaquery, 0, $all5, $p5);
                 }
@@ -605,7 +613,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                 // Now that we got something, we can check printed license in holdingsfile
                 $yeartocheck = $fieldref['date'];
                 // But this will work only with an ISSN
-                if (count($fieldref['issn']) > 100) {
+                if (count($fieldref['issn']) > 0) {
                     foreach ($fieldref['issn'] as $iss) {
                         $issntocheck = str_replace('-', '', $iss);
 
@@ -617,15 +625,22 @@ class Primo extends \VuFind\RecordDriver\Primo
                             $issnArray = $item->getElementsByTagName('issn');
                             foreach ($issnArray as $issnVar) {
                                 if ($issnVar->nodeValue == $issntocheck || $issnVar->nodeValue == $iss) {
+//echo "Got coverage for ".$issnVar->nodeValue;
                                     $coverages = $item->getElementsByTagName('coverage');
                                     foreach ($coverages as $coverage) {
+                                        $covstart = $coverage->getElementsByTagName('from')->item(0)->getElementsByTagName('year')->item(0)->nodeValue;
+                                        $covend = null;
+                                        if ($coverage->getElementsByTagName('to')->item(0)->getElementsByTagName('year')->length > 0) {
+                                            $covend = $coverage->getElementsByTagName('to')->item(0)->getElementsByTagName('year')->item(0)->nodeValue;
+                                        }
+//echo "Checking coverage match for ".$yeartocheck.". Coverage starting in $covstart and ending in $covend.";
                                         if (
-                                            $yeartocheck >= $coverage->getElementsByTagName('from')->item(0)->getElementsByTagName('year')->item(0)->nodeValue
+                                            $yeartocheck >= $covstart
                                             && (
-                                                $yeartocheck <= $coverage->getElementsByTagName('to')->item(0)->getElementsByTagName('year')->item(0)->nodeValue
-                                                || $coverage->getElementsByTagName('to')->item(0)->getElementsByTagName('year')->item(0)->nodeValue == null
+                                                $yeartocheck <= $covend || $covend == null
                                             )
                                         ) {
+//echo "Coverage match for ".$yeartocheck." at ISSN ".$issnVar->nodeValue;
                                             return $results->getRecords();
                                         }
                                     }
@@ -635,11 +650,11 @@ class Primo extends \VuFind\RecordDriver\Primo
                     }
                 }
                 else {
+//echo "Returning results that have been gotten so far";
                     // No ISSN, so we cant check, just return best guess
                     return $results->getRecords();
                 }
             }
-
             return false;
 
         }
@@ -855,7 +870,7 @@ class Primo extends \VuFind\RecordDriver\Primo
     public function getOpenUrl($overrideSupportsOpenUrl = false)
     {
         if (isset($this->fields['url'])) {
-            if (strpos($this->fields['url'], 'sfx.gbv.de') !== false) {
+            if (strpos($this->fields['url'], 'sfx-49gbv.hosted.exlibrisgroup.com') !== false) {
                 $urlarr = explode('?', $this->fields['url']);
                 return $urlarr[1];
             }
