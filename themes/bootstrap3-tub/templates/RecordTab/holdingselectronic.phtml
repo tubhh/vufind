@@ -22,9 +22,9 @@
   <?php if (!empty($urls)): ?>
     <span class="marclinks">
     <?php foreach ($urls as $current): ?>
-        <?php if (strpos($current['url'], 'sfx.gbv.de') !== false): ?>
-            <br/><a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip"  class="sfxlink"><img src="https://sfx.gbv.de/sfx_tuhh/sfx.gif" alt="SFX" /></a>
-        <?php else: ?>
+        <?php if (strpos($current['url'], 'sfx_tuhh') !== false && strpos($current['url'], 'sfx-49gbv.hosted.exlibrisgroup.com') == false): ?>
+            <br/><a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip"  class="sfxlink"><img src="https://sfx-49gbv.hosted.exlibrisgroup.com/sfx_tuhh/sfx.gif" alt="SFX" /></a>
+        <?php elseif (strpos($current['url'], 'sfx-49gbv.hosted.exlibrisgroup.com') == false): ?>
             <br/><span class="externalurl"><a href="<?=$this->escapeHtmlAttr($this->proxyUrl($current['url']))?>" rel="tooltip"><i class="fa fa-download"></i> <?=$this->escapeHtml($current['desc'])?></a></span>
         <?php endif; ?>
     <?php endforeach; ?>
