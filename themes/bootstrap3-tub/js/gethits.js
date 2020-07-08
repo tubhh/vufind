@@ -31,8 +31,10 @@ $(document).ready(function() {
             dataType:'json',
             data:{lookfor:lookfor, querystring:queryString, source:searchClass},
             success:function(data, textStatus){
-                if (searchClass == 'Primo') { var id='hitsprimo'; } else { var id='hitsgbv'; }
-                $this.find('a').append('<span class="matches" id="'+id+'"> ('+formatNumber(data.data.total)+')</span>');
+                if (lookfor != "") {
+                    if (searchClass == 'Primo') { var id='hitsprimo'; } else { var id='hitsgbv'; }
+                    $this.find('a').append('<span class="matches" id="'+id+'"> ('+formatNumber(data.data.total)+')</span>');
+                }
             }
         });
     });
