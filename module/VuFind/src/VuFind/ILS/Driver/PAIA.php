@@ -954,7 +954,7 @@ class PAIA extends DAIA
             case 'access_denied':
                 throw new AuthException(
                     $array['error_description'] ?? $array['error'],
-                    $array['code'] ?? ''
+                    $array['code'] ?? '403'
                 );
 
                 // invalid_grant     401     The access token was missing, invalid
@@ -966,7 +966,7 @@ class PAIA extends DAIA
             case 'insufficient_scope':
                 throw new ForbiddenException(
                     $array['error_description'] ?? $array['error'],
-                    $array['code'] ?? ''
+                    $array['code'] ?? '403'
                 );
 
                 // not_found     404     Unknown request URL or unknown patron.
