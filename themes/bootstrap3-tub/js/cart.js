@@ -101,6 +101,7 @@ VuFind.register('cart', function Cart() {
       cartItems[cartItems.length] = String.fromCharCode(65 + sIndex) + id;
     }
     Cookies.setItem(_COOKIE, _uniqueArray(cartItems).join(_COOKIE_DELIM), false, _COOKIE_PATH, _COOKIE_DOMAIN);
+    $('#cartItems .cartItemsCount').html(parseInt($('#cartItems .cartItemsCount').html(), 10)+1);
     updateCount();
     return true;
   }
@@ -141,6 +142,7 @@ VuFind.register('cart', function Cart() {
         Cookies.removeItem(_COOKIE, _COOKIE_PATH, _COOKIE_DOMAIN);
         Cookies.removeItem(_COOKIE_SOURCES, _COOKIE_PATH, _COOKIE_DOMAIN);
       }
+      $('#cartItems .cartItemsCount').html(parseInt($('#cartItems .cartItemsCount').html(), 10)-1);
       updateCount();
       return true;
     }
