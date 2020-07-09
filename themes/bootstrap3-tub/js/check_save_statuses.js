@@ -8,6 +8,7 @@ function displaySaveStatus(itemLists, $item) {
       return '<li><a href="' + l.list_url + '">' + htmlEncode(l.list_title) + '</a></li>';
     }).join('') + '</ul>';
     $item.find('.savedLists').addClass('loaded');
+    $item.find('.save-record').addClass('hidden');
     $item.find('.js-load').replaceWith(html);
   } else {
     // If we got nothing back, remove the pending status:
@@ -75,6 +76,7 @@ function runSaveAjaxForQueue() {
       saveStatusRunning = false;
     });
 }
+
 function saveQueueAjax(obj, el) {
   if (el.hasClass('js-save-pending')) {
     return;
