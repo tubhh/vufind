@@ -418,8 +418,10 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
      * return 'overdue' if duedate is over
      */
     public function getDueStatus($duedate) {
-        $duedateArray = explode("-", $duedate);
-        $duedateTimestamp = mktime(23,59,59,$duedateArray[0],$duedateArray[1],$duedateArray[2]);
+        // TODO: read date format from config.ini
+        $duedateArray = explode(".", $duedate);
+        // format: Hour,minute,second,month,day,year
+        $duedateTimestamp = mktime(23,59,59,$duedateArray[1],$duedateArray[0],$duedateArray[2]);
         $today = mktime(23,59,59);
         if ($duedateTimestamp < strtotime('- 1 day')) return 'overdue';
         elseif ($duedateTimestamp == $today) return 'due';
