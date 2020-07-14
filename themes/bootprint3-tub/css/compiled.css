@@ -12456,19 +12456,29 @@ header {
   /* neu Ende */
 
 }
-header .navbar .navbar-brand {
-  background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
-  height: 53px;
-  width: 195px;
+header .navbar {
+  border: none;
+  /* DEL-2020: header .navbar .navbar-brand - Gibt es nicht mehr (auch schon beim aktuellen Live-Vufind nicht)
+        .navbar-brand {
+            background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
+            height: 53px;
+            width: 195px;
+        }
+	*/
+
+}
+header .navbar-collapse {
+  padding-right: 20px;
 }
 header .searchbox {
   background: transparent linear-gradient(to bottom, #ffffff, #eeeeee) repeat scroll 0% 0%;
+  padding-left: 12px;
 }
 header .nav li a:focus,
 header .nav li a:hover {
   outline: none;
 }
-/* --- Logo --- */
+/* --- Logo (Home) https://katalog.tub.tuhh.de/ --- */
 .main .container {
   padding: 0;
   /* Perfectly dock between search area and result/filter area a) */
@@ -12477,7 +12487,7 @@ header .nav li a:hover {
 .main .container > .row {
   padding-top: 0;
 }
-/* --- Search Home --- */
+/* --- Search Home https://katalog.tub.tuhh.de/ --- */
 .searchHomeContent {
   width: auto;
 }
@@ -12486,19 +12496,36 @@ header .nav li a:hover {
   border: none;
   padding: 0;
 }
+/* --- Transition header to main --- */
+#page header {
+  padding: 0 12px;
+}
+#page div#main {
+  margin: 0 12px;
+}
+#page div#main div.main {
+  padding-top: 0;
+}
+#page div#main div.main.container {
+  padding: 0;
+  margin: 0 5px;
+  /* ugly interims solution */
+
+}
 /* --- Any row --- */
 .result {
   /* this is all rows, there is no class top-row anyway?! */
 
-  /* Perfectly dock between search area and result/filter area a) */
+  /* DEL-2020: stimmt so nicht, schon bei Live-Vufind    Perfectly dock between search area and result/filter area a) * /
+    &.search-controls {
+        padding: 0 0 3px 4px;
+    }
+	*/
 
 }
 .result:not(.top-row) {
   padding: 0;
   margin: 0;
-}
-.result.search-controls {
-  padding: 0 0 3px 4px;
 }
 .result.ajaxItem {
   padding: 12px 6px;
@@ -12524,14 +12551,25 @@ header .nav li a:hover {
 /* --- Sidebar ---*/
 .sidebar {
   background: transparent linear-gradient(to top, #ffffff, #eeeeee) repeat scroll 0% 0%;
+  /* DEL-2020 - nicht merh da?
+    >#filter-sidebar {
+        /* (if collapsed to nav menu it looks bad otherwise) * /
+        background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
+    }
+	*/
+
 }
 .sidebar.right {
   padding: 0 7px;
 }
-.sidebar > #filter-sidebar {
-  /* (if collapsed to nav menu it looks bad otherwise) */
-
-  background: transparent linear-gradient(to top, #ffffff, #eeeeee) repeat scroll 0% 0%;
+.sidebar > h4 {
+  background-color: #ffffff;
+  padding: 3px;
+}
+.sidebar > div {
+  background-color: #ffffff;
+  padding: 3px;
+  margin-bottom: 0.5em;
 }
 .sidebar .list-group-item.active {
   background: #d8f2fc;
@@ -12939,13 +12977,14 @@ i.fa-info-circle {
 }
 /* --- Logo and navigation --- */
 header .navbar {
-  padding: 0px 20px 0px 0px;
-  width: 98%;
-}
-@media (max-width: 991px) {
-  header .navbar {
-    width: 95%;
-  }
+  padding: 0;
+  /* DEL-2020 
+	width: 98%; 
+    @media (max-width: 991px) {
+        width: 95%;
+    }
+	*/
+
 }
 @media (max-width: 991px) {
   header .navbar .navbar-brand {

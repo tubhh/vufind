@@ -10,14 +10,21 @@
 /* --- Logo --- */
 header {
     .navbar {
+	border: none;
+	/* DEL-2020: header .navbar .navbar-brand - Gibt es nicht mehr (auch schon beim aktuellen Live-Vufind nicht)
         .navbar-brand {
             background-image: url("../../../bootprint3-tub/images/tubfind_logo.jpg");
             height: 53px;
             width: 195px;
         }
+	*/
     }
+	.navbar-collapse {
+		padding-right: 20px;
+	}
     .searchbox {
         background: transparent linear-gradient(to bottom, #FFF, #EEE) repeat scroll 0% 0%;
+		padding-left: 12px;
     }
     /* Neu TZ 2020-05-13 */
     .nav {
@@ -34,7 +41,7 @@ header {
 }
 
 
-/* --- Logo --- */
+/* --- Logo (Home) https://katalog.tub.tuhh.de/ --- */
 .main .container {
     padding: 0;
     /* Perfectly dock between search area and result/filter area a) */
@@ -44,7 +51,7 @@ header {
 }
 
 
-/* --- Search Home --- */
+/* --- Search Home https://katalog.tub.tuhh.de/ --- */
 .searchHomeContent {
     width: auto;
     .well {
@@ -55,6 +62,24 @@ header {
 }
 
 
+/* --- Transition header to main --- */
+#page {
+	header {
+		padding: 0 12px
+	}
+	div#main {
+		margin: 0 12px;
+		div.main {
+			padding-top: 0;
+			&.container {
+				padding: 0;
+				margin: 0 5px; /* ugly interims solution */
+			}
+		}
+	}
+}
+
+
 /* --- Any row --- */
 .result {
     /* this is all rows, there is no class top-row anyway?! */
@@ -62,10 +87,11 @@ header {
         padding: 0;
         margin: 0;
     }
-    /* Perfectly dock between search area and result/filter area a) */
+    /* DEL-2020: stimmt so nicht, schon bei Live-Vufind    Perfectly dock between search area and result/filter area a) * /
     &.search-controls {
         padding: 0 0 3px 4px;
     }
+	*/
     &.ajaxItem {
         padding: 12px 6px;
         margin: 0 4px;
@@ -93,11 +119,22 @@ header {
 
 /* --- Sidebar ---*/
 .sidebar {
-    &.right {padding: 0 7px};
     background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
+	&.right {padding: 0 7px}; 
+	/* DEL-2020 - nicht merh da?
     >#filter-sidebar {
-        /* (if collapsed to nav menu it looks bad otherwise) */
+        /* (if collapsed to nav menu it looks bad otherwise) * /
         background: transparent linear-gradient(to top, @tub-gradient-from, @tub-gradient-to) repeat scroll 0% 0%;
+    }
+	*/
+	>h4 {
+		background-color: #ffffff;
+		padding: 3px;
+	}
+	>div {
+        background-color: #ffffff;
+		padding: 3px;
+		margin-bottom: 0.5em;
     }
     .list-group-item {
         &.active {
