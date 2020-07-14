@@ -400,7 +400,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
                 break;
             case 'see_copies':
                 // Add button "See copies"
-                loc_modal_button_vols = create_volume_button(id = result.id,
+                loc_modal_button_vols = create_simple_button(id = result.id,
                                           loc_code    = 'Copies',
                                           link_title  = VuFind.translate('loc_btn_Hover_holdings'),
                                           modal_title = VuFind.translate('loc_modal_Title_holdings'),
