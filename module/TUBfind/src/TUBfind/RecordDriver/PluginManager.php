@@ -26,7 +26,7 @@
  * @link     http://vufind.org/wiki/vufind2:record_drivers Wiki
  */
 namespace TUBfind\RecordDriver;
-use Zend\ServiceManager\ConfigInterface;
+use Laminas\ServiceManager\ConfigInterface;
 
 /**
  * Record driver plugin manager
@@ -72,7 +72,7 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
     /**
      * Default delegator factories.
      *
-     * @var string[][]|\Zend\ServiceManager\Factory\DelegatorFactoryInterface[][]
+     * @var string[][]|\Laminas\ServiceManager\Factory\DelegatorFactoryInterface[][]
      *
     protected $delegators = [
         'TUBfind\RecordDriver\SolrMarc' =>
@@ -90,11 +90,11 @@ class PluginManager extends \VuFind\RecordDriver\PluginManager
      */
     protected $factories = [
         'VuFind\RecordDriver\BrowZine' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
         'VuFind\RecordDriver\EDS' => 'VuFind\RecordDriver\NameBasedConfigFactory',
         'VuFind\RecordDriver\EIT' => 'VuFind\RecordDriver\NameBasedConfigFactory',
         'VuFind\RecordDriver\LibGuides' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
         'VuFind\RecordDriver\Missing' => 'VuFind\RecordDriver\AbstractBaseFactory',
         'VuFind\RecordDriver\Pazpar2' =>
             'VuFind\RecordDriver\NameBasedConfigFactory',

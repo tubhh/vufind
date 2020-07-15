@@ -27,7 +27,7 @@
  */
 namespace TUBfind\Content\Covers;
 
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Covers content loader plugin manager
@@ -61,13 +61,13 @@ class PluginManager extends \VuFind\Content\Covers\PluginManager
     protected $factories = [
         'TUBfind\Content\Covers\GBV' => 'TUBfind\Content\Covers\GBVFactory',
         'VuFind\Content\Covers\Google' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
         'VuFind\Content\Covers\LibraryThing' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
         'VuFind\Content\Covers\LocalFile' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
         'VuFind\Content\Covers\OpenLibrary' =>
-            'Zend\ServiceManager\Factory\InvokableFactory',
+            'Laminas\ServiceManager\Factory\InvokableFactory',
     ];
 
     /**

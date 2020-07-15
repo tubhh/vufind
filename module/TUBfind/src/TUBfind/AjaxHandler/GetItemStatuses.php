@@ -37,9 +37,9 @@ use VuFind\I18n\Translator\TranslatorAwareInterface;
 use VuFind\ILS\Connection;
 use VuFind\ILS\Logic\Holds;
 use VuFind\Session\Settings as SessionSettings;
-use Zend\Config\Config;
-use Zend\Mvc\Controller\Plugin\Params;
-use Zend\View\Renderer\RendererInterface;
+use Laminas\Config\Config;
+use Laminas\Mvc\Controller\Plugin\Params;
+use Laminas\View\Renderer\RendererInterface;
 
 /**
  * "Get Item Status" AJAX handler
@@ -966,7 +966,7 @@ var_dump($items);
     protected function getRealTimeHoldings($id, $lang = 'en')
     {
         return $this->ils ? $this->holdLogic->getHoldings(
-            $id, null, $lang
+            $id, null, ['lang' => $lang]
         ) : [];
 //        $driver = $this->getRecordLoader()->load($id);
         $ids = [ $id ];
@@ -1676,7 +1676,7 @@ var_dump($items);
      * @todo 2015-12-11
      * - replace with rendering recordTabs/holdingsils.phtml
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     protected function getItemStatusTUBFullAjax()
     {
@@ -1731,7 +1731,7 @@ var_dump($items);
     /**
      * Get number of matches for a certain tab
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getNumberOfMatchesAjax() {
         if ($_REQUEST['idx'] == 'gbv') {
@@ -1790,7 +1790,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getMultipartAjax()
     {
@@ -1810,7 +1810,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getNumberOfMyResearchAjax()
     {
@@ -1823,7 +1823,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getNumberOfTransactionsAjax()
     {
@@ -1836,7 +1836,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getNumberOfHoldsAjax()
     {
@@ -1849,7 +1849,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getNumberOfStorageRetrievalRequestsAjax()
     {
@@ -1862,7 +1862,7 @@ var_dump($items);
     /**
      * Get the content of this tab page by page.
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getFinesTotalAjax()
     {
@@ -1876,7 +1876,7 @@ var_dump($items);
     /**
      * Check write permission of patron
      *
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function getProfileWritePermissionAjax()
     {
