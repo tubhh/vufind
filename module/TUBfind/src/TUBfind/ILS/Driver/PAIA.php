@@ -53,7 +53,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
      *
      * @param \VuFind\Date\Converter $converter Date converter
      */
-    public function __construct(\VuFind\Date\Converter $converter, \Zend\Session\SessionManager $sessionManager)
+    public function __construct(\VuFind\Date\Converter $converter, \Laminas\Session\SessionManager $sessionManager)
     {
         parent::__construct($converter, $sessionManager);
     }

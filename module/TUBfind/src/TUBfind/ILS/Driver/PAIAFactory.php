@@ -63,7 +63,7 @@ class PAIAFactory extends DriverWithDateConverterFactory
         }
         $driver = parent::__invoke(
             $container, $requestedName,
-            [$container->get(\Zend\Session\SessionManager::class)]
+            [$container->get(\Laminas\Session\SessionManager::class)]
         );
         $driver->setRecordLoader($container->get('VuFind\RecordLoader'));
         $driver->setLdapConfig($container->get('VuFind\Config')->get('config'));

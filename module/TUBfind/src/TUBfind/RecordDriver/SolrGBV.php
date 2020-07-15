@@ -30,8 +30,8 @@ use VuFind\Exception\ILS as ILSException,
     VuFind\View\Helper\Root\RecordLink,
     VuFind\XSLT\Processor as XSLTProcessor;
 
-//use Zend\ServiceManager\ServiceLocatorAwareInterface;
-//use Zend\ServiceManager\ServiceLocatorInterface;
+//use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use VuFindSearch\Backend\Solr\Backend;
 use VuFindSearch\Query\Query;
