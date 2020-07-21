@@ -239,7 +239,7 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
                 // add a group
                 $recordList['group'] = 'No library account';
             }
-            $recordList['firstname'] = 'TEST'.$recordList['firstname'];
+            $recordList['firstname'] = $recordList['firstname'];
             $recordList['fullname'] = $recordList['firstname'].' '.$recordList['lastname'];
         // Get the LOANS-Page to extract a message for the user
 /*        $URL = "/loan/DB=1/USERINFO";
