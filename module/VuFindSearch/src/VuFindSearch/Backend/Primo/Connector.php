@@ -233,6 +233,11 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
                 case "ISSN":
                     $lookin = "issn";
                     break;
+                case "frbr":
+                    $lookin = "facet_frbrgroupid";
+                    // Look for exact matches only
+                    $thisTerm['op'] = "exact";
+                    break;
                 }
 
                 //set the lookfor terms to search
