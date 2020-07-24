@@ -207,6 +207,42 @@ class Connector implements \Laminas\Log\LoggerAwareInterface
     }
 
     /**
+     * Return records similar to a given record specified by id.
+     *
+     * Uses MoreLikeThis Request Handler
+     *
+     * @param string   $id     Id of given record
+     * @param string   $altidx URL of the alternative index (without http://)
+     * @param ParamBag $params Parameters
+     *
+     * @return string
+     */
+    public function similarAltIdx($id, $altidx = null, ParamBag $params = null)
+    {
+        $params = $params ?: new ParamBag();
+        $params
+            ->set('q', sprintf('%s:"%s"', $this->uniqueKey, addcslashes($id, '"')));
+        $params->set('qt', 'morelikethis');
+    
+        $handler = $this->map->getHandler(__FUNCTION__);
+        $this->map->prepare(__FUNCTION__, $params);
+
+        $originalUrl = $this->url;
+
+        // Set the URL to query to a temporary one (for the special similar index)
+        if ($altidx !== null) {
+            $this->url = $altidx;
+        }
+
+        $return = $this->query($handler, $params);
+
+        // Reset the URL to the original one
+        $this->url = $originalUrl;
+
+        return $return;
+    }
+
+    /**
      * Execute a search.
      *
      * @param ParamBag $params Parameters
