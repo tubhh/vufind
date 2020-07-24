@@ -254,6 +254,26 @@ class Backend extends AbstractBackend
     }
 
     /**
+     * Return similar records.
+     *
+     * @param string   $id     Id of record to compare with
+     * @param string   $altidx URL of the alternative index (without http://)
+     * @param ParamBag $params Search backend parameters
+     *
+     * @return RecordCollectionInterface
+     */
+    public function similarAltIdx($id, $altidx = null, ParamBag $params = null)
+    {
+        $params = $params ?: new ParamBag();
+        $this->injectResponseWriter($params);
+
+        $response   = $this->connector->similarAltIdx($id, $altidx, $params);
+        $collection = $this->createRecordCollection($response);
+        $this->injectSourceIdentifier($collection);
+        return $collection;
+    }
+
+    /**
      * Return terms from SOLR index.
      *
      * @param string   $field  Index field

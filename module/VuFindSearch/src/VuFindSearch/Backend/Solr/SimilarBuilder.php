@@ -121,7 +121,17 @@ class SimilarBuilder implements SimilarBuilderInterface
                 ? $this->handlerParams
                 : 'qf=title,title_short,callnumber-label,topic,language,author,'
                     . 'publishDate mintf=1 mindf=1';
-            $params->set('q', sprintf('{!mlt %s}%s', $mltParams, $id));
+//            $params->set('q', sprintf('{!mlt %s}%s', $mltParams, $id));
+
+            $params->set('mlt', 'true');
+            $params->set('q', $this->uniqueKey.':'.$id);
+            $params->set('mlt.fl', '*');
+            $params->set('mlt.mindf', '1');
+            $params->set('mlt.boost', 'true');
+            $params->set('mlt.count', '5');
+            $params->set('mlt.qf', 'title,title_short,callnumber-label,topic,language,author');
+
+//indent=on&q=id:756596203&wt=json&mlt=true&mlt.fl=title,topic,fulltex,abstractt&mlt.mindf=1&mlt.boost=true&mlt.count=5&mlt.qf=title
         } else {
             $params->set(
                 'q', sprintf('%s:"%s"', $this->uniqueKey, addcslashes($id, '"'))
