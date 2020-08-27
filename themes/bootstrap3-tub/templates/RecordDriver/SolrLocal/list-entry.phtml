@@ -26,7 +26,7 @@ $openUrlActive = $openUrl->isActive();
 // Account for replace_other_urls setting
 $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
 ?>
-<div class="row result<? if($this->driver->supportsAjaxStatus()): ?> ajaxItem<? endif ?>">
+<div class="row <? if($this->driver->supportsAjaxStatus()): ?> ajaxItem<? endif ?>">
   <div class="col-xs-2 left">
     <label class="pull-left"><?=$this->record($this->driver)->getCheckbox() ?></label>
     <input type="hidden" value="<?=$id ?>" class="hiddenId"/>
