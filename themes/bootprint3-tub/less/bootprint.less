@@ -38,7 +38,11 @@ body {
 }
 
 /* --- Header --- */
-header { margin-top: 18px; }
+header {
+  @media (min-width: 400px) {
+    margin-top: 18px;
+  }
+}
 header .fa.fa-bars { font-size: 21px; }
 header .navbar {
   border-radius: 5px 5px 0 0;

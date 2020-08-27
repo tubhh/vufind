@@ -16,7 +16,7 @@ $openUrlActive = $openUrl->isActive();
 $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
 ?>
 <div class="col-xs-12">
-  <div class="row result">
+  <div class="row">
     <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getUniqueID())?>" class="hiddenId" />
     <input type="hidden" value="<?=$this->escapeHtmlAttr($this->driver->getSourceIdentifier())?>" class="hiddenSource" />
     <?php if ($cover = $this->record($this->driver)->getCover('result-list', 'medium', $this->recordLink()->getUrl($this->driver))): ?>
