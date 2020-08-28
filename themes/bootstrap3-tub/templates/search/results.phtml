@@ -54,6 +54,15 @@
   $this->headScript()->appendFile("check_save_statuses.js");
 ?>
 
+<?php /* Narrow Search Options */ ?>
+<button id="filter-button" data-toggle="collapse" data-target="#search-sidebar" class="visible-xs-block"><i class="fa fa-filter"></i> Filter</button>
+<div class="collapse navbar-collapse <?=$this->layoutClass('sidebar')?>" id="search-sidebar">
+  <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>
+    <?=$this->recommend($current, 'side', $index)?>
+  <?php endforeach; ?>
+</div>
+<?php /* End Narrow Search Options */ ?>
+
 <div class="<?=$this->layoutClass('mainbody')?>">
   <?php if (($recordTotal = $this->results->getResultTotal()) > 0): // only display these at very top if we have results ?>
     <?php foreach ($this->results->getRecommendations('top') as $index => $current): ?>
@@ -151,10 +160,3 @@
 </div>
 <?php /* End Main Listing */ ?>
 
-<?php /* Narrow Search Options */ ?>
-<div class="<?=$this->layoutClass('sidebar')?>" id="search-sidebar">
-  <?php foreach ($this->results->getRecommendations('side') as $index => $current): ?>
-    <?=$this->recommend($current, 'side', $index)?>
-  <?php endforeach; ?>
-</div>
-<?php /* End Narrow Search Options */ ?>
