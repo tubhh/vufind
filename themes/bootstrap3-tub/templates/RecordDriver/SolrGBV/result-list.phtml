@@ -50,7 +50,9 @@ $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
           $summSeries = $this->driver->getSeriesShort();
           if (!empty($summSeries)) {
               foreach ($summSeries as $ser) {
-                  echo ' <span>('.$ser['name'].' '.$ser['number'].')</span>';
+                  echo ' <span>('.$ser['name'];
+                  if (isset($ser['number'])) echo ' '.$ser['number'];
+                  echo ')</span>';
               }
           }
         ?>
