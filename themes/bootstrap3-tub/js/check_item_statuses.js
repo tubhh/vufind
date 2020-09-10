@@ -462,7 +462,7 @@ VuFind.register('itemStatuses', function ItemStatuses() {
             case 'local':
               // Todo: is it necessary to use result.reference_callnumber and result.reference_location. It might be...?
               title = loc_modal_body+ '\n' + VuFind.translate('loc_modal_Title_refonly_generic');
-              loc_modal_button = create_modal(id = result.id,
+              loc_modal_button = create_volume_button(id = result.id,
                                             loc_code    = loc_abbr,
                                             link_title  = title,
                                             modal_title = loc_modal_title,
