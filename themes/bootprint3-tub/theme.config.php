@@ -6,7 +6,7 @@ return [
         'style.css'
     ],
     'less' => [
-        'active' => true,
+        'active' => false,
         'compiled.less'
     ],
 ];
