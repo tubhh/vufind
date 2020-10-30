@@ -87,7 +87,17 @@ trait MarcAdvancedTrait
      */
     public function getAccessRestrictions()
     {
-        return $this->getFieldArray('506');
+        return $this->getFieldArray('506', ['a', 'e', 'u'], false);
+    }
+
+    /**
+     * Get licence notes for the record.
+     *
+     * @return array
+     */
+    public function getLicence()
+    {
+        return $this->getFieldArray('540', ['a', 'f', '2', 'u'], false);
     }
 
     /**

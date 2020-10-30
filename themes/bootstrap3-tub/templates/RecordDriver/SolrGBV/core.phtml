@@ -209,6 +209,20 @@
       </tr>
       <?php endif; ?>
 
+    <?php $accessRights = $this->driver->getAccessRestrictions(); if (!empty($accessRights)): ?>
+    <tr>
+        <th class="coreTable"><?=$this->transEsc('Access Conditions')?>: </th>
+        <td><a href="<?=$this->escapeHtml($accessRights[2])?>" target="_blank"><?=$this->escapeHtml($accessRights[0])?></a></td>
+    </tr>
+      <?php endif; ?>
+
+    <?php $licence = $this->driver->getLicence(); if (!empty($licence)): ?>
+    <tr>
+        <th class="coreTable"><?=$this->transEsc('Licence')?>: </th>
+        <td><a href="<?=$this->escapeHtml($licence[3])?>" target="_blank"><?=$this->escapeHtml($licence[0])?></a></td>
+    </tr>
+      <?php endif; ?>
+
       <?php $edition = $this->driver->getEdition(); if (!empty($edition)): ?>
       <tr>
         <th class="coreTable"><?=$this->transEsc('Edition')?>: </th>
