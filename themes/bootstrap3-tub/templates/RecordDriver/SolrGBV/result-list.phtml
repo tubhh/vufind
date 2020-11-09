@@ -255,7 +255,7 @@ $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
                 <!--@todo: I really don't like it here; it should be in themes/bootstrap3-tub/js/check_item_statuses.js -->
                 <script>
                   // ILL Button
-                  loc_button = create_button(href   = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+                  loc_button = create_button(href   = 'https://kxp.k10plus.de/request/DB=2.1/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
                                        hover  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
                                        text   = '<?=$this->transEsc('interlibrary loan')?>',
                                        icon   = 'fa-truck',
@@ -266,7 +266,7 @@ $urls = $this->record($this->driver)->getLinkDetails($openUrlActive);
                                           link_title  = '<?=$this->transEsc('loc_btn_Hover_ill')?>',
                                           modal_title = '<?=$this->transEsc('loc_modal_Title_ill')?>',
                                           modal_body  = '<?=$this->transEsc('loc_modal_Body_ill')?>',
-                                          iframe_src  = 'https://gso.gbv.de/request/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
+                                          iframe_src  = 'https://kxp.k10plus.de/request/DB=2.1/FORM/LOAN?PPN=<?=$this->driver->getUniqueId() ?>',
                                           modal_foot  = '','','','',
                                           modal_suffix = '-il');
                   document.write(loc_button+loc_modal_link);
