@@ -144,4 +144,29 @@ class Params extends \VuFind\Search\Base\Params
         }
         return $result;
     }
+
+    /**
+     * Get information on the current state of the boolean checkbox facets.
+     *
+     * @return array
+     */
+    public function getCheckboxFacets(?array $include = NULL)
+    {
+        // Grab checkbox facet details using the standard method:
+        $facets = parent::getCheckboxFacets();
+        $newFacets = [];
+
+        // Special case -- if we have a "holdings only" or "expand query" facet,
+        // we want this to always appear, even on the "no results" screen, since
+        // setting this facet actually EXPANDS rather than reduces the result set.
+        foreach ($facets as $f) {
+            if ($f['filter'] == 'pcAvailability') {
+                $f['alwaysVisible'] = true;
+            }
+            $newFacets[] = $f;
+        }
+
+        // Return modified list:
+        return $newFacets;
+    }
 }
