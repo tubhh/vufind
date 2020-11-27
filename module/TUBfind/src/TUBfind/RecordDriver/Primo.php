@@ -620,7 +620,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                         $issntocheck = str_replace('-', '', $iss);
 
                         if (file_exists($this->cacheDir.'/holdings/sfxprinted.xml')) {
-                            $printedholdings = file_get_contents($cacheDir.'/holdings/sfxprinted.xml');
+                            $printedholdings = file_get_contents($this->cacheDir.'/holdings/sfxprinted.xml');
                         } else {
                             $printedholdings = file_get_contents('https://www.tub.tuhh.de/ext/holdings/sfxprinted.xml');
                         }
