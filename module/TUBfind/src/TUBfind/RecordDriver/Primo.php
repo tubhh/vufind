@@ -618,6 +618,27 @@ class Primo extends \VuFind\RecordDriver\Primo
                 if (count($fieldref['issn']) > 0) {
                     foreach ($fieldref['issn'] as $iss) {
                         $issntocheck = str_replace('-', '', $iss);
+                        // Check Cache
+                        if (file_exists($this->cacheDir.'/holdings/'.$issntocheck.'.obj')) {
+                            $cacheFile = file($this->cacheDir.'/holdings/'.$issntocheck.'.obj');
+                            foreach ($cacheFile as $coverageline) {
+                                $coverage = explode("\t", $coverageline);
+                                $covstart = $coverage[0];
+                                $covend = null;
+                                if (!empty($coverage[1]) && $coverage[1] != "\n") {
+                                    $covend = $coverage[1];
+                                }
+                                if (
+                                    $yeartocheck >= $covstart
+                                    && (
+                                        $yeartocheck <= $covend || $covend == null
+                                    )
+                                ) {
+                                    return $results->getRecords();
+                                }
+                            }
+                        }
+                        else {
 
                         if (file_exists($this->cacheDir.'/holdings/sfxprinted.xml')) {
                             $printedholdings = file_get_contents($this->cacheDir.'/holdings/sfxprinted.xml');
@@ -652,6 +673,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                                     }
                                 }
                             }
+                        }
                         }
                     }
                 }
