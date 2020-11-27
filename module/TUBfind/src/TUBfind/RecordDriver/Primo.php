@@ -54,6 +54,8 @@ class Primo extends \VuFind\RecordDriver\Primo
      */
     protected $dateConverter = null;
 
+    protected $cacheDir = null;
+
     /**
      * Get the short (pre-subtitle) title of the record.
      *
@@ -617,7 +619,11 @@ class Primo extends \VuFind\RecordDriver\Primo
                     foreach ($fieldref['issn'] as $iss) {
                         $issntocheck = str_replace('-', '', $iss);
 
-                        $printedholdings = file_get_contents('https://www.tub.tuhh.de/ext/holdings/sfxprinted.xml');
+                        if (file_exists($this->cacheDir.'/holdings/sfxprinted.xml')) {
+                            $printedholdings = file_get_contents($cacheDir.'/holdings/sfxprinted.xml');
+                        } else {
+                            $printedholdings = file_get_contents('https://www.tub.tuhh.de/ext/holdings/sfxprinted.xml');
+                        }
                         $dom = new DomDocument();
                         $dom->loadXML($printedholdings);
                         $items = $dom->documentElement->getElementsByTagName('item');
@@ -805,6 +811,10 @@ class Primo extends \VuFind\RecordDriver\Primo
          return isset($this->fields['doi'])
              ? $this->fields['doi'] : '';
      }
+
+    public function setCacheDir($cacheDir) {
+        $this->cacheDir = $cacheDir;
+    }
 
     /** 
      * TUBHH Enhancement for GBV Discovery
