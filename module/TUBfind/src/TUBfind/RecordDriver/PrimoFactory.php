@@ -66,6 +66,9 @@ class PrimoFactory extends \VuFind\RecordDriver\AbstractBaseFactory
             ->get($configName);
         $finalOptions = [$config, $config];
         $driver = parent::__invoke($container, $requestedName, $finalOptions);
+        $cacheDir = $container->get(\VuFind\Cache\Manager::class)
+            ->getCacheDir(false);
+        $driver->setCacheDir($cacheDir);
         $driver->attachSearchService($container->get(\VuFindSearch\Service::class));
         return $driver;
     }
