@@ -639,7 +639,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                             }
                         }
                         else {
-
+/*
                         if (file_exists($this->cacheDir.'/holdings/sfxprinted.xml')) {
                             $printedholdings = file_get_contents($this->cacheDir.'/holdings/sfxprinted.xml');
                         } else {
@@ -674,6 +674,7 @@ class Primo extends \VuFind\RecordDriver\Primo
                                 }
                             }
                         }
+*/
                         }
                     }
                 }
