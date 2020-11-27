@@ -15,6 +15,12 @@
     <?php endif; ?>
 </div>
 
+<?php $printed = $this->driver->getContainerRecordID(); ?>
+<?php if (!empty($printed)): ?>
+<div class="printedCopy">
+<a href="/Record/<?=$printed?>" rel="tooltip" title="" class="holdlink holdprinted" data-original-title="Auch als gedruckte Ausgabe verfügbar"><i class="fa fa-book"></i> Druckausgabe</a>
+</div>
+<?php endif; ?>
 
 <?php if (!empty($urls) || $openUrlActive): ?>
   <h3 class="urllabel"><?=$this->transEsc("Internet")?></h3>
