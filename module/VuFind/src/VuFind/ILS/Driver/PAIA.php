@@ -1436,6 +1436,7 @@ class PAIA extends DAIA
             ? $this->getAlternativeItemId($doc['edition']) : '');
 
         $result['type'] = $this->paiaStatusString($doc['status']);
+        $result['paiaStatus'] = $doc['status'];
 
         // storage (0..1) textual description of location of the document
         $result['location'] = ($doc['storage'] ?? null);

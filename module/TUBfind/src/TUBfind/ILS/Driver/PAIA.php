@@ -307,6 +307,75 @@ class PAIA extends \TUBfind\ILS\Driver\DAIA
     }
 
     /**
+     * Get Patron Transactions
+     *
+     * This is responsible for retrieving all transactions (i.e. checked out items)
+     * by a specific patron.
+     *
+     * @param array $patron The patron array from patronLogin
+     *
+     * @return array Array of the patron's transactions on success,
+     */
+    public function getMyReadyRequests($patron)
+    {
+        // filters for getMyTransactions are by default configuration:
+        // status = 4 - provided
+        $status = $this->config['Pickup']['status'] ?? '4';
+        $filter = ['status' => explode(':', $status)];
+        // get items-docs for given filters
+        $items = $this->paiaGetItems($patron, $filter);
+        return $this->mapPaiaItems($items, 'myReadyRequestsMapping');
+    }
+
+    /**
+     * This PAIA helper function allows custom overrides for mapping of PAIA response
+     * to getMyStorageRetrievalRequests data structure.
+     *
+     * @param array $items Array of PAIA items to be mapped.
+     *
+     * @return array
+     */
+    protected function myReadyRequestsMapping($items)
+    {
+        $results = [];
+
+        foreach ($items as $doc) {
+            $result = $this->getBasicDetails($doc);
+
+            // status: provided (the document is ready to be used by the patron)
+            $result['available'] = $doc['status'] == 4 ? true : false;
+
+            $results[] = $result;
+        }
+        return $results;
+    }
+
+    /**
+     * This PAIA helper function allows custom overrides for mapping of PAIA response
+     * to getMyStorageRetrievalRequests data structure.
+     *
+     * @param array $items Array of PAIA items to be mapped.
+     *
+     * @return array
+     */
+    protected function myStorageRetrievalRequestsMapping($items)
+    {
+        $results = [];
+
+        foreach ($items as $doc) {
+            $result = $this->getBasicDetails($doc);
+
+            $result['rejected'] = $doc['status'] == 5 ? true : false;
+            $result['in_transit'] = ($doc['status'] == 2 || $doc['status'] == 1) ? true : false;
+            // status: provided (the document is ready to be used by the patron)
+            $result['available'] = $doc['status'] == 4 ? true : false;
+
+            $results[] = $result;
+        }
+        return $results;
+    }
+
+    /**
      * Get total numbers and counts from actions
      *
      * @param array  $patron Array of Patron data.
